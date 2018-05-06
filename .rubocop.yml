@@ -1,0 +1,13 @@
+inherit_gem:
+  rubocop-rails:
+    - config/rails.yml
+
+AllCops:
+  TargetRubyVersion: 2.5
+  Exclude:
+    - 'bin/*'
+    - 'Gemfile'
+    - 'config/boot.rb'
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
