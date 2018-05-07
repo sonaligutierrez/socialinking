@@ -13,7 +13,7 @@ variables:
 before_script:
   - apt-get update -qq && apt-get install -yqq nodejs libpq-dev
   - gem install bundler  --no-ri --no-rdoc
-  - gem install rake  --no-ri --no-rdoc
+  - gem install rake -v 12.0.0 --no-ri --no-rdoc
   - bundle install -j $(nproc) --path vendor
   - rails db:migrate
   - rails db:seed
