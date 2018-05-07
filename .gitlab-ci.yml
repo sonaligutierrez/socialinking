@@ -17,10 +17,7 @@ before_script:
   - rails db:migrate
   - rails db:seed
 
-rails:
-  script:
-    - rails test
-
-rubocop:
+tests:
   script:
     - rubocop
+    - rails test
