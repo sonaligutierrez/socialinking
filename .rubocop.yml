@@ -8,7 +8,7 @@ AllCops:
     - 'bin/*'
     - 'Gemfile'
     - 'config/boot.rb'
-    - 'vendor/*'
+    - 'vendor/**/*'
 
 Style/FrozenStringLiteralComment:
   Enabled: false

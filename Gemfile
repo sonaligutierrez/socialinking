@@ -57,3 +57,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # https://github.com/plataformatec/devise
 gem 'devise'
+
+# For background jobs https://github.com/mperham/sidekiq
+gem 'sidekiq'
