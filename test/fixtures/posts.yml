@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2018-05-15
+  post_date: 2018-05-15
+  post_creators: one
+  users: one
+
+two:
+  date: 2018-05-15
+  post_date: 2018-05-15
+  post_creators: two
+  users: two
