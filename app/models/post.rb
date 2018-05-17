@@ -3,5 +3,4 @@ class Post < ApplicationRecord
   belongs_to :users
   has_many :commentaries
   has_many :scraping_logs
-
 end
