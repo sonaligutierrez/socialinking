@@ -50,6 +50,10 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 
   gem "rubocop-rails"
+
+  gem "vcr"
+
+  gem "webmock"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -60,3 +64,9 @@ gem 'devise'
 
 # For background jobs https://github.com/mperham/sidekiq
 gem 'sidekiq'
+
+gem 'nokogiri'
+
+gem "httparty"
+
+gem "mechanize"
