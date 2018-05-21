@@ -8,21 +8,19 @@
 # It must return the number of comment processed
 
 class FacebookPostScraping
-
   attr_accessor :post_url, :agent, :fb_user, :fb_pass, :comments
 
   def initialize(post_url)
     @post_url = post_url
-    @fb_user = 'luiseloyhernandez@gmail.com'
-    @fb_pass = '797965padme'
-
+    @fb_user = "luiseloyhernandez@gmail.com"
+    @fb_pass = "797965padme"
   end
 
   def login
     @agent = Mechanize.new
-    @agent.user_agent_alias = 'Android'
-    login_page = @agent.get('https://m.facebook.com/')
-    login_form = @agent.page.form_with(:method => 'POST')
+    @agent.user_agent_alias = "Android"
+    login_page = @agent.get("https://m.facebook.com/")
+    login_form = @agent.page.form_with(method: "POST")
     login_form.email = @fb_user
     login_form.pass = @fb_pass
     @agent.submit(login_form)
@@ -32,26 +30,23 @@ class FacebookPostScraping
   end
 
   def process
-
     @comments = []
-    if @agent 
+    if @agent
       @agent.get(@post_url) do |page|
         if page.code == "200"
-          comments = page.search('.dw')
+          comments = page.search(".dw")
           comments.each do |comment|
-            user = comment.search('.dx').text
-            text_comment = comment.search('.dy').text
-            reactions = comment.search('.bx').text
-            resp = comment.search('.ea')
+            user = comment.search(".dx").text
+            text_comment = comment.search(".dy").text
+            reactions = comment.search(".bx").text
+            resp = comment.search(".ea")
             responses = nil
             responses = resp.last.text if resp.last
-            @comments << {user: user, comment: text_comment, reactions: reactions, responses: responses} unless text_comment.empty?
+            @comments << { user: user, comment: text_comment, reactions: reactions, responses: responses } unless text_comment.empty?
           end
         end
       end
     end
     @comments.length
-
   end
-
 end

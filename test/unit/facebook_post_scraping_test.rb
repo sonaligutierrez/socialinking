@@ -2,7 +2,7 @@ require "test_helper"
 
 class FacebookPostScrapingTest < Minitest::Test
   def setup
-    @fb_post_scraping = FacebookPostScraping.new('https://m.facebook.com/story.php?story_fbid=1089390984533567&id=543211639151507')
+    @fb_post_scraping = FacebookPostScraping.new("https://m.facebook.com/story.php?story_fbid=1089390984533567&id=543211639151507")
   end
 
   def test_login_success
