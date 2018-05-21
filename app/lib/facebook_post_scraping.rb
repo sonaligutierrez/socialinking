@@ -9,7 +9,7 @@
 
 class FacebookPostScraping
 
-  attr_accessor :post_url, :agent, :fb_user, :fb_pass
+  attr_accessor :post_url, :agent, :fb_user, :fb_pass, :comments
 
   def initialize(post_url)
     @post_url = post_url
@@ -33,24 +33,24 @@ class FacebookPostScraping
 
   def process
 
+    @comments = []
     if @agent 
-
       @agent.get(@post_url) do |page|
-
         if page.code == "200"
-          doc = Nokogiri::HTML(page.body)
-          comments = doc.css('._2a_i')
-          byebug
-          comments.length
-        else
-          0
+          comments = page.search('.dw')
+          comments.each do |comment|
+            user = comment.search('.dx').text
+            text_comment = comment.search('.dy').text
+            reactions = comment.search('.bx').text
+            resp = comment.search('.ea')
+            responses = nil
+            responses = resp.last.text if resp.last
+            @comments << {user: user, comment: text_comment, reactions: reactions, responses: responses} unless text_comment.empty?
+          end
         end
-
       end
-      
-    else
-      0
     end
+    @comments.length
 
   end
 

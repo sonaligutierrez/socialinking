@@ -19,6 +19,13 @@ class FacebookPostScrapingTest < Minitest::Test
   end
 
   def test_process
-    skip "test this later"
+    VCR.use_cassette("fb_process") do
+      assert_equal true, @fb_post_scraping.login
+      assert_equal 4, @fb_post_scraping.process
+      assert_equal "Dario Zapata", @fb_post_scraping.comments[0][:user]
+      assert_equal "Socorro González Guerrico", @fb_post_scraping.comments[1][:user]
+      assert_equal "Claudia Ines Castañer", @fb_post_scraping.comments[2][:user]
+      assert_equal "María Cristina Bianchetti Arrechea", @fb_post_scraping.comments[3][:user]
+    end
   end
 end
