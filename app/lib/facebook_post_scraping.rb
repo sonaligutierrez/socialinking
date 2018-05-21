@@ -1,8 +1,8 @@
 # Lib for process the scraping by facebook post
 # ie:
-#   url = 'https://m.facebook.com/story.php'
-#   params = { story_fbid: 1089390984533567, id: 543211639151507 }
-#   fps = FacebookPostScraping.new(url, params)
+#   url = "https://m.facebook.com/story.php?story_fbid=1089390984533567&id=543211639151507"
+#   fps = FacebookPostScraping.new(url)
+#   fps.login
 #   fps.process
 #
 # It must return the number of comment processed
@@ -13,7 +13,7 @@ class FacebookPostScraping
   def initialize(post_url)
     @post_url = post_url
     @fb_user = "luiseloyhernandez@gmail.com"
-    @fb_pass = "797965padme"
+    @fb_pass = "xyzw123456"
   end
 
   def login
