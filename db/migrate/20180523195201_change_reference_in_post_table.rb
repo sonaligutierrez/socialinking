@@ -6,6 +6,6 @@ class ChangeReferenceInPostTable < ActiveRecord::Migration[5.1]
   end
   def self.down
   	remove_foreign_key :posts, :accounts, foreign_key: true
-  	add_reference :posts, column: :acounts_id
+  	add_reference :posts, column: :acounts_id, foreign_key: true
   end
 end
