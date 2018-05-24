@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180517134153) do
+ActiveRecord::Schema.define(version: 20180523195201) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "acounts", force: :cascade do |t|
+  create_table "accounts", force: :cascade do |t|
     t.string "name"
     t.string "url"
     t.datetime "created_at", null: false
@@ -55,8 +55,8 @@ ActiveRecord::Schema.define(version: 20180517134153) do
     t.bigint "post_creators_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "acounts_id"
-    t.index ["acounts_id"], name: "index_posts_on_acounts_id"
+    t.bigint "accounts_id"
+    t.index ["accounts_id"], name: "index_posts_on_accounts_id"
     t.index ["post_creators_id"], name: "index_posts_on_post_creators_id"
   end
 
@@ -89,7 +89,7 @@ ActiveRecord::Schema.define(version: 20180517134153) do
 
   add_foreign_key "commentaries", "facebook_users", column: "facebook_users_id"
   add_foreign_key "commentaries", "posts", column: "posts_id"
-  add_foreign_key "posts", "acounts", column: "acounts_id"
+  add_foreign_key "posts", "accounts", column: "accounts_id"
   add_foreign_key "posts", "post_creators", column: "post_creators_id"
   add_foreign_key "scraping_logs", "posts", column: "posts_id"
 end
