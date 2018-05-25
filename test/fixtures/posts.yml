@@ -3,10 +3,10 @@
 one:
   date: 2018-05-15
   post_date: 2018-05-15
-  post_creators: one
+  post_creator: one
 
 
 two:
   date: 2018-05-15
   post_date: 2018-05-15
-  post_creators: two
+  post_creator: two

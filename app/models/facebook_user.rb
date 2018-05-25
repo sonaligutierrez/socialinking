@@ -1,3 +1,3 @@
 class FacebookUser < ApplicationRecord
-  has_many :commentaries
+  has_many :comments
 end
