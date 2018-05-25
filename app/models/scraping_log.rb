@@ -1,3 +1,3 @@
 class ScrapingLog < ApplicationRecord
-  belongs_to :posts
+  belongs_to :post
 end
