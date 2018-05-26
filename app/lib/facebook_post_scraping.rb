@@ -8,7 +8,7 @@
 # It must return the number of comment processed
 
 class FacebookPostScraping
-  attr_accessor :post_url, :agent, :fb_user, :fb_pass, :comments
+  attr_accessor :post_url, :agent, :fb_user, :fb_pass, :comments, :page
 
   def initialize(post_url)
     @post_url = post_url
@@ -33,20 +33,38 @@ class FacebookPostScraping
     @comments = []
     if @agent
       @agent.get(@post_url) do |page|
-        if page.code == "200"
-          comments = page.search(".dw")
-          comments.each do |comment|
-            user = comment.search(".dx").text
-            text_comment = comment.search(".dy").text
-            reactions = comment.search(".bx").text
-            resp = comment.search(".ea")
-            responses = nil
-            responses = resp.last.text if resp.last
-            @comments << { user: user, comment: text_comment, reactions: reactions, responses: responses } unless text_comment.empty?
-          end
+        @page = page
+        scrapped_comments = get_comments(page)
+        while scrapped_comments.length > 0
+          @comments += scrapped_comments
+          puts "Click"
+          page = page.link_with(:text => ' Ver comentarios siguientes…').click
+          scrapped_comments = get_comments(page)
+          puts "scrapped_comments=#{scrapped_comments.length}"
+          sleep(1)
         end
       end
     end
     @comments.length
+  end
+
+  private
+
+  def get_comments(page)
+    result_comments = []
+    if page.code == "200"
+      comments = page.search(".dw")
+      byebug
+      comments.each do |comment|
+        user = comment.search(".dx").text
+        text_comment = comment.search(".dy").text
+        reactions = comment.search(".bx").text
+        resp = comment.search(".ea")
+        responses = nil
+        responses = resp.last.text if resp.last
+        result_comments << { user: user, comment: text_comment, reactions: reactions, responses: responses } unless text_comment.empty?
+      end
+    end
+    return result_comments
   end
 end
