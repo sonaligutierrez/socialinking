@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180524191818) do
+ActiveRecord::Schema.define(version: 20180527223958) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,11 @@ ActiveRecord::Schema.define(version: 20180524191818) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "category_id"
+    t.string "id_comment"
+    t.string "reactions"
+    t.string "reactions_description"
+    t.string "responses"
+    t.string "date_comment"
     t.index ["category_id"], name: "index_comments_on_category_id"
     t.index ["facebook_user_id"], name: "index_comments_on_facebook_user_id"
     t.index ["post_id"], name: "index_comments_on_post_id"
@@ -55,6 +60,11 @@ ActiveRecord::Schema.define(version: 20180524191818) do
     t.string "avatar"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "account_id"
+    t.string "fb_user"
+    t.string "fb_pass"
+    t.string "fb_session"
+    t.index ["account_id"], name: "index_post_creators_on_account_id"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -62,10 +72,8 @@ ActiveRecord::Schema.define(version: 20180524191818) do
     t.date "post_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "account_id"
     t.bigint "post_creator_id"
     t.string "url"
-    t.index ["account_id"], name: "index_posts_on_account_id"
     t.index ["post_creator_id"], name: "index_posts_on_post_creator_id"
   end
 
@@ -99,7 +107,7 @@ ActiveRecord::Schema.define(version: 20180524191818) do
   add_foreign_key "comments", "categories"
   add_foreign_key "comments", "facebook_users"
   add_foreign_key "comments", "posts"
-  add_foreign_key "posts", "accounts"
+  add_foreign_key "post_creators", "accounts"
   add_foreign_key "posts", "post_creators"
   add_foreign_key "scraping_logs", "posts"
 end

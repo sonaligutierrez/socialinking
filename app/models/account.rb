@@ -1,3 +1,3 @@
 class Account < ApplicationRecord
-  has_many :posts
+  has_many :post_creator
 end

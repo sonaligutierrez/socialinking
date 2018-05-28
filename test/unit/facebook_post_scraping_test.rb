@@ -22,7 +22,6 @@ class FacebookPostScrapingTest < Minitest::Test
     VCR.use_cassette("fb_process") do
       assert_equal true, @fb_post_scraping.login
       assert_equal true, (@fb_post_scraping.process > 4)
-      byebug
       assert_equal "Dario Zapata", @fb_post_scraping.comments[0][:user]
       assert_equal "Socorro González Guerrico", @fb_post_scraping.comments[1][:user]
       assert_equal "Claudia Ines Castañer", @fb_post_scraping.comments[2][:user]
