@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180527223958) do
+ActiveRecord::Schema.define(version: 20180528130808) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,13 +22,35 @@ ActiveRecord::Schema.define(version: 20180527223958) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "active_admin_comments", force: :cascade do |t|
+    t.string "namespace"
+    t.text "body"
+    t.string "resource_type"
+    t.bigint "resource_id"
+    t.string "author_type"
+    t.bigint "author_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
+    t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
+    t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
+  end
+
   create_table "categories", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "comments", force: :cascade do |t|
+  create_table "facebook_users", force: :cascade do |t|
+    t.string "fb_username"
+    t.string "fb_name"
+    t.string "fb_avatar"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "post_comments", force: :cascade do |t|
     t.date "date"
     t.text "comment"
     t.bigint "facebook_user_id"
@@ -41,17 +63,9 @@ ActiveRecord::Schema.define(version: 20180527223958) do
     t.string "reactions_description"
     t.string "responses"
     t.string "date_comment"
-    t.index ["category_id"], name: "index_comments_on_category_id"
-    t.index ["facebook_user_id"], name: "index_comments_on_facebook_user_id"
-    t.index ["post_id"], name: "index_comments_on_post_id"
-  end
-
-  create_table "facebook_users", force: :cascade do |t|
-    t.string "fb_username"
-    t.string "fb_name"
-    t.string "fb_avatar"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_post_comments_on_category_id"
+    t.index ["facebook_user_id"], name: "index_post_comments_on_facebook_user_id"
+    t.index ["post_id"], name: "index_post_comments_on_post_id"
   end
 
   create_table "post_creators", force: :cascade do |t|
@@ -104,9 +118,9 @@ ActiveRecord::Schema.define(version: 20180527223958) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "comments", "categories"
-  add_foreign_key "comments", "facebook_users"
-  add_foreign_key "comments", "posts"
+  add_foreign_key "post_comments", "categories"
+  add_foreign_key "post_comments", "facebook_users"
+  add_foreign_key "post_comments", "posts"
   add_foreign_key "post_creators", "accounts"
   add_foreign_key "posts", "post_creators"
   add_foreign_key "scraping_logs", "posts"

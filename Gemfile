@@ -70,3 +70,5 @@ gem 'nokogiri'
 gem "httparty"
 
 gem "mechanize"
+
+gem "activeadmin"

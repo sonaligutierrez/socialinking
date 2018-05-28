@@ -21,4 +21,4 @@ post_a = Post.create({post_creator_id: post_creator.id, url: "https://m.facebook
 post_b = Post.create({post_creator_id: post_creator.id, url: "https://m.facebook.com/story.php?story_fbid=1111182739021058&id=543211639151507"})
 
 # Categories
-Category.create(name: "Uncategorized")
+Category.create(name: "Uncategorized")User.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?

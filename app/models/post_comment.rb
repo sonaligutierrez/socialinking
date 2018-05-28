@@ -1,4 +1,4 @@
-class Comment < ApplicationRecord
+class PostComment < ApplicationRecord
   belongs_to :facebook_user
   belongs_to :post
   belongs_to :category

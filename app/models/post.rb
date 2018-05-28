@@ -1,6 +1,6 @@
 class Post < ApplicationRecord
   belongs_to :post_creator
-  has_many :comments
+  has_many :post_comments
   has_many :scraping_logs
 
   validates :post_creator, :url, presence: true
@@ -19,11 +19,11 @@ class Post < ApplicationRecord
         puts "Ingresando: " + comment[1][:user]
         fb_user = FacebookUser.where(fb_username: comment[1][:url_profile]).first_or_create(fb_name: comment[1][:user])
         if fb_user
-          the_comment = Comment.find_by_id_comment(comment[0])
+          the_comment = PostComment.find_by_id_comment(comment[0])
           if the_comment
             the_comment.update(date_comment: comment[1][:date_comment], reactions: comment[1][:reactions], reactions_description: comment[1][:reactions_description], responses: comment[1][:responses])
           else
-            the_comment = Comment.create(post_id: id, facebook_user_id: fb_user.id, id_comment: comment[0], date_comment: comment[1][:date_comment], reactions: comment[1][:reactions], reactions_description: comment[1][:reactions_description], responses: comment[1][:responses], category_id: Category.find_by_name("Uncategorized").id, comment: comment[1][:comment])
+            the_comment = PostComment.create(post_id: id, facebook_user_id: fb_user.id, id_comment: comment[0], date_comment: comment[1][:date_comment], reactions: comment[1][:reactions], reactions_description: comment[1][:reactions_description], responses: comment[1][:responses], category_id: Category.find_by_name("Uncategorized").id, comment: comment[1][:comment])
           end
           count += 1 if the_comment
         end
