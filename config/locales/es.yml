@@ -149,9 +149,12 @@ es:
       post:
         post_creator: "Publicador"
         date: "Fecha"
+        name: "Name"
         post_date: "Fecha de publicación"
+        title: "Título"
       post_creator:
         account: "Cuenta"
+        name: "Nombre"
       scraping_log:
         post: "Publicación"
         scraping_date: "Fecha de seguimiento"
@@ -165,5 +168,6 @@ es:
         fb_username: "Usuario"
         fb_name: "Nombre"
         fb_avatar: "Avatar"
+        name: "Nombre"
 
 

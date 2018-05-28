@@ -1,5 +1,5 @@
 class ChangeNameCommentTable < ActiveRecord::Migration[5.1]
   def change
-  	rename_table :comments, :post_comments
+    rename_table :comments, :post_comments
   end
 end

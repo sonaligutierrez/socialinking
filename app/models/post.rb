@@ -6,7 +6,6 @@ class Post < ApplicationRecord
   validates :post_creator, :url, presence: true
 
   def scraping
-
     fb_scraping = FacebookPostScraping.new(url, post_creator.fb_user, post_creator.fb_pass, post_creator.fb_session)
 
     count = 0
@@ -31,5 +30,4 @@ class Post < ApplicationRecord
     end
     count
   end
-
 end

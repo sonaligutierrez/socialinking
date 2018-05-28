@@ -23,7 +23,7 @@ class FacebookPostScraping
       unless resp
         login_with_user_and_pass
       else
-        true 
+        true
       end
     else
       login_with_user_and_pass
@@ -31,7 +31,7 @@ class FacebookPostScraping
   end
 
   def get_cookie_yml
-    YAML::dump(@agent.cookie_jar)
+    YAML.dump(@agent.cookie_jar)
   end
 
   def login_with_user_and_pass
@@ -49,7 +49,7 @@ class FacebookPostScraping
 
   def login_with_cookie
     @agent = Mechanize.new
-    cookie_jar = YAML::load(@cookie_yml)
+    cookie_jar = YAML.load(@cookie_yml)
     @agent.user_agent_alias = "Linux Firefox"
     @agent.cookie_jar = cookie_jar
     @agent.get("https://m.facebook.com/")
@@ -79,61 +79,60 @@ class FacebookPostScraping
         end
       end
     end
-    @comments = @comments.select{|c| c[:id_comment][0]!="s"}
-    @comments = @comments.index_by{|r| r[:id_comment]}
+    @comments = @comments.select { |c| c[:id_comment][0] != "s" }
+    @comments = @comments.index_by { |r| r[:id_comment] }
     @comments.length
   end
 
   private
 
-  def get_comments(page)
-    result_comments = []
-    if page.code == "200"
-      comments = page.search(".dx, .ds")
-      comments.each do |comment|
-        begin
-          # byebug
-          user = comment.search("h3")&.text
-          url_profile = comment.search("a")&.first&.attributes["href"]&.text&.split("?")&.first
-          
-          text_comment = comment.search(".ea, .dz, span")&.text
+    def get_comments(page)
+      result_comments = []
+      if page.code == "200"
+        comments = page.search(".dx, .ds")
+        comments.each do |comment|
+          begin
+            # byebug
+            user = comment.search("h3")&.text
+            url_profile = comment.search("a")&.first&.attributes["href"]&.text&.split("?")&.first
 
-          date_comment = comment.search('.ec abbr')&.text
-          id_comment = comment.attributes["id"]&.text
+            text_comment = comment.search(".ea, .dz, span")&.text
 
-          reactions = comment.search('.eg')&.map{|m| m&.text }&.select{ |x| x != "#" && !x&.empty? }&.first&.split(" ")&.first
-          reactions_description = comment.search('.eg, .ek, .eg a, .ek a')&.map{|m| m.attributes["aria-label"]&.text }.select! { |x| !x.nil? }&.first
+            date_comment = comment.search(".ec abbr")&.text
+            id_comment = comment.attributes["id"]&.text
 
-          responses = comment.search('.ek')&.map{|m| m&.text }&.select{ |x| x != "#" && !x&.empty? }&.first&.split(" ")&.first
-          result_comments << { id_comment: id_comment, user: user, url_profile: url_profile, date_comment: date_comment, comment: text_comment, reactions: reactions, reactions_description: reactions_description, responses: responses } unless text_comment.empty? && id_comment.empty?
-        rescue Exception => e
-          puts e.message
+            reactions = comment.search(".eg")&.map { |m| m&.text }&.select { |x| x != "#" && !x&.empty? }&.first&.split(" ")&.first
+            reactions_description = comment.search(".eg, .ek, .eg a, .ek a")&.map { |m| m.attributes["aria-label"]&.text }.select! { |x| !x.nil? }&.first
+
+            responses = comment.search(".ek")&.map { |m| m&.text }&.select { |x| x != "#" && !x&.empty? }&.first&.split(" ")&.first
+            result_comments << { id_comment: id_comment, user: user, url_profile: url_profile, date_comment: date_comment, comment: text_comment, reactions: reactions, reactions_description: reactions_description, responses: responses } unless text_comment.empty? && id_comment.empty?
+          rescue Exception => e
+            puts e.message
+          end
         end
       end
+      result_comments
     end
-    return result_comments
-  end
 
-  def get_next_url(page)
-    next_url = page.link_with(:text => ' Ver comentarios siguientes…')&.href
-    unless next_url
-      temp_url = page.canonical_uri.to_s
-      temp_url.sub! 'www.facebook.com', 'm.facebook.com'
-      temp_url = temp_url.split("&").map do |m|
-        if m[0]=="p"
-          actual_page = m.split("=").last.to_i
-          actual_page += 1
-          "p=#{actual_page}"
-        else
-          m
+    def get_next_url(page)
+      next_url = page.link_with(text: " Ver comentarios siguientes…")&.href
+      unless next_url
+        temp_url = page.canonical_uri.to_s
+        temp_url.sub! "www.facebook.com", "m.facebook.com"
+        temp_url = temp_url.split("&").map do |m|
+          if m[0] == "p"
+            actual_page = m.split("=").last.to_i
+            actual_page += 1
+            "p=#{actual_page}"
+          else
+            m
+          end
         end
+        @finish_paging += 1
+        return temp_url.join("&")
+      else
+        @finish_paging = 0
+        return next_url
       end
-      @finish_paging += 1
-      return temp_url.join("&")
-    else
-      @finish_paging = 0
-      return next_url  
-    end
-    
-  end
+      end
 end
