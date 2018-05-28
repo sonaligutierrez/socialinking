@@ -108,5 +108,62 @@ es:
       account:
         one: Cuenta
         other: Cuentas
+      category:
+        one: Categorias
+        other: Categoria
+      facebook_user:
+        one: Usuaro Facebook
+        other: Usuarios Facebook
+      post_comment:
+        one: Comentario
+        other: Comentarios
+      post_creator:
+        one: Publicador
+        other: Publicadores
+      post:
+        one: Publicación
+        other: Publicaciones
+      scraping_log:
+        one: Seguimiento
+        other: Seguimientos
+
+      user:
+        one: Usuario
+        other: Usuarios
     attributes:
-      name: "Nombre"
+      account:
+        name: "Nombre"
+      category:
+        name: "Nombre"
+      post_comment:
+        facebook_user: "Usuario Facebook"
+        post: "Publicación"
+        category: "Categoría"
+        date: "Fecha"
+        comment: "Comentario"
+        id_comment: "Id del comentario"
+        reactions: "Reacciones"
+        reactions_description: "Descripción de de la reacción"
+        responses: "Respuestas"
+        date_comment: "Fecha de comentario"
+      post:
+        post_creator: "Publicador"
+        date: "Fecha"
+        post_date: "Fecha de publicación"
+      post_creator:
+        account: "Cuenta"
+      scraping_log:
+        post: "Publicación"
+        scraping_date: "Fecha de seguimiento"
+        exec_time: "Tiempo exedido"
+        total_comment: "Total de comentarios"
+      user:
+        email: "Email"
+        password: "Contraseña"
+        password_confirmation: "Confirmación de contraseña"
+      facebook_user:
+        fb_username: "Usuario"
+        fb_name: "Nombre"
+        fb_avatar: "Avatar"
+
+
