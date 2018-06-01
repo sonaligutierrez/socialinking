@@ -1,0 +1,173 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# The following keys must be escaped otherwise they will not be retrieved by
+# the default I18n backend:
+#
+# true, false, on, off, yes, no
+#
+# Instead, surround them with single quotes.
+#
+# en:
+#   'true': 'foo'
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+es:
+  active_admin:
+    users: "Usuarios"
+    accounts: Cuentas
+    categories: "Categorias"
+    facebook_users: "Usuarios Facebook"
+    post_comments: "Comentarios"
+    post_creators: "Publicadores"
+    posts: "Publicaciones"
+    scraping_logs: "Seguimientos"
+  
+  time:
+    formats:
+      default: '%Y-%m-%d'
+      short: '%b %d'
+      long: '%B %d, %Y'
+      calendar: '%d/%m/%Y'
+      date_and_time: '%d/%m/%Y %H:%M:%S'
+      full_calendar: '%A %d de %B de %Y'
+      large_calendar: '%d de %B de %Y'
+  date:
+    formats:
+      default: '%Y-%m-%d'
+      short: '%b %d'
+      long: '%B %d, %Y'
+      calendar: '%d/%m/%Y'
+    day_names:
+      Sunday: Domingo
+      Monday: Lunes
+      Tuesday: Martes
+      Wednesday: Miércoles
+      Thursday: Jueves
+      Friday: Viernes
+      Saturday: Sábado
+    abbr_day_names:
+      Sun: Dom
+      Mon: Lun
+      Tue: Mar
+      Wed: Mie
+      Thu: Jue
+      Fri: Vie
+      Sat: Sab
+    month_names:
+    -
+    - Enero
+    - Febrero
+    - Marzo
+    - Abril
+    - Mayo
+    - Junio
+    - Julio
+    - Agosto
+    - Septiembre
+    - Octubre
+    - Noviembre
+    - Diciembre
+    abbr_month_names:
+    -
+    - Ene
+    - Feb
+    - Mar
+    - Abr
+    - May
+    - Jun
+    - Jul
+    - Ago
+    - Sep
+    - Oct
+    - Nov
+    - Dic
+    order:
+    - :year
+    - :month
+    - :day
+  activerecord:
+    models:
+      account:
+        one: Cuenta
+        other: Cuentas
+      category:
+        one: Categorias
+        other: Categoria
+      facebook_user:
+        one: Usuaro Facebook
+        other: Usuarios Facebook
+      post_comment:
+        one: Comentario
+        other: Comentarios
+      post_creator:
+        one: Publicador
+        other: Publicadores
+      post:
+        one: Publicación
+        other: Publicaciones
+      scraping_log:
+        one: Seguimiento
+        other: Seguimientos
+
+      user:
+        one: Usuario
+        other: Usuarios
+    attributes:
+      account:
+        name: "Nombre"
+      category:
+        name: "Nombre"
+      post_comment:
+        facebook_user: "Usuario Facebook"
+        post: "Publicación"
+        category: "Categoría"
+        date: "Fecha"
+        comment: "Comentario"
+        id_comment: "Id del comentario"
+        reactions: "Reacciones"
+        reactions_description: "Descripción de de la reacción"
+        responses: "Respuestas"
+        date_comment: "Fecha de comentario"
+      post:
+        post_creator: "Publicador"
+        date: "Fecha"
+        name: "Name"
+        post_date: "Fecha de publicación"
+        title: "Título"
+      post_creator:
+        account: "Cuenta"
+        name: "Nombre"
+      scraping_log:
+        post: "Publicación"
+        scraping_date: "Fecha de seguimiento"
+        exec_time: "Tiempo exedido"
+        total_comment: "Total de comentarios"
+      user:
+        email: "Email"
+        password: "Contraseña"
+        password_confirmation: "Confirmación de contraseña"
+      facebook_user:
+        fb_username: "Usuario"
+        fb_name: "Nombre"
+        fb_avatar: "Avatar"
+        name: "Nombre"
+
+

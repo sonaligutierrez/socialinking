@@ -2,7 +2,7 @@ require "test_helper"
 
 class FacebookPostScrapingTest < Minitest::Test
   def setup
-    @fb_post_scraping = FacebookPostScraping.new("https://m.facebook.com/story.php?story_fbid=1089390984533567&id=543211639151507")
+    @fb_post_scraping = FacebookPostScraping.new("https://m.facebook.com/story.php?story_fbid=1089390984533567&id=543211639151507", "luiseloyhernandez@gmail.com", "xyzw123456", "")
   end
 
   def test_login_success
@@ -21,11 +21,11 @@ class FacebookPostScrapingTest < Minitest::Test
   def test_process
     VCR.use_cassette("fb_process") do
       assert_equal true, @fb_post_scraping.login
-      assert_equal 4, @fb_post_scraping.process
-      assert_equal "Dario Zapata", @fb_post_scraping.comments[0][:user]
-      assert_equal "Socorro González Guerrico", @fb_post_scraping.comments[1][:user]
-      assert_equal "Claudia Ines Castañer", @fb_post_scraping.comments[2][:user]
-      assert_equal "María Cristina Bianchetti Arrechea", @fb_post_scraping.comments[3][:user]
+      assert_equal true, (@fb_post_scraping.process > 4)
+      @fb_post_scraping.comments.each do |comment|
+        assert_equal false, comment[1][:user].empty?
+        assert_equal false, comment[1][:comment].empty?
+      end
     end
   end
 end

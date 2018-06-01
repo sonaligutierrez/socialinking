@@ -1,3 +1,3 @@
 class Category < ApplicationRecord
-  has_many :comments
+  has_many :post_comments
 end
