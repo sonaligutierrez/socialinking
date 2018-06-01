@@ -6,5 +6,4 @@ class FacebookUser < ApplicationRecord
   def name
     fb_username
   end
-
 end

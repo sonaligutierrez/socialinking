@@ -1,7 +1,7 @@
 namespace :scraping do
 
   desc "Run all post scraping"
-  task :start => :environment do
+  task start: :environment do
     Post.all.each do |post|
       begin
         puts "Proccesing: #{post.title} (#{post.id})"

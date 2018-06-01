@@ -1,5 +1,5 @@
 ActiveAdmin.register PostComment do
-  menu :label => proc { I18n.t("active_admin.post_comments") }, :priority => 3
+  menu label: proc { I18n.t("active_admin.post_comments") }, priority: 3
   permit_params :facebook_user_id, :post_id, :category_id, :date, :comment, :id_comment, :reactions, :reactions_description, :responses, :date_comment
 
   index do
