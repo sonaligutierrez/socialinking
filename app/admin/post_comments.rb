@@ -1,24 +1,16 @@
 ActiveAdmin.register PostComment do
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
+  menu :label => proc { I18n.t("active_admin.post_comments") }, :priority => 3
   permit_params :facebook_user_id, :post_id, :category_id, :date, :comment, :id_comment, :reactions, :reactions_description, :responses, :date_comment
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:permitted, :attributes]
-  #   permitted << :other if params[:action] == 'create' && current_user.admin?
-  #   permitted
-  # end
 
   index do
-      column :facebook_user
-      column :post
-      column :category
-      column :date
-      actions
-    end
+    column :facebook_user
+    column :comment
+    column :reactions_description
+    column :date_comment
+    column :post
+    column :category
+    actions
+  end
 
   form do |f|
     f.inputs do

@@ -48,14 +48,18 @@ class FacebookPostScraping
   end
 
   def login_with_cookie
-    @agent = Mechanize.new
-    cookie_jar = YAML.load(@cookie_yml)
-    @agent.user_agent_alias = "Linux Firefox"
-    @agent.cookie_jar = cookie_jar
-    @agent.get("https://m.facebook.com/")
-    forget_password = @agent.page.links.find { |l| l.text == "Forgot Password?" }
+    unless @cookie_yml.empty?
+      @agent = Mechanize.new
+      cookie_jar = YAML.load(@cookie_yml)
+      @agent.user_agent_alias = "Linux Firefox"
+      @agent.cookie_jar = cookie_jar
+      @agent.get("https://m.facebook.com/")
+      forget_password = @agent.page.links.find { |l| l.text == "Forgot Password?" || l.text == "Create Account" }
 
-    forget_password.nil?
+      forget_password.nil?
+    else
+      false
+    end
   end
 
   def process
@@ -65,14 +69,15 @@ class FacebookPostScraping
       @agent.get(@post_url) do |page|
         @page = page
         scrapped_comments = get_comments(page)
-        while @finish_paging < 4
+        url = get_next_url(page)
+        while @finish_paging == 0
           @comments += scrapped_comments
-          puts "Next Page"
-          page = @agent.get(get_next_url(page))
+          page = @agent.get(url)
           if page
             scrapped_comments = get_comments(page)
             puts "scrapped_comments=#{scrapped_comments.length}"
             sleep(1)
+            url = get_next_url(page)
           else
             byebug
           end
@@ -89,23 +94,28 @@ class FacebookPostScraping
     def get_comments(page)
       result_comments = []
       if page.code == "200"
-        comments = page.search(".dx, .ds")
+        comments = page.search("div[id^='composer']")&.first&.next&.children || []
         comments.each do |comment|
           begin
             # byebug
+            reactions = ""
+            reactions_description = ""
             user = comment.search("h3")&.text
             url_profile = comment.search("a")&.first&.attributes["href"]&.text&.split("?")&.first
 
-            text_comment = comment.search(".ea, .dz, span")&.text
+            text_comment = comment.search("h3")&.first&.next&.text
 
-            date_comment = comment.search(".ec abbr")&.text
+            date_comment = comment.search("abbr")&.text
             id_comment = comment.attributes["id"]&.text
 
-            reactions = comment.search(".eg")&.map { |m| m&.text }&.select { |x| x != "#" && !x&.empty? }&.first&.split(" ")&.first
-            reactions_description = comment.search(".eg, .ek, .eg a, .ek a")&.map { |m| m.attributes["aria-label"]&.text }.select! { |x| !x.nil? }&.first
+            reaction_node = comment.search("span > span > a").first
+            if reaction_node
+              reactions = reaction_node&.text&.to_i
+              reactions_description = reaction_node&.attributes["aria-label"]&.text
+            end
 
-            responses = comment.search(".ek")&.map { |m| m&.text }&.select { |x| x != "#" && !x&.empty? }&.first&.split(" ")&.first
-            result_comments << { id_comment: id_comment, user: user, url_profile: url_profile, date_comment: date_comment, comment: text_comment, reactions: reactions, reactions_description: reactions_description, responses: responses } unless text_comment.empty? && id_comment.empty?
+            responses = comment.search("div > div > div a")&.text
+            result_comments << { id_comment: id_comment, user: user, url_profile: url_profile, date_comment: date_comment, comment: text_comment, reactions: reactions, reactions_description: reactions_description, responses: responses } unless text_comment.to_s.empty? && id_comment.to_s.empty?
           rescue Exception => e
             puts e.message
           end
