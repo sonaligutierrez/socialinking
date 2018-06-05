@@ -16,6 +16,7 @@ module TemplateProject
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
+    config.active_job.queue_adapter = :sidekiq
   end
   # Where the I18n library should search for translation files
   I18n.load_path += Dir[Rails.root.join("lib", "locale", "*.{rb,yml}")]
