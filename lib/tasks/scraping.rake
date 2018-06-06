@@ -18,7 +18,8 @@ namespace :scraping do
     Post.all.each do |post|
       begin
         puts "Proccesing: #{post.title} (#{post.id})"
-        ExtractDataInBatchJob.set(wait: 1.second).perform_later post
+        count = ExtractDataInBatchJob.set(wait: 1.second).perform_later post
+        puts "Procesados: #{count} comments"
       rescue Exception => e
         puts e.message
       end
