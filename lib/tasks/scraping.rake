@@ -14,7 +14,7 @@ namespace :scraping do
   end
 
   desc "Run all post scraping asincronaly"
-  task asincrono_start: :environment do
+  task async_start: :environment do
     Post.all.each do |post|
       begin
         puts "Proccesing: #{post.title} (#{post.id})"
