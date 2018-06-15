@@ -1,0 +1,26 @@
+.container
+  - @posts.each do |p|
+    = p.url
+  
+
+  .row
+    .col-sm-3.well
+      .thumbnail
+        .panel-heading BLACK FRIDAY DEAL
+        .panel-body
+          %img.img-responsive{:alt => "Image", :src => "https://m.facebook.com/story.php?story_fbid=1089390984533567&id=543211639151507=IMAGE", :style => "width:100%"}/
+        .panel-footer Buy 50 mobiles and get a gift card
+    .col-sm-3
+      .panel.panel-danger
+        .panel-heading BLACK FRIDAY DEAL
+        .panel-body
+          %img.img-responsive{:alt => "Image", :src => "https://placehold.it/150x80?text=IMAGE", :style => "width:100%"}/
+        .panel-footer Buy 50 mobiles and get a gift card
+    .col-sm-3
+      .panel.panel-success
+        .panel-heading BLACK FRIDAY DEAL
+        .panel-body
+          %img.img-responsive{:alt => "Image", :src => "https://placehold.it/150x80?text=IMAGE", :style => "width:100%"}/
+        .panel-footer Buy 50 mobiles and get a gift card
+%br/
+

@@ -1,14 +1,11 @@
 ActiveAdmin.register Post do
-
+  config.filters = false
   menu label: proc { I18n.t("active_admin.posts") }, priority: 2
 
   permit_params :post_creator_id, :date, :post_date, :url, :title
 
   index do
-    column :post_creator
-    column :url
-    column :title
-    actions
+    render 'admin/index_posts', context: self 
   end
 
   form do |f|
