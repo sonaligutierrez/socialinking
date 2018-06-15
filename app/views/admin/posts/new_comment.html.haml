@@ -1,0 +1,19 @@
+= semantic_form_for :post_comment, url: create_comment_admin_post_path(@post), html:{method: :post} do |f|
+  = f.inputs "Datos del Comentario" do
+    = f.input :date, label: "fecha"
+    = f.input :comment, label: "Comentario"
+    = f.input :facebook_user_id, label: "Usuario Facebook", as: :select, collection: FacebookUser.all.map { |u| ["#{u.fb_name}", u.id] }
+    = f.input :category_id, label: "categoría", as: :select, collection: Category.all.map { |u| ["#{u.name}", u.id] }
+    = f.input :id_comment, label: "id del comentario"
+    = f.input :reactions, label: "Reacciones"
+    = f.input :reactions_description, label: "Descripción de la Reacción"
+    = f.input :responses, label: "Respuesta"
+    = f.input :date_comment, label: "Fecha del comentario"
+   
+
+  %fieldset.actions
+    %ol
+      %li#post_comment_submit_action.action.input_action
+        %input{"data-disable-with" => "Guardar Comentario", :name => "commit", :type => "submit", :value => "Guardar Comentario"}/
+      %li.cancel
+        %a{:href => "/admin/post_comments"} Cancelar

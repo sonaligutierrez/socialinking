@@ -1,6 +1,6 @@
 ActiveAdmin.register PostComment do
   menu label: proc { I18n.t("active_admin.post_comments") }, priority: 3
-  permit_params :facebook_user_id, :post_id, :category_id, :date, :comment, :id_comment, :reactions, :reactions_description, :responses, :date_comment
+  permit_params :facebook_user_id, :post_id, :category_id, :date, :comment, :id_comment, :reactions, :reactions_description, :responses, :date_comment, :id_comment
 
   index do
     column :facebook_user
@@ -27,5 +27,11 @@ ActiveAdmin.register PostComment do
     end
     f.actions
   end
+
+  member_action :categorize_comment, method: :put do
+    @post_comment = PostComment.find(params[:id])
+    @post_comment.update_attribute(:category_id, params[:category_id])   
+    render body: nil
+  end 
 
 end
