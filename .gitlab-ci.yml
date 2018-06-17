@@ -21,3 +21,11 @@ tests:
   script:
     - rubocop
     - rails test
+
+deploy:
+  variables:
+    RAILS_ENV: production
+  only:
+    - master
+  script:
+    - ssh -t ubuntu@34.202.235.10 "cd social_linking && git pull && rake db:migrate && rake asset:precompile && touch tmp/restart.txt && sudo service apache2 restart"
