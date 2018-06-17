@@ -8,6 +8,7 @@ ActiveAdmin.register Post do
     column :post_creator
     column :url
     column :title
+    column() { |post| link_to "Scraping", post_scraping_path(post) }
     actions
   end
 
