@@ -3,26 +3,32 @@ image: "ruby:2.5"
 services:
   - postgres:alpine
 
-variables:
-  POSTGRES_USER: test
-  POSTGRES_PASSSWORD: test-password
-  POSTGRES_DB: test_db
-  DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSSWORD}@postgres/${POSTGRES_DB}
-  RAILS_ENV: test
+stages:
+  - test
+  - deploy
 
-before_script:
-  - apt-get update -qq && apt-get install -yqq nodejs libpq-dev
-  - gem install bundler  --no-ri --no-rdoc
-  - bundle install
-  - rails db:migrate
-  - rails db:seed
+test_all:
+  stage: test
+  variables:
+    POSTGRES_USER: test
+    POSTGRES_PASSSWORD: test-password
+    POSTGRES_DB: test_db
+    DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSSWORD}@postgres/${POSTGRES_DB}
+    RAILS_ENV: test
 
-tests:
+  before_script:
+    - apt-get update -qq && apt-get install -yqq nodejs libpq-dev
+    - gem install bundler  --no-ri --no-rdoc
+    - bundle install
+    - rails db:migrate
+    - rails db:seed
+
   script:
     - rubocop
     - rails test
 
-deploy:
+production_deploys:
+  stage: deploy
   variables:
     RAILS_ENV: production
   only:
