@@ -8,7 +8,7 @@ class ExtractDataInBatchJobTest < ActiveJob::TestCase
   test "scraping execution for a post" do
     VCR.use_cassette("fb_scraping") do
       count = ExtractDataInBatchJob.perform_now @fb_post
-      assert_equal(@fb_post.post_comments.count, count)
+      assert_equal(@fb_post.post_comments.count, count-1)
     end
   end
 end
