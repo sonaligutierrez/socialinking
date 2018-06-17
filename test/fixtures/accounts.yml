@@ -11,3 +11,7 @@ one:
 two:
   name: MyString
   url: MyString
+
+three:
+  name: "test name"
+  url: "https://www.prosumia.la/"
