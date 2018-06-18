@@ -8,7 +8,3 @@ class PostControllerTest < ActionDispatch::IntegrationTest
     assert_response :redirect
   end
 end
-
-
-    
-   
