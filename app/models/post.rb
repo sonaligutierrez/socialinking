@@ -30,4 +30,20 @@ class Post < ApplicationRecord
     end
     count
   end
+
+  def count_comments_uncategorized
+    post_comments.joins(:category).where("categories.name LIKE ?",'Uncategorized').count
+  end
+
+  def count_comments_categorized
+    post_comments.joins(:category).where("categories.name NOT LIKE ?",'Uncategorized').count
+  end
+
+  def uncategorized_porcent
+    if post_comments.count > 0
+      (count_comments_uncategorized * 100) / post_comments.count
+    else
+      0
+    end
+  end
 end
