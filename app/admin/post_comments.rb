@@ -30,8 +30,8 @@ ActiveAdmin.register PostComment do
 
   member_action :categorize_comment, method: :put do
     @post_comment = PostComment.find(params[:id])
-    @post_comment.update_attribute(:category_id, params[:category_id])   
+    @post_comment.update_attribute(:category_id, params[:category_id])
     render body: nil
-  end 
+  end
 
 end
