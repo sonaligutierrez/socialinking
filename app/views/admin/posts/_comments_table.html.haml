@@ -14,5 +14,6 @@
         %td.col.col-facebook_user= pc.facebook_user.fb_username
         %td.col.col-date= pc.date
         %td.col.col-category= select_tag 'category', options_for_select(Category.all.map{|c| [c.name, c.id]}, selected: pc.category_id), onchange: "update(#{pc.id}, this.value)", class: "table_tools dropdown_menu_button color-border-select"
-  %div#index_footer
-    %div#pagination
+%br
+%div#index_footer
+  %div#pagination
