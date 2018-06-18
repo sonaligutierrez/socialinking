@@ -5,7 +5,7 @@ ActiveAdmin.register Post do
   permit_params :post_creator_id, :date, :post_date, :url, :title
 
   index do
-    render 'admin/index_posts', context: self 
+    render "admin/index_posts", context: self
   end
 
   form do |f|

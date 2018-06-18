@@ -32,11 +32,11 @@ class Post < ApplicationRecord
   end
 
   def count_comments_uncategorized
-    post_comments.joins(:category).where("categories.name LIKE ?",'Uncategorized').count
+    post_comments.joins(:category).where("categories.name LIKE ?", "Uncategorized").count
   end
 
   def count_comments_categorized
-    post_comments.joins(:category).where("categories.name NOT LIKE ?",'Uncategorized').count
+    post_comments.joins(:category).where("categories.name NOT LIKE ?", "Uncategorized").count
   end
 
   def uncategorized_porcent
