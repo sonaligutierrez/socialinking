@@ -8,7 +8,7 @@
               %img.col-sm-3.img-responsive{:alt => "Image", :src => "#{p.post_creator.try(:avatar)}", class: "img-circle", :style => "width:25%"}/
               .col-sm-9.position-title
                 .text-blue=p.post_creator.try(:fan_page)
-                =p.try(:post_date).strftime('%d de %b de %Y a las %l:%M')
+                =p.try(:post_date)&.strftime('%d de %b de %Y a las %l:%M')
             .row
               .text-post-style=p.try(:title).present? ? p.try(:title).upcase : ""
           .panel-body

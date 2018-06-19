@@ -139,8 +139,10 @@ img {
 }
 .add-post{
 	background-image: url("add_post.png") !important;
-	background-repeat: no-repeat !important;
-	padding: 65px;
+  background-repeat: no-repeat !important;
+  background-size: 100px;
+  padding: 55px;
+  margin-left: 30px;
 }
 .panel-body-link{
   border: 1.4px grey;
@@ -150,9 +152,18 @@ img {
   padding-left: 50px;	
 }
 
+.panel-body-link-post-creator{
+  border: 1.4px grey;
+  border-style: dashed;
+  padding-top: 65px;
+  padding-left: 50px;	
+  background-color: transparent;
+}
+
+
 .text-link{
-	margin-top: 35px;
-    color: grey;
+	margin-top: 20px;
+  color: grey;
 }
 
 .progress-style{
@@ -184,6 +195,7 @@ img {
   color: #7f8c8d;
 }
 
-
-
-
+.logo-right-post-creator {
+  width: 100% !important;
+  margin-top: 10px;
+}

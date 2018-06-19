@@ -1,5 +1,6 @@
 ActiveAdmin.register Post do
   config.filters = false
+  config.batch_actions = false
   menu label: proc { I18n.t("active_admin.posts") }, priority: 2
   actions :all
   permit_params :post_creator_id, :date, :post_date, :url, :title
@@ -12,7 +13,8 @@ ActiveAdmin.register Post do
     f.inputs do
       f.input :date, as: :datepicker
       f.input :title
-      f.input :post_creator, label: I18n.t("active_admin.fb_user"), as: :select, collection: PostCreator.all.map { |u| ["#{u.fan_page}", u.id] }
+      f.input :post_creator, label: "Publicador", as: :select, collection: PostCreator.all.map { |u| ["#{u.fan_page}", u.id] }
+
       f.input :url
     end
     f.actions
@@ -46,6 +48,7 @@ ActiveAdmin.register Post do
   collection_action :search_by_category, method: :get do
     @post = Post.find(params[:id])
     @post_comments = @post.post_comments.where(category_id: params[:category_id])
+    @post_comments = @post_comments.page(params[:page] || 1).per(10)
     respond_to do |format|
       format.js
     end
@@ -65,10 +68,6 @@ ActiveAdmin.register Post do
     end
     send_data csv.encode("UTF-8"), type: "text/csv; charset=windows-1251; header=present", disposition: "attachment; filename=post_comments.csv"
   end
-
-
-
-
 
   controller do
 
