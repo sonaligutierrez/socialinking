@@ -51,6 +51,25 @@ ActiveAdmin.register Post do
     end
   end
 
+  collection_action :import_csv, method: :get do
+    post_comments = PostComment.all.order("id ASC")
+    csv = CSV.generate(encoding: "UTF-8") do |csv|
+      csv << [ "Id", "Date", "Comment", "facebook User", "created_at", "updated_at",
+      "category", "id_comment", "reactions", "reactions_description",
+      "responses", "date_comment"]
+      post_comments.each do |c|
+        commentarry = [ c.id, c.date, c.comment, c.facebook_user_id, c.created_at,  c.updated_at,
+        c.category.try(:name), c.id_comment, c.reactions, c.responses, c.reactions_description]
+        csv << commentarry
+      end
+    end
+    send_data csv.encode("UTF-8"), type: "text/csv; charset=windows-1251; header=present", disposition: "attachment; filename=post_comments.csv"
+  end
+
+
+
+
+
   controller do
 
     def comment_params

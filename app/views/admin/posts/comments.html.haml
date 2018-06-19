@@ -5,6 +5,10 @@
         %div.batch_actions_selector.dropdown_menu
           %label.label{:for => "category_filter"} Filtar por: 
           = select_tag 'category', options_for_select(Category.all.map{|c| [c.name, c.id]}), onchange: "search(#{@post.id}, this.value)", class: "dropdown_menu_button"
+        .download_links
+          %spam
+            EXPORTAR:
+          = link_to "CSV", import_csv_admin_posts_path
       .index_as_table.table_tools#table_content
         = render 'comments_table', q: @post_comments
 
