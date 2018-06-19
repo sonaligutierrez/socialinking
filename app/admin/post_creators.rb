@@ -27,6 +27,7 @@ ActiveAdmin.register PostCreator do
       row :account
       row :avatar do |ad|
         link_to ad.avatar, ad.avatar, target: "_blank"
+
       end
       row :fan_page do |ad|
         link_to ad.fan_page, ad.fan_page, target: "_blank"
