@@ -39,6 +39,9 @@ es:
     post_creators: "Publicadores"
     posts: "Publicaciones"
     scraping_logs: "Seguimientos"
+    comments: "COMENTARIOS"
+    categorized: "CATEGORIZADOS"
+    uncategorized: "SIN CATEGORIZAR"
   
   time:
     formats:
