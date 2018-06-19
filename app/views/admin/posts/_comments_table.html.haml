@@ -1,0 +1,22 @@
+%table#index_table_post_comments.index_table.index{:border => "0", :cellpadding => "0", :paginator => "true"}
+  %thead
+    %tr
+      %th.col.col-setting=image_tag("setting.png", size: "15x15")
+      %th.col.col-comment=I18n.t("active_admin.comment")
+      %th.col.col-facebook_user=I18n.t("active_admin.user")
+      %th.col.col-date=I18n.t("active_admin.date")
+      %th.col.col-category=I18n.t("active_admin.category")
+  %tbody
+    - q.each do |pc|
+      %tr{:id => "post_comment_#{pc.id}"}
+        %td.col.col-setting= check_box_tag 'setting', 0
+        %td.col.col-comment= pc.comment
+        %td.col.col-facebook_user= pc.facebook_user.fb_username
+        %td.col.col-date= pc.date
+        %td.col.col-category= select_tag 'category', options_for_select(Category.all.map{|c| [c.name, c.id]}, selected: pc.category_id), onchange: "update(#{pc.id}, this.value)", class: "table_tools dropdown_menu_button color-border-select"
+%br
+%div#index_footer
+  .pagination.col-sm-12
+    = paginate q
+  .pagination_information
+    = page_entries_info q

@@ -1,0 +1,14 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: "2018-05-28 18:12:13.233476"
+  comment: "Comentario de prueba"
+  facebook_user: one
+  post: three
+  category: one
+  id_comment: "123456"
+  reactions: "reactions"
+  reactions_description: "MyString"
+  responses: "MyString"
+  date_comment: "2018-05-28 18:12:13.233476"
+  

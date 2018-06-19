@@ -1,0 +1,35 @@
+.paginated_collection
+  .paginated_collection_contents
+    .index_content
+      %div.table_tools
+        %div.batch_actions_selector.dropdown_menu
+          %label.label{:for => "category_filter"} Filtar por: 
+          = select_tag 'category', options_for_select(Category.all.map{|c| [c.name, c.id]}), onchange: "search(#{@post.id}, this.value)", class: "dropdown_menu_button"
+        .download_links
+          %spam
+            EXPORTAR:
+          = link_to "CSV", import_csv_admin_posts_path
+      .index_as_table.table_tools#table_content
+        = render 'comments_table', q: @post_comments
+
+
+
+
+:javascript
+  $('#page_title').html("#{@post.title}" || "#{@post.date} - #{@post.post_creator.fb_user}");
+  $("#titlebar_right").html("<span class='action_item'><a href='/admin/posts/#{@post.id}/new_comment'>Añadir Comentario</a></span>")
+  	function update(comment_id, category_id){
+  	  $.ajax({
+  						method: "put",
+          		url: '/admin/post_comments/'+comment_id+'/categorize_comment',
+          		data: {id: comment_id, category_id:category_id}
+        		});
+  	}
+
+  	function search(post_id, category_id){
+  	  $.ajax({
+  						method: "get",
+          		url: '/admin/posts/search_by_category',
+          		data: {id: post_id, category_id:category_id}
+        		});
+  	}

@@ -39,10 +39,16 @@ es:
     post_creators: "Publicadores"
     posts: "Publicaciones"
     scraping_logs: "Seguimientos"
+    comment: "Comentario"
+    post_comments: "Comentarios"
+    user: "Usuario"
+    date: "Fecha"
+    category: "Categoría"
+    fb_user: "Publicador"
+    cancel: "Cancelar"
     comments: "COMENTARIOS"
     categorized: "CATEGORIZADOS"
     uncategorized: "SIN CATEGORIZAR"
-  
   time:
     formats:
       default: '%Y-%m-%d'
@@ -52,6 +58,21 @@ es:
       date_and_time: '%d/%m/%Y %H:%M:%S'
       full_calendar: '%A %d de %B de %Y'
       large_calendar: '%d de %B de %Y'
+  helpers:
+    page_entries_info:
+      one_page:
+        display_entries:
+          zero: "No %{entry_name} encontrado"
+          one: "Mostrando <b>1</b> %{entry_name}"
+          other: "Mostrando <b>un total de %{count}</b> %{entry_name}"
+      more_pages:
+        display_entries: "Mostrando %{entry_name} <b>%{first}&nbsp;-&nbsp;%{last}</b> de un total de <b>%{total}</b>"
+  views:
+    pagination:
+      first: Primero
+      previous: Anterior
+      next: Próximo
+      last: Último
   date:
     formats:
       default: '%Y-%m-%d'
