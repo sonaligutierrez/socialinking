@@ -10,12 +10,4 @@ class PostControllerTest < ActionDispatch::IntegrationTest
     assert_match "Publicaciones", @response.body
     assert_match "Cambiemos", @response.body
   end
-
-  test "comments" do
-    sign_in users(:one)
-    get comments_admin_post_url(Post.first)
-    assert_response :success
-    assert_match "Prueba", @response.body
-    assert_match "Comentario de prueba", @response.body
-  end
 end
