@@ -27,7 +27,7 @@ test_all:
     - rubocop
     - rails test
 
-production_deploys:
+production_deploy:
   stage: deploy
   variables:
     RAILS_ENV: production
