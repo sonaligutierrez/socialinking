@@ -77,3 +77,7 @@ gem "mechanize"
 gem "activeadmin"
 
 gem "active_skin"
+
+gem 'rails-controller-testing'
+
+gem 'kaminari'

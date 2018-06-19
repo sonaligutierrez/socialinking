@@ -1,17 +1,11 @@
 ActiveAdmin.register Post do
+  config.filters = false
   menu label: proc { I18n.t("active_admin.posts") }, priority: 2
   actions :all
   permit_params :post_creator_id, :date, :post_date, :url, :title
 
   index do
-    column :post_creator
-    column :url
-    column :title
-    actions
-    actions do |resource|
-        link_to(I18n.t("active_admin.post_comments"), comments_admin_post_path(resource), method: :get)
-      end
-
+    render "admin/posts/index_posts", context: self
   end
 
   form do |f|
@@ -26,6 +20,7 @@ ActiveAdmin.register Post do
   member_action :comments, method: :get do
     @post = Post.find(params[:id])
     @post_comments = @post.post_comments.joins(:category).where("categories.name LIKE ?", "Uncategorized")
+    @post_comments = @post_comments.page(params[:page] || 1).per(10)
   end
 
   member_action :new_comment, method: :get do

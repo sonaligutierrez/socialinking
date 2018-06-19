@@ -17,6 +17,7 @@ $skinLogo: none;
 @import "active_admin/mixins";
 @import "active_admin/base";
 @import "active_skin";
+@import "bootstrap";
 
 // Overriding any non-variable SASS must be done after the fact.
 // For example, to change the default status-tag color:
@@ -43,7 +44,7 @@ img {
   	color: #c71a2a !important;
   	border-color: #d60707 !important;
   }
-  #titlebar_right{
+  .comments #titlebar_right{
     border-radius: 0;
     background: #08ACD4;
     color: #fff;
@@ -54,8 +55,128 @@ img {
     font-size: 14px;
     text-align: center !important;
     cursor: pointer;
+    position: absolute;
+    margin-left: -162px;
+    margin-top: 20px;
+    padding-top: 15px;
+    font-size: 15px;
   }
   .action_item a{
     color: #fff;
   }
+.cards, .index_as_block {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 2em;
+}
+
+.card {
+  flex: 0 1 24%;
+  background: white;
+  margin-right: 1em;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.card-container {
+  padding: 2px 16px;
+}
+
+.position-title{
+	padding-left: 0px !important;
+}
+
+.text-blue{
+	color: blue;
+}
+
+.text-color-grey{
+	color: grey !important;
+}
+
+.text-color-darkgrey{
+	color: darkgrey;
+}
+
+.text-color-red{
+	color: #ff005e;
+}
+
+.padding-uncategorized{
+	padding-left: 25px;
+}
+
+.text-small-bold{
+	font-size: 8px;
+    font-weight: bold;
+    font-family: sans-serif;
+}
+
+.text-link-footer{
+	font-size: 10px;
+    font-weight: bold;
+    font-family: sans-serif;
+}
+
+.footer-style{
+	background-color: #fff !important;
+	text-align: center;
+}
+
+.stadistic-style{
+	margin-top: 10px !important;
+	padding-left: 10px;
+}
+
+.text-post-style{
+  margin: 10px 0px 0px 17px;
+}
+.add-post{
+	background-image: url("add_post.png") !important;
+	background-repeat: no-repeat !important;
+	padding: 65px;
+}
+.panel-body-link{
+  border: 1.4px grey;
+  border-style: dashed;
+  height: 200px;
+  padding-top: 85px;
+  padding-left: 50px;	
+}
+
+.text-link{
+	margin-top: 35px;
+    color: grey;
+}
+
+.progress-style{
+	margin-top: 10px;
+}
+
+.progress-bar-red{
+	background-color: #ff005e;
+}
+
+.transp{
+	opacity: 0;
+}
+.label{
+	color: #5E6469 !important;
+}
+
+.breadcrumb{
+  background: #045B70 !important;
+}
+
+.comments .pagination {
+  float: right !important;
+  margin-top: 0px !important;
+}
+.comments .pagination_information{
+  float: left;
+  margin-top: -80px;
+  color: #7f8c8d;
+}
+
+
+
 
