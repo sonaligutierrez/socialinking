@@ -37,4 +37,4 @@ production_deploys:
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval $(ssh-agent -s)
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
-    - ssh -t ubuntu@34.202.235.10 "cd social_linking && git pull && /home/ubuntu/.rvm/gems/ruby-2.5.1@social-linking/bin/rake db:migrate && /home/ubuntu/.rvm/gems/ruby-2.5.1@social-linking/bin/rake asset:precompile && touch tmp/restart.txt && sudo service apache2 restart"
+    - ssh -t -o StrictHostKeyChecking=no ubuntu@34.202.235.10 "cd social_linking && git pull && /home/ubuntu/.rvm/gems/ruby-2.5.1@social-linking/bin/rake db:migrate && /home/ubuntu/.rvm/gems/ruby-2.5.1@social-linking/bin/rake asset:precompile && touch tmp/restart.txt && sudo service apache2 restart"
