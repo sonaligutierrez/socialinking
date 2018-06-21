@@ -30,8 +30,10 @@
                 %br/
                 =I18n.t("active_admin.uncategorized")
           .panel-footer.footer-style 
-            .text-color-grey.text-link-footer
+            .text-color-grey.text-link-footer.left
               = link_to "Ver Comentarios", comments_admin_post_path(p)
+            .text-color-grey.text-link-footer.right
+              = link_to "Agendar Scraping", post_scraping_path(p)
     .col-sm-3
       .panel-body-link
         = link_to "-", new_admin_post_path, class: "add-post"
