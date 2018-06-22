@@ -78,8 +78,6 @@ class FacebookPostScraping
             puts "scrapped_comments=#{scrapped_comments.length}"
             sleep(1)
             url = get_next_url(page)
-          else
-            byebug
           end
         end
       end
