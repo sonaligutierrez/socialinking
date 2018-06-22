@@ -24,7 +24,7 @@ ActiveAdmin.register PostCreator do
 
   member_action :posts, method: :get do
     @post_creator = PostCreator.find(params[:id])
-    @posts = Post.where(post_creator:@post_creator)
+    @posts = Post.where(post_creator: @post_creator)
     render "admin/posts/_index_posts", context: self
   end
 
