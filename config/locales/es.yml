@@ -49,6 +49,7 @@ es:
     comments: "COMENTARIOS"
     categorized: "CATEGORIZADOS"
     uncategorized: "SIN CATEGORIZAR"
+    edit: "Editar"
   time:
     formats:
       default: '%Y-%m-%d'

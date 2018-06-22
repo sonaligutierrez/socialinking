@@ -5,6 +5,7 @@
       %th.col.col-comment=I18n.t("active_admin.comment")
       %th.col.col-facebook_user=I18n.t("active_admin.user")
       %th.col.col-date=I18n.t("active_admin.date")
+      %th.col.col-date=""
       %th.col.col-category=I18n.t("active_admin.category")
   %tbody
     - q.each do |pc|
@@ -13,6 +14,7 @@
         %td.col.col-comment= pc.comment
         %td.col.col-facebook_user= pc.facebook_user.fb_username
         %td.col.col-date= pc.date
+        %td.col.col-edit= link_to I18n.t("active_admin.edit"), edit_admin_post_comment_path(pc)
         %td.col.col-category= select_tag 'category', options_for_select(Category.all.map{|c| [c.name, c.id]}, selected: pc.category_id), onchange: "update(#{pc.id}, this.value)", class: "table_tools dropdown_menu_button color-border-select"
 %br
 %div#index_footer
