@@ -1,0 +1,362 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://m.facebook.com/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip,deflate,identity
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:43.0) Gecko/20100101 Firefox/43.0
+      Accept-Charset:
+      - ISO-8859-1,utf-8;q=0.7,*;q=0.7
+      Accept-Language:
+      - en-us,en;q=0.5
+      Host:
+      - m.facebook.com
+      Connection:
+      - keep-alive
+      Keep-Alive:
+      - '300'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Security-Policy:
+      - 'default-src * data: blob:;script-src *.facebook.com *.fbcdn.net *.facebook.net
+        *.google-analytics.com *.virtualearth.net *.google.com 127.0.0.1:* *.spotilocal.com:*
+        ''unsafe-inline'' ''unsafe-eval'' *.atlassolutions.com blob: data: ''self'';style-src
+        data: blob: ''unsafe-inline'' *;connect-src *.facebook.com facebook.com *.fbcdn.net
+        *.facebook.net *.spotilocal.com:* wss://*.facebook.com:* https://fb.scanandcleanlocal.com:*
+        *.atlassolutions.com attachment.fbsbx.com ws://localhost:* blob: *.cdninstagram.com
+        ''self'';'
+      X-Frame-Options:
+      - DENY
+      X-Xss-Protection:
+      - '0'
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Access-Control-Allow-Origin:
+      - https://m.facebook.com
+      Access-Control-Expose-Headers:
+      - X-FB-Debug, X-Loader-Length
+      Pragma:
+      - no-cache
+      Vary:
+      - Accept-Encoding
+      - Origin
+      Content-Type:
+      - text/html; charset=utf-8
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - OPTIONS
+      Strict-Transport-Security:
+      - max-age=15552000; preload; includeSubDomains
+      Expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      Set-Cookie:
+      - datr=h3MsW3rSKOF8FrMxpoAU4dLc; expires=Sun, 21-Jun-2020 03:56:55 GMT; Max-Age=63072000;
+        path=/; domain=.facebook.com; secure; httponly
+      - reg_fb_gate=https%3A%2F%2Fm.facebook.com%2F; path=/; domain=.facebook.com;
+        secure; httponly
+      - reg_fb_ref=https%3A%2F%2Fm.facebook.com%2F; path=/; domain=.facebook.com;
+        secure; httponly
+      - sb=h3MsW1Vemnznwa9vs3NsA87q; expires=Sun, 21-Jun-2020 03:56:55 GMT; Max-Age=63072000;
+        path=/; domain=.facebook.com; secure; httponly
+      Content-Encoding:
+      - gzip
+      X-Fb-Debug:
+      - gJ1xgfZur1ofwGHhXdkNANqLnheIGTIECZzM2grRr6NVqQYgzcXY4nGnsd040FUgtbYCF+sxKOy+c+Utr9ECiQ==
+      Date:
+      - Fri, 22 Jun 2018 03:56:55 GMT
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        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
+    http_version: 
+  recorded_at: Fri, 22 Jun 2018 03:56:56 GMT
+- request:
+    method: post
+    uri: https://m.facebook.com/login.php?lwv=100&refid=8&refsrc=https://m.facebook.com/
+    body:
+      encoding: UTF-8
+      string: lsd=AVo2ugBf&m_ts=1529639815&li=h3MsW4lPi4aGlYFBFEoJYpdu&try_number=0&unrecognized_tries=0&email=luiseloyhernandez%40gmail.com&pass=xyzw123456&_fb_noscript=true
+    headers:
+      Accept-Encoding:
+      - gzip,deflate,identity
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:43.0) Gecko/20100101 Firefox/43.0
+      Accept-Charset:
+      - ISO-8859-1,utf-8;q=0.7,*;q=0.7
+      Accept-Language:
+      - en-us,en;q=0.5
+      Cookie:
+      - datr=h3MsW3rSKOF8FrMxpoAU4dLc; reg_fb_gate=https%3A%2F%2Fm.facebook.com%2F;
+        reg_fb_ref=https%3A%2F%2Fm.facebook.com%2F; sb=h3MsW1Vemnznwa9vs3NsA87q
+      Host:
+      - m.facebook.com
+      Referer:
+      - https://m.facebook.com/
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Content-Length:
+      - '160'
+      Connection:
+      - keep-alive
+      Keep-Alive:
+      - '300'
+  response:
+    status:
+      code: 302
+      message: Found
+    headers:
+      Location:
+      - https://m.facebook.com/login/save-device/?login_source=login&refsrc=https%3A%2F%2Fm.facebook.com%2F&refid=8&_rdr#_=_
+      Content-Security-Policy:
+      - 'default-src * data: blob:;script-src *.facebook.com *.fbcdn.net *.facebook.net
+        *.google-analytics.com *.virtualearth.net *.google.com 127.0.0.1:* *.spotilocal.com:*
+        ''unsafe-inline'' ''unsafe-eval'' *.atlassolutions.com blob: data: ''self'';style-src
+        data: blob: ''unsafe-inline'' *;connect-src *.facebook.com facebook.com *.fbcdn.net
+        *.facebook.net *.spotilocal.com:* wss://*.facebook.com:* https://fb.scanandcleanlocal.com:*
+        *.atlassolutions.com attachment.fbsbx.com ws://localhost:* blob: *.cdninstagram.com
+        ''self'';'
+      X-Frame-Options:
+      - DENY
+      X-Xss-Protection:
+      - '0'
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Access-Control-Allow-Origin:
+      - https://m.facebook.com
+      Access-Control-Expose-Headers:
+      - X-FB-Debug, X-Loader-Length
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin
+      Content-Type:
+      - text/html; charset=utf-8
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - OPTIONS
+      Strict-Transport-Security:
+      - max-age=15552000; preload; includeSubDomains
+      Expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      Set-Cookie:
+      - c_user=100026226699213; expires=Thu, 20-Sep-2018 03:56:56 GMT; Max-Age=7776000;
+        path=/; domain=.facebook.com; secure
+      - datr=h3MsW3rSKOF8FrMxpoAU4dLc; expires=Sun, 21-Jun-2020 03:56:56 GMT; Max-Age=63072000;
+        path=/; domain=.facebook.com; secure; httponly
+      - fr=0BOnhvq3qERlhdBBr.AWXkQl_iPWT_p2ZSHnZTzB4LMPA.BbLHOI.O2.AAA.0.0.BbLHOI.AWVDLVB_;
+        expires=Thu, 20-Sep-2018 03:56:56 GMT; Max-Age=7776000; path=/; domain=.facebook.com;
+        secure; httponly
+      - noscript=1; path=/; domain=.facebook.com; secure
+      - pl=n; expires=Thu, 20-Sep-2018 03:56:56 GMT; Max-Age=7776000; path=/; domain=.facebook.com;
+        secure; httponly
+      - reg_fb_gate=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; Max-Age=-1529639815;
+        path=/; domain=.facebook.com; httponly
+      - reg_fb_ref=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; Max-Age=-1529639815;
+        path=/; domain=.facebook.com; httponly
+      - sb=h3MsW1Vemnznwa9vs3NsA87q; expires=Sun, 21-Jun-2020 03:56:56 GMT; Max-Age=63072000;
+        path=/; domain=.facebook.com; secure; httponly
+      - xs=31%3Av4nqI6d5uO-VSg%3A2%3A1529639816%3A-1%3A-1; expires=Thu, 20-Sep-2018
+        03:56:56 GMT; Max-Age=7776000; path=/; domain=.facebook.com; secure; httponly
+      X-Fb-Debug:
+      - 2MAbxmlR0xsHA4Xg1bX/1mS0zUFOB3qcA7ahq8bdc4T/mVTHyMT24wqjFEkQhWHoEG4WgIrJLTm9I8MAYBWtCg==
+      Date:
+      - Fri, 22 Jun 2018 03:56:56 GMT
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Fri, 22 Jun 2018 03:56:56 GMT
+- request:
+    method: get
+    uri: https://m.facebook.com/login/save-device/?_rdr&login_source=login&refid=8&refsrc=https://m.facebook.com/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip,deflate,identity
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:43.0) Gecko/20100101 Firefox/43.0
+      Accept-Charset:
+      - ISO-8859-1,utf-8;q=0.7,*;q=0.7
+      Accept-Language:
+      - en-us,en;q=0.5
+      Cookie:
+      - c_user=100026226699213; datr=h3MsW3rSKOF8FrMxpoAU4dLc; fr=0BOnhvq3qERlhdBBr.AWXkQl_iPWT_p2ZSHnZTzB4LMPA.BbLHOI.O2.AAA.0.0.BbLHOI.AWVDLVB_;
+        noscript=1; pl=n; sb=h3MsW1Vemnznwa9vs3NsA87q; xs=31%3Av4nqI6d5uO-VSg%3A2%3A1529639816%3A-1%3A-1
+      Host:
+      - m.facebook.com
+      Referer:
+      - https://m.facebook.com/
+      Connection:
+      - keep-alive
+      Keep-Alive:
+      - '300'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Security-Policy:
+      - 'default-src * data: blob:;script-src *.facebook.com *.fbcdn.net *.facebook.net
+        *.google-analytics.com *.virtualearth.net *.google.com 127.0.0.1:* *.spotilocal.com:*
+        ''unsafe-inline'' ''unsafe-eval'' *.atlassolutions.com blob: data: ''self'';style-src
+        data: blob: ''unsafe-inline'' *;connect-src *.facebook.com facebook.com *.fbcdn.net
+        *.facebook.net *.spotilocal.com:* wss://*.facebook.com:* https://fb.scanandcleanlocal.com:*
+        *.atlassolutions.com attachment.fbsbx.com ws://localhost:* blob: *.cdninstagram.com
+        ''self'';'
+      X-Frame-Options:
+      - DENY
+      X-Xss-Protection:
+      - '0'
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Access-Control-Allow-Origin:
+      - https://m.facebook.com
+      Access-Control-Expose-Headers:
+      - X-FB-Debug, X-Loader-Length
+      Pragma:
+      - no-cache
+      Vary:
+      - Accept-Encoding
+      - Origin
+      Content-Type:
+      - text/html; charset=utf-8
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - OPTIONS
+      Strict-Transport-Security:
+      - max-age=15552000; preload; includeSubDomains
+      Expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      Content-Encoding:
+      - gzip
+      X-Fb-Debug:
+      - knuoX8vpDFm0iejQcCoiQkYZsvsgfvHli0W+op2SRtjRLX1XbY0hQOZNMw5E8PFkqGNcAGP0P8Mtuv5fTg7VbA==
+      Date:
+      - Fri, 22 Jun 2018 03:56:57 GMT
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        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
+    http_version: 
+  recorded_at: Fri, 22 Jun 2018 03:56:57 GMT
+- request:
+    method: get
+    uri: https://m.facebook.com/story.php?id=543211639151507&story_fbid=1089390984533567
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip,deflate,identity
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:43.0) Gecko/20100101 Firefox/43.0
+      Accept-Charset:
+      - ISO-8859-1,utf-8;q=0.7,*;q=0.7
+      Accept-Language:
+      - en-us,en;q=0.5
+      Cookie:
+      - c_user=100026226699213; datr=h3MsW3rSKOF8FrMxpoAU4dLc; fr=0BOnhvq3qERlhdBBr.AWXkQl_iPWT_p2ZSHnZTzB4LMPA.BbLHOI.O2.AAA.0.0.BbLHOI.AWVDLVB_;
+        noscript=1; pl=n; sb=h3MsW1Vemnznwa9vs3NsA87q; xs=31%3Av4nqI6d5uO-VSg%3A2%3A1529639816%3A-1%3A-1
+      Host:
+      - m.facebook.com
+      Connection:
+      - keep-alive
+      Keep-Alive:
+      - '300'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Security-Policy:
+      - 'default-src * data: blob:;script-src *.facebook.com *.fbcdn.net *.facebook.net
+        *.google-analytics.com *.virtualearth.net *.google.com 127.0.0.1:* *.spotilocal.com:*
+        ''unsafe-inline'' ''unsafe-eval'' *.atlassolutions.com blob: data: ''self'';style-src
+        data: blob: ''unsafe-inline'' *;connect-src *.facebook.com facebook.com *.fbcdn.net
+        *.facebook.net *.spotilocal.com:* wss://*.facebook.com:* https://fb.scanandcleanlocal.com:*
+        *.atlassolutions.com attachment.fbsbx.com ws://localhost:* blob: *.cdninstagram.com
+        ''self'';'
+      X-Frame-Options:
+      - DENY
+      X-Xss-Protection:
+      - '0'
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Access-Control-Allow-Origin:
+      - https://m.facebook.com
+      Access-Control-Expose-Headers:
+      - X-FB-Debug, X-Loader-Length
+      Pragma:
+      - no-cache
+      Vary:
+      - Accept-Encoding
+      - Origin
+      Content-Type:
+      - text/html; charset=utf-8
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - OPTIONS
+      Strict-Transport-Security:
+      - max-age=15552000; preload; includeSubDomains
+      Expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      Content-Encoding:
+      - gzip
+      X-Fb-Debug:
+      - "/Yfy2DgW2R3TX2PiNJziCtA/A/315tEgeFNc7e4qBM2DllRquWBvrOZEIJVcc+T3EquHAi0in5MRlKmzA32y0g=="
+      Date:
+      - Fri, 22 Jun 2018 03:56:57 GMT
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        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
+    http_version: 
+  recorded_at: Fri, 22 Jun 2018 03:56:57 GMT
+recorded_with: VCR 4.0.0

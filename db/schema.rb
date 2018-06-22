@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180528182908) do
+ActiveRecord::Schema.define(version: 20180622030603) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(version: 20180528182908) do
   end
 
   create_table "scraping_logs", force: :cascade do |t|
-    t.date "scraping_date"
+    t.datetime "scraping_date"
     t.time "exec_time"
     t.integer "total_comment"
     t.datetime "created_at", null: false

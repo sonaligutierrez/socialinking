@@ -6,6 +6,7 @@ class Post < ApplicationRecord
   validates :post_creator, :url, presence: true
 
   def scraping
+    start_time = DateTime.now
     fb_scraping = FacebookPostScraping.new(url, post_creator.fb_user, post_creator.fb_pass, post_creator.fb_session)
 
     count = 0
@@ -28,6 +29,9 @@ class Post < ApplicationRecord
         end
       end
     end
+    end_time = DateTime.now
+    seconds = ((end_time - start_time) * 24 * 60 * 60).to_i
+    scraping_logs.create(scraping_date: start_time, exec_time: Time.at(seconds), total_comment: count)
     count
   end
 
