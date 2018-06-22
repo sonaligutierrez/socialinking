@@ -10,10 +10,9 @@
                   %h2=p.try(:fan_page)
               .col-xs-4
                 %img.img-responsive{:alt => "Image", :src => "#{p.try(:avatar)}", class: "img-circle logo-right-post-creator", :style => "width:25%"}/
-          .panel-body
-            .row.stadistic-style
-              .text-color-grey.text-small-bold
-                ="#{p.posts.count} #{I18n.t('active_admin.posts')}"
+          .panel-body.footer-style
+            .text-color-grey.text-medium-bold
+              = link_to "#{p.posts.count} #{I18n.t('active_admin.posts')}", posts_admin_post_creator_path(p)
     .col-sm-3
       .panel-body-link-post-creator
         = link_to "-", new_admin_post_creator_path, class: "add-post"
