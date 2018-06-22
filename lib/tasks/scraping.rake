@@ -17,7 +17,7 @@ namespace :scraping do
   task async_start: :environment do
     Post.all.each do |post|
       begin
-        hours_diff = (Time.parse(DateTime.now.to_s) - Time.parse(post.created_at.to_s))/3600
+        hours_diff = (Time.parse(DateTime.now.to_s) - Time.parse(post.created_at.to_s)) / 3600
         if hours_diff > 24.0
           if post.id.odd? && DateTime.now.hour > 12
             puts "Programming: #{post.title} (#{post.id})"
