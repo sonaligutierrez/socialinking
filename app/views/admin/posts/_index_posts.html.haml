@@ -5,9 +5,10 @@
         .panel
           .panel-heading
             .row
-              %img.col-sm-3.img-responsive{:alt => "Image", :src => "#{p.post_creator.try(:avatar)}", class: "img-circle", :style => "width:25%"}/
+              %img.col-sm-3.img-responsive{:alt => "Image", :src => "#{p.post_creator.try(:avatar) || '/assets/default-user.png'}", class: "img-circle", :style => "width:25%"}/
               .col-sm-9.position-title
-                .text-blue=p.post_creator.try(:fan_page)
+                =link_to p.post_creator.try(:fan_page), edit_admin_post_path(p), class:"text-blue"
+                %br
                 =p.try(:post_date)&.strftime('%d de %b de %Y a las %l:%M')
             .row
               .text-post-style=p.try(:title).present? ? p.try(:title).upcase : ""
