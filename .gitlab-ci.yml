@@ -33,14 +33,11 @@ production_deploy:
     RAILS_ENV: production
   only:
     - master
-  script:
+  before_script:
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
-    - eval $(ssh-agent -s)
-    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
-    - ssh -v -t ubuntu@34.202.235.10 "cd /home/ubuntu/social_linking && 
-        git pull origin master && 
-        bundle install &&
-        /home/ubuntu/.rvm/gems/ruby-2.5.1@social-linking/bin/rake db:migrate && 
-        /home/ubuntu/.rvm/gems/ruby-2.5.1@social-linking/bin/rake asset:precompile && 
-        touch tmp/restart.txt && 
-        sudo service apache2 restart"
+    - eval "$(ssh-agent -s)"
+    - ssh-add <(echo -e "$SSH_PRIVATE_KEY")
+    - gem install bundler  --no-ri --no-rdoc
+    - bundle install
+  script:
+    - bundle exec cap production deploy
