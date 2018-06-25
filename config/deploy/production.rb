@@ -41,10 +41,9 @@ server "34.202.235.10", user: "ubuntu", roles: %w{app db web}
 #
 # Global options
 # --------------
- set :ssh_options, {
-   keys: %w(/User/luelher/Dropbox/keys/social_linking.pub),
-   forward_agent: false
- }
+set :ssh_options,
+ keys: %w(/User/luelher/Dropbox/keys/social_linking.pub),
+ forward_agent: false
 #
 # The server-based syntax can be used to override options:
 # ------------------------------------
@@ -58,8 +57,6 @@ server "34.202.235.10", user: "ubuntu", roles: %w{app db web}
 #     auth_methods: %w(publickey password)
 #     # password: "please use keys"
 #   }
-
-set :slackistrano, {
-    channel: '#social-linking',
-    webhook: 'https://hooks.slack.com/services/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'
-  }
+set :slackistrano,
+ channel: "#social-linking",
+ webhook: "https://hooks.slack.com/services/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"
