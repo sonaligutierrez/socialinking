@@ -29,6 +29,11 @@ class Post < ApplicationRecord
         end
       end
     end
+    page_info = fb_scraping.get_page_info
+    if page_info
+      self.title = page_info[:title]
+      self.save
+    end
     end_time = DateTime.now
     seconds = ((end_time - start_time) * 24 * 60 * 60).to_i
     scraping_logs.create(scraping_date: start_time, exec_time: Time.at(seconds), total_comment: count)
