@@ -80,11 +80,21 @@ class FacebookPostScraping
             url = get_next_url(page)
           end
         end
+        @comments += scrapped_comments
       end
     end
+
     @comments = @comments.select { |c| c[:id_comment][0] != "s" }
     @comments = @comments.index_by { |r| r[:id_comment] }
     @comments.length
+  end
+
+  def get_page_info
+    if @page
+      { title: @page.search("head > title").text }
+    else
+      nil
+    end
   end
 
   private
@@ -92,10 +102,10 @@ class FacebookPostScraping
     def get_comments(page)
       result_comments = []
       if page.code == "200"
-        comments = page.search("div[id^='composer']")&.first&.next&.children || []
+        comments = page.search("div[id^='composer']")&.first&.next&.children || page.search("div[id^='sentence']")&.first&.next&.children || []
         comments.each do |comment|
           begin
-            # byebug
+
             reactions = ""
             reactions_description = ""
             user = comment.search("h3")&.text
@@ -123,7 +133,7 @@ class FacebookPostScraping
     end
 
     def get_next_url(page)
-      next_url = page.link_with(text: " Ver comentarios siguientes…")&.href
+      next_url = page.link_with(text: " Ver comentarios siguientes…")&.href || page.link_with(text: " Ver más comentarios…")&.href
       unless next_url
         temp_url = page.canonical_uri.to_s
         temp_url.sub! "www.facebook.com", "m.facebook.com"
