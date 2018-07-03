@@ -4,21 +4,39 @@ ActiveAdmin.register_page "Dashboard" do
 
 
   content title: proc { I18n.t("active_admin.dashboard") } do
-   columns do
-    column do
-       panel "Models" do
-         ul do
-           li link_to(I18n.t("active_admin.accounts"), admin_users_path)
-           li link_to(I18n.t("active_admin.categories"), admin_categories_path)
-           li link_to(I18n.t("active_admin.facebook_users"), admin_facebook_users_path)
-           li link_to(I18n.t("active_admin.post_creators"), admin_post_creators_path)
-           li link_to(I18n.t("active_admin.posts"), admin_posts_path)
-           li link_to(I18n.t("active_admin.scraping_logs"), admin_scraping_logs_path)
-           li link_to(I18n.t("active_admin.users"), admin_users_path)
-         end
-       end
-     end
-  end
+    columns do
 
- end # content
+      column class: "column small-column" do
+        panel "" do
+          image_tag "/assets/social_linking_logo.png"
+        end
+        panel "Categorizados vs No Categorizados", class: "category_panel" do
+          render partial: "categorized_grafic"
+        end
+      end
+      column class: "column big-column" do
+        panel "Cantidad de Comentarios por Categoría" do
+          render partial: "cant_category_grafic"
+        end
+      end
+
+    end
+    columns do
+      column class: "column" do
+        panel "Últimas 10 Publicaciones" do
+          table_for Post.last_ten_posts, class: "index_table index" do |o|
+            column "Título", :title
+            column "Fecha",  :post_date
+            column "Fan Page",  :fan_page
+            column "" do |p|
+              link_to("Comentarios (#{Post.cant_comments p.id})", comments_admin_post_path(p)).html_safe
+            end
+          end
+        end
+      end
+    end
+
+
+
+  end # content
 end
