@@ -208,3 +208,22 @@ img {
   width: 100% !important;
   margin-top: 10px;
 }
+
+.column.small-column {
+  width: 25% !important;
+}
+.column.big-column {
+  width: 73% !important;
+}
+
+.column img{
+  width: 100%;
+}
+
+.panel > h3 {
+  margin-top: 0px !important;
+}
+
+.category_panel{
+  height: 235px;
+}
