@@ -93,4 +93,6 @@ group :development do
   gem "capistrano-rails", "~> 1.3", require: false
   gem 'slackistrano'
   gem 'capistrano-rvm'
+  gem 'capistrano-sidekiq'
+  gem 'capistrano-apache'
 end

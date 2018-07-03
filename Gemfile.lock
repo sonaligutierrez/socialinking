@@ -68,6 +68,8 @@ GEM
       i18n
       rake (>= 10.0.0)
       sshkit (>= 1.9.0)
+    capistrano-apache (3.0.0)
+      capistrano (~> 3.2)
     capistrano-bundler (1.3.0)
       capistrano (~> 3.1)
       sshkit (~> 1.2)
@@ -77,6 +79,9 @@ GEM
     capistrano-rvm (0.1.2)
       capistrano (~> 3.0)
       sshkit (~> 1.2)
+    capistrano-sidekiq (1.0.2)
+      capistrano (>= 3.9.0)
+      sidekiq (>= 3.4)
     chartkick (2.3.5)
     chronic (0.10.2)
     coffee-rails (4.2.2)
@@ -323,8 +328,10 @@ DEPENDENCIES
   activeadmin
   byebug
   capistrano (~> 3.10)
+  capistrano-apache
   capistrano-rails (~> 1.3)
   capistrano-rvm
+  capistrano-sidekiq
   chartkick
   coffee-rails (~> 4.2)
   devise
