@@ -8,7 +8,7 @@ ActiveAdmin.register_page "Dashboard" do
 
       column class: "column small-column" do
         panel "" do
-          image_tag "/assets/social_linking_logo.png"
+          image_tag asset_url("social_linking_logo.png")
         end
         panel "Categorizados vs No Categorizados", class: "category_panel" do
           render partial: "categorized_grafic"
