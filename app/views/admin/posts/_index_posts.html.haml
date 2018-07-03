@@ -12,7 +12,7 @@
                 =p.try(:post_date)&.strftime('%d de %b de %Y a las %l:%M')
             .row
               -if p.try(:title).present?
-                - if p.title.size > 64
+                - if p.title.size > 33
                   .text-post-style{:title => "#{p.try(:title).upcase}"}
                     = p.try(:title).upcase.truncate 67
                 - else
