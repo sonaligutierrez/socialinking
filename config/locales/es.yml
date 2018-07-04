@@ -74,6 +74,12 @@ es:
       previous: Anterior
       next: Próximo
       last: Último
+  devise:
+    failure:
+      user:
+        unauthenticated: Usuario no Autenticado
+    sessions:
+      signed_in: Usuario Autenticado
   date:
     formats:
       default: '%Y-%m-%d'
