@@ -61,9 +61,9 @@ set :slackistrano,
  channel: "#social-linking",
  webhook: "https://hooks.slack.com/services/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"
 
-set :apache_service_name, 'apache2'
+set :apache_service_name, "apache2"
 
 namespace :deploy do
-  after :finishing, 'apache:reload'
-  after :rollback, 'apache:reload'
+  after :finishing, "apache:reload"
+  after :rollback, "apache:reload"
 end
