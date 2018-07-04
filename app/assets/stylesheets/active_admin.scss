@@ -146,6 +146,8 @@ img {
 .text-post-style{
   margin: 10px 15px 0px 17px;
   word-wrap: break-word;
+  overflow: scroll;
+  max-height: 40px;
 }
 .add-post{
 	background-image: asset_url("add_post.png") !important;
