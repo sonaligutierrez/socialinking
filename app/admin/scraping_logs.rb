@@ -7,13 +7,11 @@ ActiveAdmin.register ScrapingLog do
     column :exec_time
     column :total_comment
     column "" do |p|
-      div(title: "#{p.post.title}") do	
-    	p.post.title.truncate 70
+      div(title: "#{p.post.title}") do
+        p.post.title.truncate 70
       end
     end
   end
 
 
 end
-
-

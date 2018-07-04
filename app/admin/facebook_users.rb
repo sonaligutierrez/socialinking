@@ -12,4 +12,3 @@ ActiveAdmin.register FacebookUser do
     end
 
 end
-
