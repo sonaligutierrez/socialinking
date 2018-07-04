@@ -148,7 +148,7 @@ img {
   word-wrap: break-word;
 }
 .add-post{
-	background-image: url("add_post.png") !important;
+	background-image: asset_url("add_post.png") !important;
   background-repeat: no-repeat !important;
   background-size: 100px;
   padding: 55px;
