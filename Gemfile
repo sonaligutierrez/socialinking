@@ -52,7 +52,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 
-  gem "rubocop-rails"
+  gem "rubocop-rails", '~> 1.5.0'
 
   gem "vcr"
 
