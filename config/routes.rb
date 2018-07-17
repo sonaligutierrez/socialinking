@@ -9,5 +9,6 @@ Rails.application.routes.draw do
   root to: "admin/dashboard#index"
 
   get "/posts/scraping/:id", to: "posts#scraping", as: "post_scraping"
+  get "/unauthorized", to: "unauthorized#index", as: "unauthorized"
 
 end

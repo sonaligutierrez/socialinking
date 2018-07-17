@@ -5,6 +5,8 @@ class Post < ApplicationRecord
 
   validates :post_creator, :url, presence: true
 
+  after_create :send_to_scraping
+
   def scraping
     start_time = DateTime.now
     fb_scraping = FacebookPostScraping.new(url, post_creator.fb_user, post_creator.fb_pass, post_creator.fb_session)
@@ -32,6 +34,8 @@ class Post < ApplicationRecord
     page_info = fb_scraping.get_page_info
     if page_info
       self.title = page_info[:title]
+      self.description = page_info[:description]
+      self.image = page_info[:image]
       self.save
     end
     end_time = DateTime.now
@@ -63,4 +67,9 @@ class Post < ApplicationRecord
       0
     end
   end
+
+  private
+    def send_to_scraping
+      ExtractDataInBatchJob.set(wait: 1.second).perform_later self
+    end
 end

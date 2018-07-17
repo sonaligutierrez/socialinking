@@ -10,7 +10,7 @@
             EXPORTAR:
           = link_to "CSV", import_csv_admin_posts_path
       .index_as_table.table_tools#table_content
-        = render 'comments_table', q: @post_comments
+        = render 'comments_table', q: @post_comments, account: @post.post_creator.account
 
 
 

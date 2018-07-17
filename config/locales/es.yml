@@ -164,6 +164,7 @@ es:
     attributes:
       account:
         name: "Nombre"
+        account_id: "Cuenta"
       category:
         name: "Nombre"
       post_comment:
@@ -200,5 +201,14 @@ es:
         fb_name: "Nombre"
         fb_avatar: "Avatar"
         name: "Nombre"
+    errors:
+      models:
+        category:
+          attributes:
+            account:
+              required: "Requerido"
+            name:
+              required: "Requerido"
+              blank: "Requerido"
 
 

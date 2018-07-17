@@ -11,10 +11,7 @@ ActiveAdmin.register Post do
 
   form do |f|
     f.inputs do
-      f.input :date, as: :datepicker
-      f.input :title
       f.input :post_creator, label: "Publicador", as: :select, collection: PostCreator.all.map { |u| ["#{u.fan_page}", u.id] }
-
       f.input :url
     end
     f.actions

@@ -105,6 +105,8 @@ GEM
       unf (>= 0.0.5, < 1.0.0)
     erubi (1.6.1)
     execjs (2.7.0)
+    faraday (0.15.2)
+      multipart-post (>= 1.2, < 3)
     ffi (1.9.18)
     formtastic (3.1.5)
       actionpack (>= 3.2.13)
@@ -172,6 +174,7 @@ GEM
     minitest (5.10.3)
     multi_json (1.12.2)
     multi_xml (0.6.0)
+    multipart-post (2.0.0)
     net-http-digest_auth (1.4.1)
     net-http-persistent (2.9.4)
     net-scp (1.2.1)
@@ -181,6 +184,9 @@ GEM
     nokogiri (1.8.0)
       mini_portile2 (~> 2.2.0)
     ntlm-http (0.1.1)
+    open_graph_reader (0.6.2)
+      faraday (>= 0.9.0)
+      nokogiri (~> 1.6)
     orm_adapter (0.5.0)
     parallel (1.12.1)
     parser (2.5.1.0)
@@ -342,6 +348,7 @@ DEPENDENCIES
   listen (>= 3.0.5, < 3.2)
   mechanize
   nokogiri
+  open_graph_reader
   pg
   puma (~> 3.7)
   rails (~> 5.1.3)

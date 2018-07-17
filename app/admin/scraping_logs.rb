@@ -8,7 +8,7 @@ ActiveAdmin.register ScrapingLog do
     column :total_comment
     column "" do |p|
       div(title: "#{p.post.title}") do
-        p.post.title.truncate 70
+        p.post.title&.truncate 70
       end
     end
   end
