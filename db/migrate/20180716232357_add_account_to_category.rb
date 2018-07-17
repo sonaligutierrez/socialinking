@@ -4,7 +4,8 @@ class AddAccountToCategory < ActiveRecord::Migration[5.1]
 
     reversible do |dir|
       dir.up do
-        Category.update_all(account_id: Account.last.id)
+        account = Account.last
+        Category.update_all(account_id: account.id) if account
       end
     end
   end
