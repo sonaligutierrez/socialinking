@@ -18,7 +18,7 @@ test_all:
 
   before_script:
     - apt-get update -qq && apt-get install -yqq nodejs libpq-dev
-    - apt-get install redis-server
+    - apt-get install redis-server -y
     - gem install bundler  --no-ri --no-rdoc
     - bundle install
     - rails db:migrate
