@@ -22,7 +22,6 @@ test_all:
     - gem install bundler  --no-ri --no-rdoc
     - bundle install
     - rails db:migrate
-    - rails db:seed
 
   script:
     - rubocop
