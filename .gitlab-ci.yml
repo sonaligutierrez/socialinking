@@ -2,7 +2,7 @@ image: "ruby:2.5"
 
 services:
   - postgres:alpine
-
+  - redis:latest
 stages:
   - test
   - deploy
