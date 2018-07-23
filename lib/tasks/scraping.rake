@@ -28,7 +28,7 @@ namespace :scraping do
 
   desc "Run all facebook user profile scraping asincronaly"
   task async_facebook_users_start: :environment do
-    FacebookUser.all.limit(10).each do |profile|
+    FacebookUser.all.each do |profile|
       begin
         if profile.fb_avatar.to_s.empty?
           puts "Programming: #{profile.name} (#{profile.id})"
