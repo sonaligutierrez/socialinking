@@ -13,7 +13,7 @@
 #   rake "some:great:rake:task"
 # end
 #
-every 12.hours do
+every 24.hours do
   rake "scraping:async_start"
 end
 

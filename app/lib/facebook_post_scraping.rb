@@ -93,9 +93,9 @@ class FacebookPostScraping
     if @page
       objectOG = OpenGraphReader.fetch(@post_url)
       page_info = {}
-      page_info[:title] = objectOG.og.title unless objectOG.og.title.nil?
-      page_info[:description] = objectOG.og.description unless objectOG.og.description.nil?
-      page_info[:image] = objectOG.og.image.url unless objectOG.og.image.nil?
+      page_info[:title] = objectOG.og&.title unless objectOG.og&.title&.nil?
+      page_info[:description] = objectOG.og&.description unless objectOG.og&.description&.nil?
+      page_info[:image] = objectOG.og&.image&.url unless objectOG.og&.image&.nil?
       page_info
     else
       nil
