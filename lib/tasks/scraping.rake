@@ -26,4 +26,19 @@ namespace :scraping do
     end
   end
 
+  desc "Run all facebook user profile scraping asincronaly"
+  task async_facebook_users_start: :environment do
+    FacebookUser.all.limit(10).each do |profile|
+      begin
+        if profile.fb_avatar.to_s.empty?
+          puts "Programming: #{profile.name} (#{profile.id})"
+          count = ExtractProfileDataInBatchJob.set(wait: 1.second).perform_later profile
+        end
+      rescue Exception => e
+        puts e.message
+        Rollbar.error(e.message)
+      end
+    end
+  end
+
 end

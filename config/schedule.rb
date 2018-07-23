@@ -17,4 +17,8 @@ every 24.hours do
   rake "scraping:async_start"
 end
 
+every 24.hours do
+  rake "scraping:async_facebook_users_start"
+end
+
 # Learn more: http://github.com/javan/whenever

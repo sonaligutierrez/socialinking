@@ -93,9 +93,11 @@ class FacebookPostScraping
     if @page
       objectOG = OpenGraphReader.fetch(@post_url)
       page_info = {}
-      page_info[:title] = objectOG.og&.title unless objectOG.og&.title&.nil?
-      page_info[:description] = objectOG.og&.description unless objectOG.og&.description&.nil?
-      page_info[:image] = objectOG.og&.image&.url unless objectOG.og&.image&.nil?
+      if objectOG
+        page_info[:title] = objectOG.og&.title unless objectOG.og&.title&.nil?
+        page_info[:description] = objectOG.og&.description unless objectOG.og&.description&.nil?
+        page_info[:image] = objectOG.og&.image&.url unless objectOG.og&.image&.nil?
+      end
       page_info
     else
       nil
@@ -115,6 +117,7 @@ class FacebookPostScraping
             reactions_description = ""
             user = comment.search("h3")&.text
             url_profile = comment.search("a")&.first&.attributes["href"]&.text&.split("?")&.first
+            url_profile = comment.search("a")&.first&.attributes["href"]&.text&.split("&")&.first if url_profile == "/profile.php"
 
             text_comment = comment.search("h3")&.first&.next&.text
 

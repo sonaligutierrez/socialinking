@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  fb_username: MyString
-  fb_name: MyString
-  fb_avatar: MyString
+  fb_username: /norberto.sampol
+  fb_name: Norberto Sampol
+  fb_avatar: ''
 
 two:
-  fb_username: MyString
-  fb_name: MyString
-  fb_avatar: MyString
+  fb_username: /juandaniel.gonzalez.7771
+  fb_name: Juan Daniel González
+  fb_avatar: ''
