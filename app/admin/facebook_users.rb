@@ -8,7 +8,9 @@ ActiveAdmin.register FacebookUser do
   index do
     column :fb_username
     column :fb_name
-    column :fb_avatar
+    column :fb_avatar do |img|
+      image_tag img.fb_avatar unless img.fb_avatar.to_s.empty?
+    end
     actions
   end
 

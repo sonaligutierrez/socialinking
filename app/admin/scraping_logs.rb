@@ -4,7 +4,7 @@ ActiveAdmin.register ScrapingLog do
   filter :total_comment
   index do
     column :scraping_date
-    column :exec_time
+    column :exec_time_in_hours
     column :total_comment
     column "" do |p|
       div(title: "#{p.post.title}") do

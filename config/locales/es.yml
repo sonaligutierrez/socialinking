@@ -190,7 +190,8 @@ es:
       scraping_log:
         post: "Publicación"
         scraping_date: "Fecha de seguimiento"
-        exec_time: "Tiempo exedido"
+        exec_time: "Tiempo ejecución"
+        exec_time_in_hours: "Tiempo ejecución"
         total_comment: "Total de comentarios"
       user:
         email: "Email"
