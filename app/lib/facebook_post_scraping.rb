@@ -66,7 +66,7 @@ class FacebookPostScraping
     @comments = []
     @finish_paging = 0
     if @agent
-      @agent.get(@post_url) do |page|
+      @agent.get(check_and_get_post_url) do |page|
         @page = page
         scrapped_comments = get_comments(page)
         url = get_next_url(page)
@@ -105,6 +105,10 @@ class FacebookPostScraping
   end
 
   private
+
+    def check_and_get_post_url
+      @post_url.gsub("www.facebook.com", "m.facebook.com")
+    end
 
     def get_comments(page)
       result_comments = []
