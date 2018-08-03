@@ -60,6 +60,10 @@ class Post < ApplicationRecord
     joins(:post_creator).limit(10).order("post_date DESC").select(:id, :title, :post_date, "post_creators.fan_page")
   end
 
+  def self.posts_created_before_24_hours
+    where("EXTRACT(DAY FROM (now() - created_at)) = 0 and EXTRACT(HOUR FROM (now() - created_at)) < 24")
+  end
+
   def uncategorized_porcent
     if post_comments.count > 0
       (count_comments_uncategorized * 100) / post_comments.count

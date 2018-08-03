@@ -41,4 +41,17 @@ namespace :scraping do
     end
   end
 
+  desc "Run post scraping that have less 24 hours loaded"
+  task scraping_post_just_loaded: :environment do
+    Post.posts_created_before_24_hours.each do |post|
+      begin
+        puts "Proccesing: #{post.title} (#{post.id})"
+        count = post.scraping
+        puts "Procesados: #{count} comments"
+      rescue Exception => e
+        puts e.message
+      end
+    end
+  end
+
 end
