@@ -9,7 +9,7 @@ class Post < ApplicationRecord
 
   def scraping
     start_time = DateTime.now
-    fb_scraping = FacebookPostScraping.new(url, post_creator.fb_user, post_creator.fb_pass, post_creator.fb_session)
+    fb_scraping = FacebookPostScraping.new(url, post_creator.fb_user, post_creator.fb_pass, post_creator.fb_session, post_creator.proxy)
 
     count = 0
     # Login
@@ -60,8 +60,8 @@ class Post < ApplicationRecord
     joins(:post_creator).limit(10).order("post_date DESC").select(:id, :title, :post_date, "post_creators.fan_page")
   end
 
-  def self.posts_created_before_24_hours
-    where("EXTRACT(DAY FROM (now() - created_at)) = 0 and EXTRACT(HOUR FROM (now() - created_at)) < 24")
+  def self.created_before_24_hours
+    where("created_at > ?", 36.hours.ago)
   end
 
   def uncategorized_porcent

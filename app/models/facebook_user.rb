@@ -11,7 +11,7 @@ class FacebookUser < ApplicationRecord
     start_time = DateTime.now
     post_creator = post_comments&.first&.post&.post_creator
     if post_creator
-      fb_scraping = FacebookProfileScraping.new(self, post_creator.fb_user, post_creator.fb_pass, post_creator.fb_session)
+      fb_scraping = FacebookProfileScraping.new(self, post_creator.fb_user, post_creator.fb_pass, post_creator.fb_session, post_creator.proxy)
 
       # Login
       if fb_scraping.login

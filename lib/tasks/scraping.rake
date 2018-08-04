@@ -15,7 +15,7 @@ namespace :scraping do
 
   desc "Run all post scraping asincronaly"
   task async_start: :environment do
-    Post.all.each do |post|
+    Post.created_before_24_hours.each do |post|
       begin
         puts "Programming: #{post.title} (#{post.id})"
         count = ExtractDataInBatchJob.set(wait: 1.second).perform_later post

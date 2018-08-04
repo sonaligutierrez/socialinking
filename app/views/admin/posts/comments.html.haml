@@ -8,7 +8,7 @@
         .download_links
           %spam
             EXPORTAR:
-          = link_to "CSV", import_csv_admin_posts_path
+          = link_to "CSV", import_csv_admin_posts_path(post_id: @post.id)
       .index_as_table.table_tools#table_content
         = render 'comments_table', q: @post_comments, account: @post.post_creator.account
 
