@@ -8,13 +8,16 @@
 # It must return the number of comment processed
 
 class FacebookProfileScraping
-  attr_accessor :profile, :agent, :fb_user, :fb_pass, :comments, :page, :finish_paging, :cookie_yml
+  attr_accessor :profile, :agent, :fb_user, :fb_pass, :comments, :page, :finish_paging, :cookie_yml, :proxy
 
-  def initialize(profile, user, pass, cookie_yml)
+  def initialize(profile, user, pass, cookie_yml, proxy)
     @profile = profile
     @fb_user = user
     @fb_pass = pass
     @cookie_yml = cookie_yml
+    @proxy = proxy
+    @agent = Mechanize.new
+    @agent.user_agent_alias = "Linux Firefox"
   end
 
   def login
@@ -34,9 +37,15 @@ class FacebookProfileScraping
     YAML.dump(@agent.cookie_jar)
   end
 
+  def set_proxy
+    unless @proxy.to_s.empty?
+      proxy_config = @proxy.split(":")
+      @agent.set_proxy proxy_config[0], proxy_config[1], proxy_config[2], proxy_config[3]
+    end
+  end
+
   def login_with_user_and_pass
-    @agent = Mechanize.new
-    @agent.user_agent_alias = "Linux Firefox"
+    set_proxy
     login_page = @agent.get("https://m.facebook.com/")
     login_form = @agent.page.form_with(method: "POST")
     login_form.email = @fb_user
@@ -49,12 +58,11 @@ class FacebookProfileScraping
 
   def login_with_cookie
     unless @cookie_yml.empty?
-      @agent = Mechanize.new
+      set_proxy
       cookie_jar = YAML.load(@cookie_yml)
-      @agent.user_agent_alias = "Linux Firefox"
       @agent.cookie_jar = cookie_jar
       @agent.get("https://m.facebook.com/")
-      forget_password = @agent.page.links.find { |l| l.text == "Forgot Password?" || l.text == "Create Account" }
+      forget_password = @agent.page.links.find { |l| l.text == "Forgot Password?" || l.text == "Create Account" || l.text == "Crear cuenta nueva" }
 
       forget_password.nil?
     else

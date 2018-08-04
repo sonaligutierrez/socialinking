@@ -3,7 +3,7 @@ require "test_helper"
 class FacebookProfileScrapingTest < ActiveSupport::TestCase
   def setup
     @facebook_user = facebook_users(:one)
-    @fb_profile_scraping = FacebookProfileScraping.new(@facebook_user, "luiseloyhernandez@gmail.com", "xyzw123456", "")
+    @fb_profile_scraping = FacebookProfileScraping.new(@facebook_user, "luiseloyhernandez@gmail.com", "xyzw123456", "", "")
   end
 
   def test_login_success
