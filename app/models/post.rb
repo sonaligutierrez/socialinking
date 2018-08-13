@@ -7,10 +7,13 @@ class Post < ApplicationRecord
 
   after_create :send_to_scraping
 
+  attr_accessor :debug
+
   def scraping
     start_time = DateTime.now
     fb_scraping = FacebookPostScraping.new(url, post_creator.fb_user, post_creator.fb_pass, post_creator.fb_session, post_creator.proxy)
 
+    fb_scraping.debug = true if @debug
     count = 0
     # Login
     if fb_scraping.login
@@ -18,7 +21,6 @@ class Post < ApplicationRecord
       post_creator.save
       fb_scraping.process
       fb_scraping.comments.each do |comment|
-        puts "Ingresando: " + comment[1][:user]
         fb_user = FacebookUser.where(fb_username: comment[1][:url_profile]).first_or_create(fb_name: comment[1][:user])
         if fb_user
           the_comment = PostComment.find_by_id_comment(comment[0])
