@@ -8,7 +8,7 @@
 # It must return the number of comment processed
 
 class FacebookPostScraping
-  attr_accessor :post_url, :agent, :fb_user, :fb_pass, :comments, :page, :finish_paging, :cookie_yml, :proxy
+  attr_accessor :post_url, :agent, :fb_user, :fb_pass, :comments, :page, :finish_paging, :cookie_yml, :proxy, :debug
 
   def initialize(post_url, user, pass, cookie_yml, proxy)
     @post_url = post_url
@@ -18,9 +18,11 @@ class FacebookPostScraping
     @proxy = proxy
     @agent = Mechanize.new
     @agent.user_agent_alias = "Linux Firefox"
+    @debug = false
   end
 
   def login
+    print_debug "Login", @cookie_yml
     if @cookie_yml
       resp = login_with_cookie
       unless resp
@@ -38,6 +40,7 @@ class FacebookPostScraping
   end
 
   def set_proxy
+    print_debug "Set Proxy", @proxy
     unless @proxy.to_s.empty?
       proxy_config = @proxy.split(":")
       @agent.set_proxy proxy_config[0], proxy_config[1], proxy_config[2], proxy_config[3]
@@ -45,6 +48,7 @@ class FacebookPostScraping
   end
 
   def login_with_user_and_pass
+    print_debug "Login With User And Pass", ""
     set_proxy
     login_page = @agent.get("https://m.facebook.com/")
     login_form = @agent.page.form_with(method: "POST")
@@ -52,18 +56,19 @@ class FacebookPostScraping
     login_form.pass = @fb_pass
     @agent.submit(login_form)
     forget_password = @agent.page.links.find { |l| l.text == "Did you forget your password?" }
-
+    print_debug "Login With User And Pass - Page", @agent.page.body.to_s
     forget_password.nil?
   end
 
   def login_with_cookie
+    print_debug "Login With Cookie", @cookie_yml
     unless @cookie_yml.empty?
       set_proxy
       cookie_jar = YAML.load(@cookie_yml)
       @agent.cookie_jar = cookie_jar
       @agent.get("https://m.facebook.com/")
       forget_password = @agent.page.links.find { |l| l.text == "Forgot Password?" || l.text == "Create Account" || l.text == "Crear cuenta nueva" }
-
+      print_debug "Login With Cookie - Page", @agent.page.body.to_s
       forget_password.nil?
     else
       false
@@ -71,19 +76,23 @@ class FacebookPostScraping
   end
 
   def process
+    print_debug "Process", check_and_get_post_url
     @comments = []
     @finish_paging = 0
     if @agent
       @agent.get(check_and_get_post_url) do |page|
         @page = page
+        print_debug "Process - First Page", @page.body.to_s
         scrapped_comments = get_comments(page)
+        print_debug "Process - First Page - Comments", scrapped_comments.to_s
         url = get_next_url(page)
         while @finish_paging == 0
           @comments += scrapped_comments
           page = @agent.get(url)
           if page
+            print_debug "Process - Page #{url}", @page.body.to_s
             scrapped_comments = get_comments(page)
-            puts "scrapped_comments=#{scrapped_comments.length}"
+            print_debug "Process - Page #{url} - Comments", scrapped_comments.to_s
             sleep(1)
             url = get_next_url(page)
           end
@@ -114,14 +123,23 @@ class FacebookPostScraping
 
   private
 
+    def print_debug(title, value)
+      if @debug
+        puts "#{title}:"
+        puts value
+      end
+    end
+
     def check_and_get_post_url
       @post_url.gsub("www.facebook.com", "m.facebook.com")
     end
 
     def get_comments(page)
+      print_debug "Process - Comments", ""
       result_comments = []
       if page.code == "200"
         comments = page.search("div[id^='composer']")&.first&.next&.children || page.search("div[id^='sentence']")&.first&.next&.children || []
+        print_debug "Process - Comments - Scraping", comments.to_s
         comments.each do |comment|
           begin
 
@@ -153,7 +171,8 @@ class FacebookPostScraping
     end
 
     def get_next_url(page)
-      next_url = page.link_with(text: " Ver comentarios siguientes…")&.href || page.link_with(text: " Ver más comentarios…")&.href
+      next_url = page.link_with(text: " Ver comentarios siguientes…")&.href || page.link_with(text: " Ver más comentarios…")&.href || page.link_with(text: " View previous comments…")&.href
+      print_debug "Get Next Url", next_url.to_s
       unless next_url
         temp_url = page.canonical_uri.to_s
         temp_url.sub! "www.facebook.com", "m.facebook.com"
