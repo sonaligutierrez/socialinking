@@ -26,10 +26,8 @@ class FacebookPostScraping
     if @cookie_yml
       resp = login_with_cookie
       unless resp
-        #@agent.cookie_jar.save("/tmp/cookies.yaml", session: true)
         login_with_user_and_pass
       else
-        #@agent.cookie_jar.save("/tmp/cookies.yaml", session: true)
         true
       end
     else
@@ -127,7 +125,7 @@ class FacebookPostScraping
 
     def print_debug(title, value)
       if @debug
-        puts "#{title}:" 
+        puts "#{title}:"
         puts value
       end
     end
