@@ -8,7 +8,9 @@
 # It must return the number of comment processed
 
 class FacebookPostScraping
-  attr_accessor :post_url, :agent, :fb_user, :fb_pass, :comments, :page, :finish_paging, :cookie_yml, :proxy, :debug
+  attr_accessor :post_url, :agent, :fb_user, :fb_pass, :comments, :page, :finish_paging, :cookie_yml, :proxy, :debug, :start_time
+
+  MAX_SCRAPING_TIME = 300 # sec
 
   def initialize(post_url, user, pass, cookie_yml, proxy)
     @post_url = post_url
@@ -77,6 +79,7 @@ class FacebookPostScraping
 
   def process
     print_debug "Process", check_and_get_post_url
+    @start_time = DateTime.now
     @comments = []
     @finish_paging = 0
     if @agent
@@ -170,6 +173,13 @@ class FacebookPostScraping
       result_comments
     end
 
+    def get_execution_time
+      @start_time = DateTime.now if @start_time.nil?
+      end_time = DateTime.now
+      seconds = ((end_time - @start_time) * 24 * 60 * 60).to_i
+      seconds
+    end
+
     def get_next_url(page)
       next_url = page.link_with(text: " Ver comentarios siguientes…")&.href || page.link_with(text: " Ver más comentarios…")&.href || page.link_with(text: " View previous comments…")&.href || page.link_with(text: " View more comments…")&.href
       print_debug "Get Next Url", next_url.to_s
@@ -188,7 +198,12 @@ class FacebookPostScraping
         @finish_paging += 1
         return temp_url.join("&")
       else
-        @finish_paging = 0
+        if get_execution_time > MAX_SCRAPING_TIME
+          print_debug "Get Next Url - TimeUp", next_url.to_s
+          @finish_paging = 1
+        else
+          @finish_paging = 0
+        end
         return next_url
       end
       end
