@@ -19,6 +19,7 @@ ActiveAdmin.register PostCreator do
        f.input :fb_user
        f.input :fb_pass
        f.input :proxy
+       f.input :fb_session, as: :text
      end
      f.actions
    end
