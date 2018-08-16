@@ -9,7 +9,7 @@ class Post < ApplicationRecord
 
   attr_accessor :debug
 
-  scope :created_before_24_hours, -> {where("created_at > ?", 36.hours.ago)}
+  scope :created_before_24_hours, -> { where("created_at > ?", 36.hours.ago) }
 
   def scraping
     start_time = DateTime.now
