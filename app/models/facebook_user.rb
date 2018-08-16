@@ -3,6 +3,8 @@ class FacebookUser < ApplicationRecord
 
   validates :fb_username, :fb_name, presence: true
 
+  scope :created_before_24_hours, -> {where("created_at > ?", 36.hours.ago)}
+
   def name
     fb_username
   end
