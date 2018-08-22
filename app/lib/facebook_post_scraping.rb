@@ -181,7 +181,7 @@ class FacebookPostScraping
     end
 
     def get_next_url(page)
-      next_url = page.link_with(text: " Ver comentarios siguientes…")&.href || page.link_with(text: " Ver más comentarios…")&.href || page.link_with(text: " View previous comments…")&.href || page.link_with(text: " View more comments…")&.href
+      next_url = page.link_with(text: " Ver comentarios siguientes…")&.href || page.link_with(text: " Ver más comentarios…")&.href || page.link_with(text: " View more comments…")&.href || page.link_with(text: " View previous comments…")&.href
       print_debug "Get Next Url", next_url.to_s
       unless next_url
         temp_url = page.canonical_uri.to_s
