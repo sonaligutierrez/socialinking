@@ -8,6 +8,9 @@ ActiveAdmin.register FacebookUser do
   index do
     column :fb_username
     column :fb_name
+    column :dni do |fuser|
+      text_field_tag 'dni', fuser.dni, maxlength: 15, size: 20, class: "dni-input", onchange: "update_dni(#{fuser.id}, this.value)"
+    end
     column :fb_avatar do |img|
       image_tag img.fb_avatar unless img.fb_avatar.to_s.empty?
     end
@@ -19,8 +22,12 @@ ActiveAdmin.register FacebookUser do
       end
       col
     end
+  end
 
-
+  member_action :fuser_update, method: :put do
+    @facebook_user = FacebookUser.find(params[:id])
+    @facebook_user.update_attribute(:dni, params[:dni])
+    render body: nil
   end
 
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180804152831) do
+ActiveRecord::Schema.define(version: 20180823125619) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20180804152831) do
     t.string "fb_avatar"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "dni"
   end
 
   create_table "post_comments", force: :cascade do |t|
