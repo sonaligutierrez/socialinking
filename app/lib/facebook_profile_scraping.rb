@@ -87,4 +87,23 @@ class FacebookProfileScraping
     end
     false
   end
+
+  def get_post_creator_avatar
+    if @agent
+      @agent.get("#{@profile.url}") do |page|
+        @page = page
+        images = page.search("a img")
+        images.each do |img|
+          if img.attributes["alt"].text == @profile.fb_user
+            @profile.avatar = img.attributes["src"].text unless img.attributes["src"].nil?
+            @profile.save!
+            break
+          end
+        end
+      end
+      return true
+    end
+    false
+  end
+
 end
