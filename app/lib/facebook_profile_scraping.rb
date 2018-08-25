@@ -105,5 +105,4 @@ class FacebookProfileScraping
     end
     false
   end
-
 end
