@@ -6,7 +6,7 @@ class OnlyAdminsAuthorization < ActiveAdmin::AuthorizationAdapter
     when normalized(ScrapingLog)
       user.admin?
     when normalized(Category)
-      user.admin?  
+      user.admin?
     when normalized(PostCreator)
       if action == :update || action == :destroy
         user.admin?
