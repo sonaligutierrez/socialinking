@@ -94,11 +94,9 @@ class FacebookProfileScraping
         @page = page
         images = page.search("a img")
         images.each do |img|
-          if img.attributes["alt"].text == @profile.fb_user
-            @profile.avatar = img.attributes["src"].text unless img.attributes["src"].nil?
-            @profile.save!
-            break
-          end
+          @profile.avatar = img.attributes["src"].text unless img.attributes["src"].nil?
+          @profile.save!
+          break
         end
       end
       return true
