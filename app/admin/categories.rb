@@ -1,6 +1,6 @@
 ActiveAdmin.register Category do
   permit_params :name
-  menu label: proc { I18n.t("active_admin.categories") }, priority: 4 if proc { current_user.admin? }
+  menu label: proc { I18n.t("active_admin.categories") }, priority: 4
   filter :name
   index do
     column :name

@@ -5,8 +5,14 @@ class OnlyAdminsAuthorization < ActiveAdmin::AuthorizationAdapter
       user.admin?
     when normalized(ScrapingLog)
       user.admin?
-    when normalized(PostCreator)
+    when normalized(Category)
       user.admin?
+    when normalized(PostCreator)
+      if action == :update || action == :destroy
+        user.admin?
+      else
+        true
+      end
     when normalized(FacebookUser)
       if action == :update || action == :destroy
         user.admin?

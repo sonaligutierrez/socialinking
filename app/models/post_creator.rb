@@ -18,6 +18,8 @@ class PostCreator < ApplicationRecord
 
   def assign_avatar
     fb_scraping = FacebookProfileScraping.new(self, self.fb_user, self.fb_pass, self.fb_session, self.proxy)
-    fb_scraping.get_post_creator_avatar
+    if fb_scraping.login
+      fb_scraping.get_post_creator_avatar
+    end
   end
 end
