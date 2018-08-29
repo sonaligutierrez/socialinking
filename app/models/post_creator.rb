@@ -22,4 +22,36 @@ class PostCreator < ApplicationRecord
       fb_scraping.get_post_creator_avatar
     end
   end
+
+  def generate_cookie
+    post_creator = self
+    var_json = "--- !ruby/object:Mechanize::CookieJar\n"
+    var_json += "store: !ruby/object:HTTP::CookieJar::HashStore\n"
+    var_json += "\ \ mon_owner: \n"
+    var_json += "\ \ mon_count: 0\n"
+    var_json += "\ \ mon_mutex: !ruby/object:Thread::Mutex {}\n"
+    var_json += "\ \ logger: \n"
+    var_json += "\ \ gc_threshold: 150\n"
+    var_json += "\ \ jar:\n"
+    var_json += "\ \ \ \ facebook.com:\n"
+    var_json += "\ \ \ \ \ \ \"/\":\n"
+
+    JSON.parse(post_creator.cookie_info).each do |cook|
+      # puts cook[:name]
+      var_json += "\ \ \ \ \ \ \ \ #{cook['name']}: !ruby/object:HTTP::Cookie\n"
+      var_json += "\ \ \ \ \ \ \ \ \ \ domain: #{cook['domain']}\n"
+      var_json += "\ \ \ \ \ \ \ \ \ \ hostOnly: #{cook['hostOnly']}\n"
+      var_json += "\ \ \ \ \ \ \ \ \ \ httpOnly: #{cook['httpOnly']}\n"
+      var_json += "\ \ \ \ \ \ \ \ \ \ name: #{cook['name']}\n"
+      var_json += "\ \ \ \ \ \ \ \ \ \ path: #{cook['path']}\n"
+      var_json += "\ \ \ \ \ \ \ \ \ \ sameSite: #{cook['sameSite']}\n"
+      var_json += "\ \ \ \ \ \ \ \ \ \ secure: #{cook['secure']}\n"
+      var_json += "\ \ \ \ \ \ \ \ \ \ session: #{cook['session']}\n"
+      var_json += "\ \ \ \ \ \ \ \ \ \ storeId: #{cook['storeId']}\n"
+      var_json += "\ \ \ \ \ \ \ \ \ \ value: \"#{cook['value']}\"\n"
+    end
+    var_json += "\ \ gc_index: 18"
+    post_creator.fb_session = var_json
+    post_creator.save!
+  end
 end
