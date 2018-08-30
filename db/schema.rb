@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180823125619) do
+ActiveRecord::Schema.define(version: 20180828185702) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(version: 20180823125619) do
     t.string "fb_pass"
     t.string "fb_session"
     t.string "proxy"
+    t.string "cookie_info"
     t.index ["account_id"], name: "index_post_creators_on_account_id"
   end
 

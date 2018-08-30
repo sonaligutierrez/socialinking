@@ -13,6 +13,7 @@ class Post < ApplicationRecord
 
   def scraping
     start_time = DateTime.now
+    post_creator.generate_cookie if post_creator.fb_session.to_s.empty? && !post_creator.cookie_info.to_s.empty?
     fb_scraping = FacebookPostScraping.new(url, post_creator.fb_user, post_creator.fb_pass, post_creator.fb_session, post_creator.proxy)
 
     fb_scraping.debug = true if @debug
