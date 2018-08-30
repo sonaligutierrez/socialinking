@@ -93,7 +93,7 @@ class FacebookPostScraping
           @comments += scrapped_comments
           page = @agent.get(url)
           if page
-            print_debug "Process - Page #{url}", @page.body.to_s
+            print_debug "Process - Page #{url}", page.body.to_s
             scrapped_comments = get_comments(page)
             print_debug "Process - Page #{url} - Comments", scrapped_comments.to_s
             sleep(1)

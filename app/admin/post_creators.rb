@@ -2,7 +2,7 @@ require "working_url"
 
 ActiveAdmin.register PostCreator do
   menu label: proc { I18n.t("active_admin.post_creators") }, priority: 1
-  permit_params :account_id, :fan_page, :url, :avatar, :fb_user, :fb_pass, :fb_session, :proxy
+  permit_params :account_id, :fan_page, :url, :avatar, :fb_user, :fb_pass, :fb_session, :proxy, :cookie_info
   config.batch_actions = false
   config.filters = false
 
@@ -20,6 +20,7 @@ ActiveAdmin.register PostCreator do
        f.input :fb_pass
        f.input :proxy
        f.input :fb_session, as: :text
+       f.input :cookie_info, as: :text
      end
      f.actions
    end
