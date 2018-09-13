@@ -1,6 +1,7 @@
 require File.expand_path("../../config/environment", __FILE__)
 require "rails/test_help"
 require "vcr"
+require "watir"
 
 VCR.configure do |config|
   config.cassette_library_dir = "vcr/vcr_cassettes"

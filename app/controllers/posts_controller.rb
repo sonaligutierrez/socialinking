@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   def scraping
     begin
-      ExtractDataInBatchJob.set(wait: 1.second).perform_later Post.find(params[:id])
+      ExtractDataWatirInBatchJob.set(wait: 1.second).perform_later Post.find(params[:id])
       flash[:notice] = "Scraping agendado para la publicacion"
   rescue => exception
     flash[:error] = "Error al agendar scraping para la publicacion"

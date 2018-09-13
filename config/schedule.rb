@@ -14,7 +14,7 @@
 # end
 #
 every 24.hours do
-  rake "scraping:async_start"
+  rake "scraping:async_watir_start"
 end
 
 every 24.hours do

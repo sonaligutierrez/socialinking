@@ -36,4 +36,21 @@ page_info:
   post_creator: three
   title: "Prueba Page Info"
 
+watir_1:
+  date: "2018-05-28 18:12:13.233476"
+  created_at: "2018-05-28 18:12:13.233476"
+  post_date: "2018-05-28 18:12:13.233476"
+  url: "https://m.facebook.com/story.php?story_fbid=1089390984533567&id=543211639151507"
+  post_creator: watir
+  title: "Prueba Page Info"
+
+watir_2:
+  date: "2018-05-28 18:12:13.233476"
+  created_at: "2018-05-28 18:12:13.233476"
+  post_date: "2018-05-28 18:12:13.233476"
+  url: "https://www.facebook.com/JMUrtubey/posts/2100999796659189"
+  post_creator: watir
+  title: "Prueba Page Info"
+
+
   
