@@ -19,5 +19,4 @@ class ExtractDataWatirInBatchJobTest < ActiveJob::TestCase
       assert_equal(@fb_post.post_comments.count, 15)
     end
   end
-
 end
