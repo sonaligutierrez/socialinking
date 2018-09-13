@@ -1,4 +1,4 @@
-image: "alpin3/watir"
+image: "levlozhkin/ruby-chromedriver"
 
 services:
   - postgres:alpine
