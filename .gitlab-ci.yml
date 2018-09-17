@@ -38,7 +38,7 @@ production_deploy:
   before_script:
     - 'which ssh-agent || ( apk update && apk add --update openssh-client )'
     - eval "$(ssh-agent -s)"
-    - ssh-add <(echo -e "$SSH_PRIVATE_KEY")
+    - ssh-add < ( echo -e "$SSH_PRIVATE_KEY" )
     - gem install bundler  --no-ri --no-rdoc
     - bundle install
   script:
