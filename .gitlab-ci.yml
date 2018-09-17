@@ -36,6 +36,7 @@ production_deploy:
   only:
     - master
   before_script:
+    - apk update && apk add --update build-base postgresql-dev nodejs chromium chromium-chromedriver libexif udev curl-dev less git yarn redis
     - 'which ssh-agent || ( apk update && apk add --update openssh-client )'
     - eval "$(ssh-agent -s)"
     - echo "$SSH_PRIVATE_KEY" | ssh-add -
