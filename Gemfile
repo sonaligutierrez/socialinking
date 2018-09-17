@@ -94,6 +94,8 @@ gem "watir"
 
 gem 'watir-scroll'
 
+gem 'tzinfo-data'
+
 group :development do
   gem "capistrano", "~> 3.10", require: false
   gem "capistrano-rails", "~> 1.3", require: false
