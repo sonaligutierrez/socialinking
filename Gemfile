@@ -60,7 +60,7 @@ group :development do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data'
 
 # https://github.com/plataformatec/devise
 gem 'devise'
@@ -68,7 +68,7 @@ gem 'devise'
 # For background jobs https://github.com/mperham/sidekiq
 gem 'sidekiq'
 
-gem 'nokogiri'
+gem 'nokogiri', "1.8.0"
 
 gem "httparty"
 
@@ -93,8 +93,6 @@ gem "open_graph_reader"
 gem "watir"
 
 gem 'watir-scroll'
-
-gem 'tzinfo-data'
 
 group :development do
   gem "capistrano", "~> 3.10", require: false
