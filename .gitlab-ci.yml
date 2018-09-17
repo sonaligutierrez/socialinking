@@ -20,8 +20,8 @@ test_all:
 
   before_script:
     - apk update && apk add --update build-base postgresql-dev nodejs chromium chromium-chromedriver libexif udev curl-dev less git yarn
-    - apt-get update -qq && apt-get install -yqq libpq-dev
-    - apt-get install redis-server -y
+    - apk add -yqq libpq-dev
+    - apk add redis-server -y
     - gem install bundler  --no-ri --no-rdoc
     - bundle install
     - rails db:migrate
