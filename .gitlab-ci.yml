@@ -19,9 +19,7 @@ test_all:
     CHROME_PATH: /usr/lib/chromium/
 
   before_script:
-    - apk update && apk add --update build-base postgresql-dev nodejs chromium chromium-chromedriver libexif udev curl-dev less git yarn
-    - apk add -yqq libpq-dev
-    - apk add redis-server -y
+    - apk update && apk add --update build-base postgresql-dev nodejs chromium chromium-chromedriver libexif udev curl-dev less git yarn libpq-dev redis-server
     - gem install bundler  --no-ri --no-rdoc
     - bundle install
     - rails db:migrate
@@ -37,7 +35,7 @@ production_deploy:
   only:
     - master
   before_script:
-    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - 'which ssh-agent || ( pk update && apk add --update openssh-client )'
     - eval "$(ssh-agent -s)"
     - ssh-add <(echo -e "$SSH_PRIVATE_KEY")
     - gem install bundler  --no-ri --no-rdoc
