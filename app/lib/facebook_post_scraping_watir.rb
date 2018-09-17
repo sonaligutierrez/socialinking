@@ -44,11 +44,11 @@ class FacebookPostScrapingWatir
   def set_proxy
     print_debug "Set Proxy", @proxy
     unless @proxy.to_s.empty?
-      proxies = ["--proxy-server=23.106.16.75:29842", "--proxy-auth=mmacer:nk4YWBdc", "--incognito", "--disable-notifications", "--start-maximized"]
+      proxies = ["--proxy-server=23.106.16.75:29842", "--proxy-auth=mmacer:nk4YWBdc", "--incognito", "--disable-notifications", "--start-maximized", "--privileged"]
       @browser = Watir::Browser.new :chrome, switches: proxies, headless: @headless
       @browser.goto("http://mmacer:nk4YWBdc@google.com/")
     else
-      options = ["--incognito", "--disable-notifications", "--start-maximized"]
+      options = ["--incognito", "--disable-notifications", "--start-maximized", "--privileged"]
       @browser = Watir::Browser.new :chrome, switches: options, headless: @headless
       @browser.goto("https://www.google.com/")
     end
@@ -119,7 +119,6 @@ class FacebookPostScrapingWatir
       print_debug "Process - First Page - Comments", @comments.count.to_s
     end
 
-    browser.close
     @comments.length
   end
 
@@ -158,7 +157,10 @@ class FacebookPostScrapingWatir
     def get_comments
       print_debug "Process - Comments", "getting...."
       result_comments = []
-      @browser.element(css: ".permalinkPost .uiPopover").wait_until_present(timeout: 5)
+      begin
+        @browser.element(css: ".permalinkPost .uiPopover").wait_until_present(timeout: 5)
+      rescue Watir::Wait::TimeoutError => error
+      end
       if @browser.elements(css: ".permalinkPost .uiPopover").count > 1
         if @browser.elements(css: ".permalinkPost .uiPopover").last.exist?
           element = @browser.elements(css: ".permalinkPost .uiPopover").last
@@ -176,6 +178,8 @@ class FacebookPostScrapingWatir
       rescue Watir::Wait::TimeoutError => error
       end
       while @browser.element(css: ".permalinkPost a.UFIPagerLink").exist?
+        element = @browser.elements(css: ".permalinkPost a.UFIPagerLink").last
+        @browser.scroll.to(:top).by(0, element.location.y - 100)
         @browser.element(css: ".permalinkPost a.UFIPagerLink").click
         sleep 3
       end
