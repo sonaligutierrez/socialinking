@@ -165,11 +165,11 @@ class FacebookPostScrapingWatir
         if @browser.elements(css: ".permalinkPost .uiPopover").last.exist?
           element = @browser.elements(css: ".permalinkPost .uiPopover").last
           @browser.scroll.to(:top).by(0, element.location.y - 100)
-          element.click
+          element.click!
         end
         if @browser.elements(css: ".__MenuItem").count == 3
           if @browser.elements(css: ".__MenuItem").last.exist?
-            @browser.elements(css: ".__MenuItem").last.click
+            @browser.elements(css: ".__MenuItem").last.click!
           end
         end
       end
@@ -180,7 +180,7 @@ class FacebookPostScrapingWatir
       while @browser.element(css: ".permalinkPost a.UFIPagerLink").exist?
         element = @browser.elements(css: ".permalinkPost a.UFIPagerLink").last
         @browser.scroll.to(:top).by(0, element.location.y - 100)
-        @browser.element(css: ".permalinkPost a.UFIPagerLink").click
+        @browser.element(css: ".permalinkPost a.UFIPagerLink").click!
         sleep 3
       end
 
