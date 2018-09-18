@@ -45,11 +45,11 @@ class FacebookPostScrapingWatir
     print_debug "Set Proxy", @proxy
     unless @proxy.to_s.empty?
       proxies = ["--proxy-server=23.106.16.75:29842", "--proxy-auth=mmacer:nk4YWBdc", "--incognito", "--disable-notifications", "--start-maximized", "--privileged"]
-      @browser = Watir::Browser.new :chrome, switches: proxies, headless: @headless
+      @browser = Watir::Browser.new :chrome, switches: proxies, headless: @headless, service_log_path: "/tmp/chromedriver.log"
       @browser.goto("http://mmacer:nk4YWBdc@google.com/")
     else
       options = ["--incognito", "--disable-notifications", "--start-maximized", "--privileged"]
-      @browser = Watir::Browser.new :chrome, switches: options, headless: @headless
+      @browser = Watir::Browser.new :chrome, switches: options, headless: @headless, service_log_path: "/tmp/chromedriver.log"
       @browser.goto("https://www.google.com/")
     end
   end
