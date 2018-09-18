@@ -77,6 +77,7 @@ class Post < ApplicationRecord
           count += 1 if the_comment
         end
       end
+      fb_scraping.close
     end
     page_info = fb_scraping.get_page_info
     if page_info
