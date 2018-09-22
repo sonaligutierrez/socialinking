@@ -2,12 +2,12 @@ require File.expand_path("../../config/environment", __FILE__)
 require "rails/test_help"
 require "vcr"
 
+
 VCR.configure do |config|
   config.ignore_request do |request|
-    request.uri == "http://127.0.0.1:9515/shutdown"
-    request.uri == "http://127.0.0.1:9516/shutdown"
+    request.uri.include?("127.0.0.1")
   end
-
+  ignore_localhost = true
   config.cassette_library_dir = "vcr/vcr_cassettes"
   config.hook_into :webmock
 end

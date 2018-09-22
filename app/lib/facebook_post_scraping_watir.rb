@@ -8,7 +8,7 @@
 # It must return the number of comment processed
 
 class FacebookPostScrapingWatir
-  attr_accessor :post_url, :browser, :fb_user, :fb_pass, :comments, :page, :finish_paging, :cookie_json, :proxy, :debug, :start_time, :headless
+  attr_accessor :post_url, :browser, :fb_user, :fb_pass, :comments, :page, :finish_paging, :cookie_json, :proxy, :debug, :start_time, :headless, :message
 
   MAX_SCRAPING_TIME = 300 # sec
 
@@ -20,6 +20,7 @@ class FacebookPostScrapingWatir
     @proxy = proxy
     @headless = headless
     @debug = debug
+    @message = ""
     set_proxy
   end
 
@@ -43,13 +44,16 @@ class FacebookPostScrapingWatir
 
   def set_proxy
     print_debug "Set Proxy", @proxy
+    capabilities = Selenium::WebDriver::Remote::Capabilities.chrome
+    capabilities['chrome.page.customHeaders.Accept-Language'] = 'en-US'
+    capabilities['intl.accept_languages'] = 'en-US'
     unless @proxy.to_s.empty?
       proxies = ["--proxy-server=23.106.16.75:29842", "--proxy-auth=mmacer:nk4YWBdc", "--incognito", "--disable-notifications", "--start-maximized", "--privileged"]
-      @browser = Watir::Browser.new :chrome, switches: proxies, headless: @headless, service_log_path: "/tmp/chromedriver.log"
+      @browser = Watir::Browser.new :chrome, switches: proxies, headless: @headless, desired_capabilities: capabilities
       @browser.goto("http://mmacer:nk4YWBdc@google.com/")
     else
       options = ["--incognito", "--disable-notifications", "--start-maximized", "--privileged"]
-      @browser = Watir::Browser.new :chrome, switches: options, headless: @headless, service_log_path: "/tmp/chromedriver.log"
+      @browser = Watir::Browser.new :chrome, switches: options, headless: @headless, desired_capabilities: capabilities
       @browser.goto("https://www.google.com/")
     end
   end
@@ -57,6 +61,9 @@ class FacebookPostScrapingWatir
   def login_with_user_and_pass
     print_debug "Login With User And Pass", ""
     @browser.goto("https://m.facebook.com/a/language.php?l=en_US&lref=https%3A%2F%2Fm.facebook.com%2F%3Frefsrc%3Dhttps%253A%252F%252Fm.facebook.com%252F&gfid=AQASICdU5DBrEyI_&refid=8")
+    if @browser.a(text: "Log In").exist?
+      @browser.a(text: "Log In").click
+    end
     @browser.text_field(id: "m_login_email").set(@fb_user)
     @browser.text_field(id: "m_login_password").set(@fb_pass)
     if @browser.button(text: "Log In").exist?
@@ -64,8 +71,10 @@ class FacebookPostScrapingWatir
     else
       return false
     end
-    print_debug "Login With User And Pass - Page", @browser.body.html
+    print_debug "Login With User And Pass - Page", "" #@browser.body.html
     return true unless @browser.a(text: "Did you forget your password?").exist?
+    @message += "Error in login/pass for login. "
+    @message += "User Disabled by FB. " if @browser.div(text: "Your Account Has Been Disabled").exist?
     false
   end
 
@@ -73,6 +82,7 @@ class FacebookPostScrapingWatir
     print_debug "Login With Cookie", @cookie_json
     unless @cookie_json.empty?
       @browser.goto("https://www.facebook.com/")
+      @browser.a(text: "English (US)").click! if @browser.a(text: "English (US)").exist?
       set_cookie
       @browser.refresh
       print_debug "Login With Cookie - Page - Before Check Cookie Login", @browser.body.html
@@ -85,8 +95,11 @@ class FacebookPostScrapingWatir
           end
         end
       end
+      sleep(3)
       print_debug "Login With Cookie - Page - After Check Cookie Login", @browser.body.html
-      return true unless @browser.a(text: "Did you forget your password?").exist?
+      return true unless @browser.a(text: "Did you forget your password?").exist? || @browser.a(text: "Forgot account?").exist? || @browser.a(text: "Create New Account").exist?
+      @message += "Error in Cookie for Login. "
+      @message += "User Disabled by FB. " if @browser.div(text: "Your Account Has Been Disabled").exist?
       return false
     else
       return false
@@ -107,11 +120,14 @@ class FacebookPostScrapingWatir
     @finish_paging = 0
     if @browser
       @browser.goto(check_and_get_post_url)
-      print_debug "Process - First Page", @browser.body.html
+      print_debug "Process - First Page", "" #@browser.body.html
       # Clean view when it is a photo/video post
       begin
         @browser.element(css: ".fbPhotoSnowlift > div > div > a").wait_until_present(timeout: 3)
-        @browser.element(css: ".fbPhotoSnowlift > div > div > a").click if @browser.element(css: ".fbPhotoSnowlift > div > div > a").present? && @browser.element(css: ".fbPhotoSnowlift > div > div > a").exist?
+        if @browser.element(css: ".fbPhotoSnowlift > div > div > a").present? && @browser.element(css: ".fbPhotoSnowlift > div > div > a").exist?
+          @browser.element(css: ".fbPhotoSnowlift > div > div > a").click 
+          @message += "Got Image/Video cover Post. "
+        end
         @browser.element(css: ".fbPhotoSnowlift > div > div > a").wait_while_present(timeout: 3)
       rescue Watir::Wait::TimeoutError => error
       end
@@ -185,6 +201,7 @@ class FacebookPostScrapingWatir
       end
 
       comments = @browser.elements(css: ".permalinkPost .UFIComment")
+      @message += "Comments found: #{comments.count.to_s}. "
       print_debug "Process - Comments - Scraping", comments.count.to_s
       comments.each do |comment|
         begin
@@ -211,7 +228,7 @@ class FacebookPostScrapingWatir
           puts e.message
         end
       end
-
+      @message += "Comments scraped: #{result_comments.count.to_s}. "
       result_comments
     end
 

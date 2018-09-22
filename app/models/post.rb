@@ -77,8 +77,8 @@ class Post < ApplicationRecord
           count += 1 if the_comment
         end
       end
-      fb_scraping.close
     end
+    fb_scraping.close
     page_info = fb_scraping.get_page_info
     if page_info
       self.title = page_info[:title]
@@ -87,8 +87,9 @@ class Post < ApplicationRecord
       self.save
     end
     end_time = DateTime.now
+    fb_scraping.message += "Scraping finished. "
     seconds = ((end_time - start_time) * 24 * 60 * 60).to_i
-    scraping_logs.create(scraping_date: start_time, exec_time: Time.at(seconds), total_comment: count)
+    scraping_logs.create(scraping_date: start_time, exec_time: Time.at(seconds), total_comment: count, message: fb_scraping.message)
     count
   end
 
