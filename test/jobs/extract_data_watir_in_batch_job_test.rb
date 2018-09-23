@@ -14,5 +14,5 @@ class ExtractDataWatirInBatchJobTest < ActiveJob::TestCase
   test "scraping execution for a post with photo" do
     count = ExtractDataWatirInBatchJob.perform_now @fb_post_photo
     assert_equal(116, @fb_post_photo.post_comments.count)
-  end  
+  end
 end

@@ -45,8 +45,8 @@ class FacebookPostScrapingWatir
   def set_proxy
     print_debug "Set Proxy", @proxy
     capabilities = Selenium::WebDriver::Remote::Capabilities.chrome
-    capabilities['chrome.page.customHeaders.Accept-Language'] = 'en-US'
-    capabilities['intl.accept_languages'] = 'en-US'
+    capabilities["chrome.page.customHeaders.Accept-Language"] = "en-US"
+    capabilities["intl.accept_languages"] = "en-US"
     unless @proxy.to_s.empty?
       proxies = ["--proxy-server=23.106.16.75:29842", "--proxy-auth=mmacer:nk4YWBdc", "--incognito", "--disable-notifications", "--start-maximized", "--privileged"]
       @browser = Watir::Browser.new :chrome, switches: proxies, headless: @headless, desired_capabilities: capabilities
@@ -71,7 +71,7 @@ class FacebookPostScrapingWatir
     else
       return false
     end
-    print_debug "Login With User And Pass - Page", "" #@browser.body.html
+    print_debug "Login With User And Pass - Page", "" # @browser.body.html
     return true unless @browser.a(text: "Did you forget your password?").exist?
     @message += "Error in login/pass for login. "
     @message += "User Disabled by FB. " if @browser.div(text: "Your Account Has Been Disabled").exist?
@@ -120,12 +120,12 @@ class FacebookPostScrapingWatir
     @finish_paging = 0
     if @browser
       @browser.goto(check_and_get_post_url)
-      print_debug "Process - First Page", "" #@browser.body.html
+      print_debug "Process - First Page", "" # @browser.body.html
       # Clean view when it is a photo/video post
       begin
         @browser.element(css: ".fbPhotoSnowlift > div > div > a").wait_until_present(timeout: 3)
         if @browser.element(css: ".fbPhotoSnowlift > div > div > a").present? && @browser.element(css: ".fbPhotoSnowlift > div > div > a").exist?
-          @browser.element(css: ".fbPhotoSnowlift > div > div > a").click 
+          @browser.element(css: ".fbPhotoSnowlift > div > div > a").click
           @message += "Got Image/Video cover Post. "
         end
         @browser.element(css: ".fbPhotoSnowlift > div > div > a").wait_while_present(timeout: 3)
@@ -201,7 +201,7 @@ class FacebookPostScrapingWatir
       end
 
       comments = @browser.elements(css: ".permalinkPost .UFIComment")
-      @message += "Comments found: #{comments.count.to_s}. "
+      @message += "Comments found: #{comments.count}. "
       print_debug "Process - Comments - Scraping", comments.count.to_s
       comments.each do |comment|
         begin
@@ -228,7 +228,7 @@ class FacebookPostScrapingWatir
           puts e.message
         end
       end
-      @message += "Comments scraped: #{result_comments.count.to_s}. "
+      @message += "Comments scraped: #{result_comments.count}. "
       result_comments
     end
 
