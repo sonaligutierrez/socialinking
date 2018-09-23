@@ -7,13 +7,9 @@ ActiveAdmin.register ScrapingLog do
     column :scraping_date
     column :exec_time_in_hours
     column :total_comment
-    column "" do |p|
-      div(title: "#{p.post.title}") do
-        p.post.title&.truncate 70
-      end
+    column "Post" do |p|
+      link_to(p.post.title&.truncate(70).to_s, p.post.url, target: "_blank")
     end
     column :message
   end
-
-
 end
