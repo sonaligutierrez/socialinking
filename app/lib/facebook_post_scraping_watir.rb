@@ -125,7 +125,7 @@ class FacebookPostScrapingWatir
       begin
         @browser.element(css: ".fbPhotoSnowlift > div > div > a").wait_until_present(timeout: 3)
         if @browser.element(css: ".fbPhotoSnowlift > div > div > a").present? && @browser.element(css: ".fbPhotoSnowlift > div > div > a").exist?
-          @browser.element(css: ".fbPhotoSnowlift > div > div > a").click
+          @browser.element(css: ".fbPhotoSnowlift > div > div > a").click!
           @message += "Got Image/Video cover Post. "
         end
         @browser.element(css: ".fbPhotoSnowlift > div > div > a").wait_while_present(timeout: 3)
