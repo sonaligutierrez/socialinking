@@ -10,7 +10,7 @@
 class FacebookPostScrapingWatir
   attr_accessor :post_url, :browser, :fb_user, :fb_pass, :comments, :page, :finish_paging, :cookie_json, :proxy, :debug, :start_time, :headless, :message
 
-  MAX_SCRAPING_TIME = 300 # sec
+  MAX_SCRAPING_TIME = 400 # sec
 
   def initialize(post_url, user, pass, cookie_json, proxy, headless = true, debug = false)
     @post_url = post_url
@@ -198,6 +198,10 @@ class FacebookPostScrapingWatir
         @browser.scroll.to(:top).by(0, element.location.y - 100)
         @browser.element(css: ".permalinkPost a.UFIPagerLink").click!
         sleep 3
+        if get_execution_time > MAX_SCRAPING_TIME
+          @message += "Scraping Time up. "
+          return result_comments
+        end
       end
 
       comments = @browser.elements(css: ".permalinkPost .UFIComment")
@@ -221,7 +225,11 @@ class FacebookPostScrapingWatir
           if comment.span(css: ".UFISutroLikeCount").exist?
             reactions = comment.span(css: ".UFISutroLikeCount").text
           end
-
+          if get_execution_time > MAX_SCRAPING_TIME
+            @message += "Scraping Time up. "
+            return result_comments
+          end
+  
           responses = comment.span(css: ".UFIReplySocialSentenceLinkText").text if comment.span(css: ".UFIReplySocialSentenceLinkText").exist?
           result_comments << { id_comment: id_comment, user: user, url_profile: url_profile, date_comment: date_comment, comment: text_comment, reactions: reactions, reactions_description: reactions_description, responses: responses } unless text_comment.to_s.empty? && id_comment.to_s.empty?
         rescue Exception => e
