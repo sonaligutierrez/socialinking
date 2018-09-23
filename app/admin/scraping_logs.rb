@@ -12,6 +12,7 @@ ActiveAdmin.register ScrapingLog do
         p.post.title&.truncate 70
       end
     end
+    column :message
   end
 
 
