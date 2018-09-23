@@ -72,10 +72,15 @@ class FacebookPostScrapingWatir
       return false
     end
     print_debug "Login With User And Pass - Page", "" # @browser.body.html
-    return true unless @browser.a(text: "Did you forget your password?").exist?
-    @message += "Error in login/pass for login. "
-    @message += "User Disabled by FB. " if @browser.div(text: "Your Account Has Been Disabled").exist?
-    false
+
+    if @browser.a(text: "Did you forget your password?").exist?
+      @message += "Error in login/pass for login. "
+      @message += "User Disabled by FB. " if @browser.div(text: "Your Account Has Been Disabled").exist?
+      return false
+    else
+      @message += "Logged with User/Pass. "
+      return true
+    end
   end
 
   def login_with_cookie
@@ -97,10 +102,14 @@ class FacebookPostScrapingWatir
       end
       sleep(3)
       print_debug "Login With Cookie - Page - After Check Cookie Login", @browser.body.html
-      return true unless @browser.a(text: "Did you forget your password?").exist? || @browser.a(text: "Forgot account?").exist? || @browser.a(text: "Create New Account").exist?
-      @message += "Error in Cookie for Login. "
-      @message += "User Disabled by FB. " if @browser.div(text: "Your Account Has Been Disabled").exist?
-      return false
+      if @browser.a(text: "Did you forget your password?").exist? || @browser.a(text: "Forgot account?").exist? || @browser.a(text: "Create New Account").exist?
+        @message += "Error in Cookie for Login. "
+        @message += "User Disabled by FB. " if @browser.div(text: "Your Account Has Been Disabled").exist?
+        return false
+      else
+        @message += "Logged with Cookie. "
+        return true
+      end
     else
       return false
     end
