@@ -229,7 +229,7 @@ class FacebookPostScrapingWatir
             @message += "Scraping Time up. "
             return result_comments
           end
-  
+
           responses = comment.span(css: ".UFIReplySocialSentenceLinkText").text if comment.span(css: ".UFIReplySocialSentenceLinkText").exist?
           result_comments << { id_comment: id_comment, user: user, url_profile: url_profile, date_comment: date_comment, comment: text_comment, reactions: reactions, reactions_description: reactions_description, responses: responses } unless text_comment.to_s.empty? && id_comment.to_s.empty?
         rescue Exception => e
