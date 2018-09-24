@@ -52,5 +52,12 @@ watir_2:
   post_creator: watir
   title: "Prueba Page Info"
 
+watir_3:
+  date: "2018-05-28 18:12:13.233476"
+  created_at: "2018-05-28 18:12:13.233476"
+  post_date: "2018-05-28 18:12:13.233476"
+  url: "https://www.facebook.com/374082229927/posts/10204558704043746"
+  post_creator: watir
+  title: "Prueba Page Info with html change"
 
   

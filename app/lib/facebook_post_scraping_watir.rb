@@ -186,11 +186,12 @@ class FacebookPostScrapingWatir
         @browser.element(css: ".permalinkPost .uiPopover").wait_until_present(timeout: 5)
       rescue Watir::Wait::TimeoutError => error
       end
+
       if @browser.elements(css: ".permalinkPost .uiPopover").count > 1
         if @browser.elements(css: ".permalinkPost .uiPopover").last.exist?
           element = @browser.elements(css: ".permalinkPost .uiPopover").last
           @browser.scroll.to(:top).by(0, element.location.y - 100)
-          element.click!
+          element.click
         end
         if @browser.elements(css: ".__MenuItem").count == 3
           if @browser.elements(css: ".__MenuItem").last.exist?
@@ -198,10 +199,12 @@ class FacebookPostScrapingWatir
           end
         end
       end
+
       begin
         @browser.element(css: ".permalinkPost a.UFIPagerLink").wait_until_present(timeout: 5)
       rescue Watir::Wait::TimeoutError => error
       end
+
       while @browser.element(css: ".permalinkPost a.UFIPagerLink").exist?
         element = @browser.elements(css: ".permalinkPost a.UFIPagerLink").last
         @browser.scroll.to(:top).by(0, element.location.y - 100)
@@ -214,6 +217,7 @@ class FacebookPostScrapingWatir
       end
 
       comments = @browser.elements(css: ".permalinkPost .UFIComment")
+      comments = @browser.elements(css: ".UFIList").first.elements(css: ".UFIComment") if comments.count == 0 && @browser.elements(css: ".UFIList").count > 0
       @message += "Comments found: #{comments.count}. "
       print_debug "Process - Comments - Scraping", comments.count.to_s
       comments.each do |comment|
