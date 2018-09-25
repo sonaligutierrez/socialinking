@@ -1,6 +1,8 @@
 class PostCreator < ApplicationRecord
   has_many :posts
   belongs_to :account
+  belongs_to :proxy
+  belongs_to :fb_session
 
   before_validation :check_to_clean_session
   after_create :assign_avatar
@@ -8,7 +10,7 @@ class PostCreator < ApplicationRecord
 
   def check_to_clean_session
     if self.changed_attributes.keys.include?("fb_user") || self.changed_attributes.keys.include?("fb_pass")
-      self.fb_session = ""
+      self.fb_session_id = nil
     end
   end
 
@@ -17,7 +19,7 @@ class PostCreator < ApplicationRecord
   end
 
   def assign_avatar
-    fb_scraping = FacebookProfileScraping.new(self, self.fb_user, self.fb_pass, self.fb_session, self.proxy)
+    fb_scraping = FacebookProfileScraping.new(self, self.fb_user, self.fb_pass, self.fb_session.try(:name), self.proxy.try(:name))
     if fb_scraping.login
       fb_scraping.get_post_creator_avatar
     end
@@ -51,7 +53,8 @@ class PostCreator < ApplicationRecord
       var_json += "\ \ \ \ \ \ \ \ \ \ value: \"#{cook['value']}\"\n"
     end
     var_json += "\ \ gc_index: 18"
-    post_creator.fb_session = var_json
+    fbs = FbSession.new_session var_json
+    post_creator.fb_session_id = fbs.id
     post_creator.save!
   end
 end

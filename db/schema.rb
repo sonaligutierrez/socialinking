@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180922002021) do
+ActiveRecord::Schema.define(version: 20180925184143) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,20 @@ ActiveRecord::Schema.define(version: 20180922002021) do
     t.string "url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "active_admin_comments", force: :cascade do |t|
+    t.string "namespace"
+    t.text "body"
+    t.string "resource_type"
+    t.bigint "resource_id"
+    t.string "author_type"
+    t.bigint "author_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
+    t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
+    t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -37,6 +51,12 @@ ActiveRecord::Schema.define(version: 20180922002021) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "dni"
+  end
+
+  create_table "fb_sessions", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "post_comments", force: :cascade do |t|
@@ -66,10 +86,12 @@ ActiveRecord::Schema.define(version: 20180922002021) do
     t.bigint "account_id"
     t.string "fb_user"
     t.string "fb_pass"
-    t.string "fb_session"
-    t.string "proxy"
     t.string "cookie_info"
+    t.bigint "fb_session_id"
+    t.bigint "proxy_id"
     t.index ["account_id"], name: "index_post_creators_on_account_id"
+    t.index ["fb_session_id"], name: "index_post_creators_on_fb_session_id"
+    t.index ["proxy_id"], name: "index_post_creators_on_proxy_id"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -83,6 +105,12 @@ ActiveRecord::Schema.define(version: 20180922002021) do
     t.string "description"
     t.string "image"
     t.index ["post_creator_id"], name: "index_posts_on_post_creator_id"
+  end
+
+  create_table "proxies", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "scraping_logs", force: :cascade do |t|
@@ -119,6 +147,8 @@ ActiveRecord::Schema.define(version: 20180922002021) do
   add_foreign_key "post_comments", "facebook_users"
   add_foreign_key "post_comments", "posts"
   add_foreign_key "post_creators", "accounts"
+  add_foreign_key "post_creators", "fb_sessions"
+  add_foreign_key "post_creators", "proxies"
   add_foreign_key "posts", "post_creators"
   add_foreign_key "scraping_logs", "posts"
 end
