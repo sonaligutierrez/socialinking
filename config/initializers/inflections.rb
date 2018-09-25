@@ -16,5 +16,5 @@
 # end
 
 ActiveSupport::Inflector.inflections do |inflect|
-  inflect.plural 'proxy', 'proxies'
+  inflect.plural "proxy", "proxies"
 end

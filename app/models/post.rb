@@ -59,7 +59,7 @@ class Post < ApplicationRecord
     # Login
     if fb_scraping.login
       fbs = FbSession.new_session fb_scraping.get_cookie_json
-      post_creator.fb_session_id = fbs.id 
+      post_creator.fb_session_id = fbs.id
       post_creator.save
       # begin
       fb_scraping.process

@@ -17,7 +17,7 @@ ActiveAdmin.register PostCreator do
        f.input :url
        f.input :avatar
        f.input :fb_user
-       f.input :fb_pass       
+       f.input :fb_pass
        f.input :proxy_id, label: "Proxy", as: :select, collection: Proxy.all.map { |p| ["#{p.name}", p.id] }
        f.input :fb_session_id, label: "fb_session", as: :select, collection: FbSession.all.map { |f| ["#{f.name}", f.id] }
        f.input :cookie_info, as: :text
