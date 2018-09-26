@@ -1,0 +1,10 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  disabled: false
+  created_at: "2018-05-28 18:12:12"
+  updated_at: "2018-06-06 20:22:39"
+
+
+

@@ -50,6 +50,8 @@ es:
     categorized: "CATEGORIZADOS"
     uncategorized: "SIN CATEGORIZAR"
     edit: "Editar"
+    proxies: "Proxy"
+    fb_sessions: "Fb Sessions"
   time:
     formats:
       default: '%Y-%m-%d'
