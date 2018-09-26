@@ -20,9 +20,6 @@ class Post < ApplicationRecord
     count = 0
     # Login
     if fb_scraping.login
-      fbs = FbSession.new_session fb_scraping.get_cookie_yml
-      post_creator.fb_session_id = fbs.id
-      post_creator.save
       fb_scraping.process
       fb_scraping.comments.each do |comment|
         fb_user = FacebookUser.where(fb_username: comment[1][:url_profile]).first_or_create(fb_name: comment[1][:user])
@@ -58,9 +55,9 @@ class Post < ApplicationRecord
     count = 0
     # Login
     if fb_scraping.login
-      fbs = FbSession.new_session fb_scraping.get_cookie_json
-      post_creator.fb_session_id = fbs.id
-      post_creator.save
+      post_creator.fb_session = FbSession.new unless post_creator.fb_session
+      post_creator.fb_session.name = fb_scraping.get_cookie_json
+      post_creator.fb_session.save
       # begin
       fb_scraping.process
       # rescue Exception => e
