@@ -4,7 +4,7 @@ ActiveAdmin.register FbSession do
   index do
     selectable_column
     id_column
-    column :name
+    column :name, label: "Datos JSON de la sesión"
     column :disabled
     column :created_at
     column :updated_at
@@ -14,7 +14,7 @@ ActiveAdmin.register FbSession do
 
   form do |f|
     f.inputs do
-      f.input :name
+      f.input :name, as: :text, label: "Datos JSON de la sesión"
       f.input :disabled
     end
     f.actions
