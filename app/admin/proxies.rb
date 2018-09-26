@@ -10,6 +10,14 @@ ActiveAdmin.register Proxy do
     actions
   end
 
+  show title: :id do
+    attributes_table do
+      row :name
+      row :disabled
+      row :created_at
+      row :updated_at
+    end
+  end
 
   form do |f|
     f.inputs do
