@@ -7,6 +7,10 @@ class OnlyAdminsAuthorization < ActiveAdmin::AuthorizationAdapter
       user.admin?
     when normalized(Category)
       user.admin?
+    when normalized(Proxy)
+      user.admin?
+    when normalized(FbSession)
+      user.admin?
     when normalized(PostCreator)
       if action == :update || action == :destroy
         user.admin?
