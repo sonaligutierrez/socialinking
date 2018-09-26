@@ -4,7 +4,6 @@ ActiveAdmin.register Proxy do
   index do
     selectable_column
     id_column
-    column :name
     column :disabled
     column :created_at
     column :updated_at
