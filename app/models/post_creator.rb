@@ -1,8 +1,8 @@
 class PostCreator < ApplicationRecord
   has_many :posts
   belongs_to :account
-  belongs_to :proxy
-  belongs_to :fb_session
+  belongs_to :proxy, optional: true
+  belongs_to :fb_session, optional: true
 
   before_validation :check_to_clean_session
   after_create :assign_avatar
