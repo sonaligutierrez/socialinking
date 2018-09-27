@@ -13,9 +13,7 @@ ActiveAdmin.register PostCreator do
   form do |f|
      f.inputs do
        f.input :account
-       f.input :fan_page
        f.input :url
-       f.input :avatar
        f.input :fb_user
        f.input :fb_pass
        f.input :proxy_id, label: "Proxy", as: :select, collection: Proxy.all.map { |p| ["#{p.id}", p.id] }
@@ -35,10 +33,6 @@ ActiveAdmin.register PostCreator do
       row :account
       row :avatar do |ad|
         link_to ad.avatar, ad.avatar, target: "_blank"
-
-      end
-      row :fan_page do |ad|
-        link_to ad.fan_page, ad.fan_page, target: "_blank"
       end
       row :url do |ad|
         link_to ad.url, ad.url, target: "_blank"

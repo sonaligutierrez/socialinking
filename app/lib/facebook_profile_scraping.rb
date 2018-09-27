@@ -88,16 +88,25 @@ class FacebookProfileScraping
     false
   end
 
+  def check_and_get_profile_url
+    @profile.url.gsub("www.facebook.com", "m.facebook.com")
+  end
+
   def get_post_creator_avatar
     if @agent
-      @agent.get("#{@profile.url}") do |page|
+      @agent.get("#{check_and_get_profile_url}") do |page|
         @page = page
         images = page.search("a img")
+        @profile.fan_page = page.title
         images.each do |img|
-          @profile.avatar = img.attributes["src"].text unless img.attributes["src"].nil?
-          @profile.save!
-          break
+          if img.attributes["alt"]
+            if img.attributes["alt"].text.include?("Profile picture")
+              @profile.avatar = img.attributes["src"].text
+              break
+            end
+          end
         end
+        @profile.save!
       end
       return true
     end

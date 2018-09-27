@@ -20,9 +20,7 @@ class PostCreator < ApplicationRecord
 
   def assign_avatar
     fb_scraping = FacebookProfileScraping.new(self, self.fb_user, self.fb_pass, self.fb_session.try(:name), self.proxy.try(:name))
-    if fb_scraping.login
-      fb_scraping.get_post_creator_avatar
-    end
+    fb_scraping.get_post_creator_avatar
   end
 
   def generate_cookie
