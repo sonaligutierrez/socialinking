@@ -8,17 +8,17 @@ class PostCreator < ApplicationRecord
 
   def fb_user
     return fb_session.login if fb_session
-    return nil
+    nil
   end
 
   def fb_pass
     return fb_session.pass if fb_session
-    return nil
+    nil
   end
 
   def proxy
     return fb_session.proxy.name if fb_session.proxy
-    return nil
+    nil
   end
 
   def check_to_clean_session
