@@ -14,9 +14,6 @@ ActiveAdmin.register PostCreator do
      f.inputs do
        f.input :account
        f.input :url
-       f.input :fb_user
-       f.input :fb_pass
-       f.input :proxy_id, label: "Proxy", as: :select, collection: Proxy.all.map { |p| ["#{p.id}", p.id] }
        f.input :fb_session_id, label: "fb_session", as: :select, collection: FbSession.all.map { |f| ["#{f.id}", f.id] }
      end
      f.actions
@@ -37,7 +34,6 @@ ActiveAdmin.register PostCreator do
       row :url do |ad|
         link_to ad.url, ad.url, target: "_blank"
       end
-      row :fb_user
     end
   end
 

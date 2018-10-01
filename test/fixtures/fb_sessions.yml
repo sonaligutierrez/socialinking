@@ -5,3 +5,12 @@ one:
   disabled: false
   created_at: "2018-05-28 18:12:12"
   updated_at: "2018-06-06 20:22:39"
+  login: "100024259477385"
+  pass: "123gwapako"
+two:
+  name: ''
+  disabled: false
+  created_at: "2018-05-28 18:12:12"
+  updated_at: "2018-06-06 20:22:39"
+  login: "luiseloyhernandez@gmail.com"
+  pass: "xyzw123456"

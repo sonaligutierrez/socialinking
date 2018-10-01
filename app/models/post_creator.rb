@@ -1,12 +1,25 @@
 class PostCreator < ApplicationRecord
   has_many :posts
   belongs_to :account
-  belongs_to :proxy, optional: true
   belongs_to :fb_session, optional: true
 
   before_validation :check_to_clean_session
   after_create :assign_avatar
 
+  def fb_user
+    return fb_session.login if fb_session
+    return nil
+  end
+
+  def fb_pass
+    return fb_session.pass if fb_session
+    return nil
+  end
+
+  def proxy
+    return fb_session.proxy.name if fb_session.proxy
+    return nil
+  end
 
   def check_to_clean_session
     if self.changed_attributes.keys.include?("fb_user") || self.changed_attributes.keys.include?("fb_pass")

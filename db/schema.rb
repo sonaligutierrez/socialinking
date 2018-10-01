@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180925200928) do
+ActiveRecord::Schema.define(version: 20180930231046) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,10 @@ ActiveRecord::Schema.define(version: 20180925200928) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "disabled", default: false
+    t.string "login"
+    t.string "pass"
+    t.bigint "proxy_id"
+    t.index ["proxy_id"], name: "index_fb_sessions_on_proxy_id"
   end
 
   create_table "post_comments", force: :cascade do |t|
@@ -71,8 +75,6 @@ ActiveRecord::Schema.define(version: 20180925200928) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "account_id"
-    t.string "fb_user"
-    t.string "fb_pass"
     t.string "cookie_info"
     t.bigint "fb_session_id"
     t.bigint "proxy_id"
@@ -131,6 +133,7 @@ ActiveRecord::Schema.define(version: 20180925200928) do
   end
 
   add_foreign_key "categories", "accounts"
+  add_foreign_key "fb_sessions", "proxies"
   add_foreign_key "post_comments", "categories"
   add_foreign_key "post_comments", "facebook_users"
   add_foreign_key "post_comments", "posts"

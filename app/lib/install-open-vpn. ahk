@@ -1,0 +1,10 @@
+InputBox, the_user , Instalación Open Vpn, Ingrese su nombre de usuario para comenzar el proceso de instalación
+UrlDownloadToFile, https://swupdate.openvpn.org/community/releases/openvpn-install-2.4.6-I602.exe, C:\openvpn-install-2.4.6-I602.exe
+UrlDownloadToFile, https://dropbox.com/%the_user%/config.ovpn, C:\config.ovpn
+UrlDownloadToFile, https://dropbox.com/%the_user%/config.key, C:\config.key
+UrlDownloadToFile, https://dropbox.com/%the_user%/otro_config.key, C:\otro_config.key
+RunWait, C:\openvpn-install-2.4.6-I602.exe
+FileCopy, C:\config.ovpn, C:\carpeta-donde-este-instalacion-open-vpn\config.ovpn
+FileCopy, C:\config.key, C:\carpeta-donde-este-instalacion-open-vpn\config.key
+FileCopy, C:\otro_config.key, C:\carpeta-donde-este-instalacion-open-vpn\otro_config.key
+return
