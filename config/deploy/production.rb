@@ -41,9 +41,9 @@ server "social-linking.prosumia.la", user: "ubuntu", roles: %w{app db web}
 #
 # Global options
 # --------------
-# set :ssh_options,
-#  keys: %w(/User/luelher/Dropbox/keys/social_linking.pub),
-#  forward_agent: false
+set :ssh_options,
+ keys: %w(/User/luelher/Dropbox/keys/social_linking.pub, /tmp/social_linking.pub),
+ forward_agent: false
 #
 # The server-based syntax can be used to override options:
 # ------------------------------------
