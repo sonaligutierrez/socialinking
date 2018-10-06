@@ -209,7 +209,7 @@ class FacebookPostScrapingWatir
         element = @browser.elements(css: ".permalinkPost a.UFIPagerLink").last
         @browser.scroll.to(:top).by(0, element.location.y - 100)
         @browser.element(css: ".permalinkPost a.UFIPagerLink").click!
-        sleep 3
+        sleep 2
         if get_execution_time > MAX_SCRAPING_TIME
           @message += "Scraping Time up. "
           @start_time = nil
