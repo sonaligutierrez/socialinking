@@ -8,7 +8,7 @@
 # It must return the number of comment processed
 
 class FacebookPostScrapingWatir
-  attr_accessor :post_url, :browser, :fb_user, :fb_pass, :comments, :page, :finish_paging, :cookie_json, :proxy, :debug, :start_time, :headless, :message
+  attr_accessor :post_url, :browser, :fb_user, :fb_pass, :comments, :page, :finish_paging, :cookie_json, :proxy, :debug, :start_time, :headless, :message, :post_id
 
   MAX_SCRAPING_TIME = 600 # sec
 
@@ -141,10 +141,10 @@ class FacebookPostScrapingWatir
       rescue Watir::Wait::TimeoutError => error
       end
       @comments = get_comments
-      print_debug "Process - First Page - Comments", @comments.count.to_s
+      print_debug "Process - First Page - Comments", @comments.to_s
     end
 
-    @comments.length
+    @comments
   end
 
   def get_page_info
@@ -181,7 +181,7 @@ class FacebookPostScrapingWatir
 
     def get_comments
       print_debug "Process - Comments", "getting...."
-      result_comments = []
+      result_comments = 0
       begin
         @browser.element(css: ".permalinkPost .uiPopover").wait_until_present(timeout: 5)
       rescue Watir::Wait::TimeoutError => error
@@ -191,7 +191,7 @@ class FacebookPostScrapingWatir
         if @browser.elements(css: ".permalinkPost .uiPopover").last.exist?
           element = @browser.elements(css: ".permalinkPost .uiPopover").last
           @browser.scroll.to(:top).by(0, element.location.y - 100)
-          element.click
+          element.click!
         end
         if @browser.elements(css: ".__MenuItem").count == 3
           if @browser.elements(css: ".__MenuItem").last.exist?
@@ -222,7 +222,7 @@ class FacebookPostScrapingWatir
       @message += "Comments found: #{comments.count}. "
       print_debug "Process - Comments - Scraping", comments.count.to_s
       comments.each do |comment|
-        begin
+        # begin
 
           reactions = ""
           reactions_description = ""
@@ -239,18 +239,28 @@ class FacebookPostScrapingWatir
           if comment.span(css: ".UFISutroLikeCount").exist?
             reactions = comment.span(css: ".UFISutroLikeCount").text
           end
-          if get_execution_time > MAX_SCRAPING_TIME
-            @message += "Scraping Time up. "
-            return result_comments
-          end
 
           responses = comment.span(css: ".UFIReplySocialSentenceLinkText").text if comment.span(css: ".UFIReplySocialSentenceLinkText").exist?
-          result_comments << { id_comment: id_comment, user: user, url_profile: url_profile, date_comment: date_comment, comment: text_comment, reactions: reactions, reactions_description: reactions_description, responses: responses } unless text_comment.to_s.empty? && id_comment.to_s.empty?
-        rescue Exception => e
-          puts e.message
-        end
+
+          unless text_comment.to_s.empty? && id_comment.to_s.empty?
+            result_comment = { id_comment: id_comment, user: user, url_profile: url_profile, date_comment: date_comment, comment: text_comment, reactions: reactions, reactions_description: reactions_description, responses: responses } 
+
+            fb_user = FacebookUser.where(fb_username: result_comment[:url_profile]).first_or_create(fb_name: result_comment[:user])
+            if fb_user
+              the_comment = PostComment.find_by_id_comment(result_comment[:id_comment])
+              if the_comment
+                the_comment.update(date_comment: result_comment[:date_comment], reactions: result_comment[:reactions], reactions_description: result_comment[:reactions_description], responses: result_comment[:responses])
+              else
+                the_comment = PostComment.create(post_id: @post_id, facebook_user_id: fb_user.id, id_comment: result_comment[:id_comment], date_comment: result_comment[:date_comment], reactions: result_comment[:reactions], reactions_description: result_comment[:reactions_description], responses: result_comment[:responses], category_id: Category.find_by_name("Uncategorized").id, comment: result_comment[:comment])
+              end
+              result_comments += 1 if the_comment
+            end
+          end
+        # rescue Exception => e
+        #   puts e.message
+        # end
       end
-      @message += "Comments scraped: #{result_comments.count}. "
+      @message += "Comments scraped: #{result_comments}. "
       result_comments
     end
 
