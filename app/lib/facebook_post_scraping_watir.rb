@@ -224,38 +224,38 @@ class FacebookPostScrapingWatir
       comments.each do |comment|
         # begin
 
-          reactions = ""
-          reactions_description = ""
-          responses = ""
-          user = comment.a(css: ".UFICommentActorName").text
-          url_profile = comment.a(css: ".UFICommentActorName").href
+        reactions = ""
+        reactions_description = ""
+        responses = ""
+        user = comment.a(css: ".UFICommentActorName").text
+        url_profile = comment.a(css: ".UFICommentActorName").href
 
-          text_comment = comment.span(css: ".UFICommentBody").text
+        text_comment = comment.span(css: ".UFICommentBody").text
 
-          date_comment = comment.a(css: ".uiLinkSubtle").text
+        date_comment = comment.a(css: ".uiLinkSubtle").text
 
-          id_comment = comment.a(css: ".uiLinkSubtle").href.split("?").last.split("&")[0].split("comment_id=").last
+        id_comment = comment.a(css: ".uiLinkSubtle").href.split("?").last.split("&")[0].split("comment_id=").last
 
-          if comment.span(css: ".UFISutroLikeCount").exist?
-            reactions = comment.span(css: ".UFISutroLikeCount").text
-          end
+        if comment.span(css: ".UFISutroLikeCount").exist?
+          reactions = comment.span(css: ".UFISutroLikeCount").text
+        end
 
-          responses = comment.span(css: ".UFIReplySocialSentenceLinkText").text if comment.span(css: ".UFIReplySocialSentenceLinkText").exist?
+        responses = comment.span(css: ".UFIReplySocialSentenceLinkText").text if comment.span(css: ".UFIReplySocialSentenceLinkText").exist?
 
-          unless text_comment.to_s.empty? && id_comment.to_s.empty?
-            result_comment = { id_comment: id_comment, user: user, url_profile: url_profile, date_comment: date_comment, comment: text_comment, reactions: reactions, reactions_description: reactions_description, responses: responses } 
+        unless text_comment.to_s.empty? && id_comment.to_s.empty?
+          result_comment = { id_comment: id_comment, user: user, url_profile: url_profile, date_comment: date_comment, comment: text_comment, reactions: reactions, reactions_description: reactions_description, responses: responses }
 
-            fb_user = FacebookUser.where(fb_username: result_comment[:url_profile]).first_or_create(fb_name: result_comment[:user])
-            if fb_user
-              the_comment = PostComment.find_by_id_comment(result_comment[:id_comment])
-              if the_comment
-                the_comment.update(date_comment: result_comment[:date_comment], reactions: result_comment[:reactions], reactions_description: result_comment[:reactions_description], responses: result_comment[:responses])
-              else
-                the_comment = PostComment.create(post_id: @post_id, facebook_user_id: fb_user.id, id_comment: result_comment[:id_comment], date_comment: result_comment[:date_comment], reactions: result_comment[:reactions], reactions_description: result_comment[:reactions_description], responses: result_comment[:responses], category_id: Category.find_by_name("Uncategorized").id, comment: result_comment[:comment])
-              end
-              result_comments += 1 if the_comment
+          fb_user = FacebookUser.where(fb_username: result_comment[:url_profile]).first_or_create(fb_name: result_comment[:user])
+          if fb_user
+            the_comment = PostComment.find_by_id_comment(result_comment[:id_comment])
+            if the_comment
+              the_comment.update(date_comment: result_comment[:date_comment], reactions: result_comment[:reactions], reactions_description: result_comment[:reactions_description], responses: result_comment[:responses])
+            else
+              the_comment = PostComment.create(post_id: @post_id, facebook_user_id: fb_user.id, id_comment: result_comment[:id_comment], date_comment: result_comment[:date_comment], reactions: result_comment[:reactions], reactions_description: result_comment[:reactions_description], responses: result_comment[:responses], category_id: Category.find_by_name("Uncategorized").id, comment: result_comment[:comment])
             end
+            result_comments += 1 if the_comment
           end
+        end
         # rescue Exception => e
         #   puts e.message
         # end
