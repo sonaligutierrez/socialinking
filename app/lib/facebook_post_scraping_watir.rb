@@ -10,7 +10,7 @@
 class FacebookPostScrapingWatir
   attr_accessor :post_url, :browser, :fb_user, :fb_pass, :comments, :page, :finish_paging, :cookie_json, :proxy, :debug, :start_time, :headless, :message, :post_id
 
-  MAX_SCRAPING_TIME = 1200 # sec
+  MAX_SCRAPING_TIME = 800 # sec
 
   def initialize(post_url, user, pass, cookie_json, proxy, headless = true, debug = false)
     @post_url = post_url
