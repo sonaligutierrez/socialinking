@@ -69,23 +69,7 @@ class Post < ApplicationRecord
       post_creator.fb_session.save
       # begin
       fb_scraping.post_id = id
-      fb_scraping.process
-      # rescue Exception => e
-      #   puts e.message
-      #   fb_scraping.close
-      # end
-      # fb_scraping.comments.each do |comment|
-      #   fb_user = FacebookUser.where(fb_username: comment[:url_profile]).first_or_create(fb_name: comment[:user])
-      #   if fb_user
-      #     the_comment = PostComment.find_by_id_comment(comment[:id_comment])
-      #     if the_comment
-      #       the_comment.update(date_comment: comment[:date_comment], reactions: comment[:reactions], reactions_description: comment[:reactions_description], responses: comment[:responses])
-      #     else
-      #       the_comment = PostComment.create(post_id: id, facebook_user_id: fb_user.id, id_comment: comment[:id_comment], date_comment: comment[:date_comment], reactions: comment[:reactions], reactions_description: comment[:reactions_description], responses: comment[:responses], category_id: Category.find_by_name("Uncategorized").id, comment: comment[:comment])
-      #     end
-      #     count += 1 if the_comment
-      #   end
-      # end
+      count = fb_scraping.process
     end
     fb_scraping.close
     end_time = DateTime.now

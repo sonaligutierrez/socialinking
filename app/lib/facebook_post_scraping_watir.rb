@@ -10,7 +10,7 @@
 class FacebookPostScrapingWatir
   attr_accessor :post_url, :browser, :fb_user, :fb_pass, :comments, :page, :finish_paging, :cookie_json, :proxy, :debug, :start_time, :headless, :message, :post_id
 
-  MAX_SCRAPING_TIME = 600 # sec
+  MAX_SCRAPING_TIME = 1200 # sec
 
   def initialize(post_url, user, pass, cookie_json, proxy, headless = true, debug = false)
     @post_url = post_url
@@ -217,48 +217,54 @@ class FacebookPostScrapingWatir
         end
       end
 
-      comments = @browser.elements(css: ".permalinkPost .UFIComment")
-      comments = @browser.elements(css: ".UFIList").first.elements(css: ".UFIComment") if comments.count == 0 && @browser.elements(css: ".UFIList").count > 0
+      if @browser.elements(css: ".permalinkPost").count >= 1
+        comments_html = @browser.elements(css: ".permalinkPost").first.html
+      else
+        comments_html = @browser.elements(css: ".UFIList").first.html
+      end
+
+      close
+
+      page = Nokogiri::HTML(comments_html)
+      comments = page.css(".UFIComment")
       @message += "Comments found: #{comments.count}. "
       print_debug "Process - Comments - Scraping", comments.count.to_s
+
       comments.each do |comment|
-        # begin
+        begin
+          reactions = ""
+          reactions_description = ""
+          responses = ""
+          user = comment.css("a.UFICommentActorName").text
+          url_profile = comment.css("a.UFICommentActorName").first.attributes["href"].text
 
-        reactions = ""
-        reactions_description = ""
-        responses = ""
-        user = comment.a(css: ".UFICommentActorName").text
-        url_profile = comment.a(css: ".UFICommentActorName").href
+          text_comment = comment.css("span.UFICommentBody").text
 
-        text_comment = comment.span(css: ".UFICommentBody").text
+          date_comment = comment.css("a.uiLinkSubtle").text
 
-        date_comment = comment.a(css: ".uiLinkSubtle").text
+          id_comment = comment.css("a.uiLinkSubtle").first.attributes["href"].text.split("?").last.split("&")[0].split("comment_id=").last
 
-        id_comment = comment.a(css: ".uiLinkSubtle").href.split("?").last.split("&")[0].split("comment_id=").last
+          reactions = comment.css("span.UFISutroLikeCount").text
 
-        if comment.span(css: ".UFISutroLikeCount").exist?
-          reactions = comment.span(css: ".UFISutroLikeCount").text
-        end
+          responses = comment.css("span.UFIReplySocialSentenceLinkText").text
 
-        responses = comment.span(css: ".UFIReplySocialSentenceLinkText").text if comment.span(css: ".UFIReplySocialSentenceLinkText").exist?
+          unless text_comment.to_s.empty? && id_comment.to_s.empty?
+            result_comment = { id_comment: id_comment, user: user, url_profile: url_profile, date_comment: date_comment, comment: text_comment, reactions: reactions, reactions_description: reactions_description, responses: responses }
 
-        unless text_comment.to_s.empty? && id_comment.to_s.empty?
-          result_comment = { id_comment: id_comment, user: user, url_profile: url_profile, date_comment: date_comment, comment: text_comment, reactions: reactions, reactions_description: reactions_description, responses: responses }
-
-          fb_user = FacebookUser.where(fb_username: result_comment[:url_profile]).first_or_create(fb_name: result_comment[:user])
-          if fb_user
-            the_comment = PostComment.find_by_id_comment(result_comment[:id_comment])
-            if the_comment
-              the_comment.update(date_comment: result_comment[:date_comment], reactions: result_comment[:reactions], reactions_description: result_comment[:reactions_description], responses: result_comment[:responses])
-            else
-              the_comment = PostComment.create(post_id: @post_id, facebook_user_id: fb_user.id, id_comment: result_comment[:id_comment], date_comment: result_comment[:date_comment], reactions: result_comment[:reactions], reactions_description: result_comment[:reactions_description], responses: result_comment[:responses], category_id: Category.find_by_name("Uncategorized").id, comment: result_comment[:comment])
+            fb_user = FacebookUser.where(fb_username: result_comment[:url_profile]).first_or_create(fb_name: result_comment[:user])
+            if fb_user
+              the_comment = PostComment.find_by_id_comment(result_comment[:id_comment])
+              if the_comment
+                the_comment.update(date_comment: result_comment[:date_comment], reactions: result_comment[:reactions], reactions_description: result_comment[:reactions_description], responses: result_comment[:responses])
+              else
+                the_comment = PostComment.create(post_id: @post_id, facebook_user_id: fb_user.id, id_comment: result_comment[:id_comment], date_comment: result_comment[:date_comment], reactions: result_comment[:reactions], reactions_description: result_comment[:reactions_description], responses: result_comment[:responses], category_id: Category.find_by_name("Uncategorized").id, comment: result_comment[:comment])
+              end
+              result_comments += 1 if the_comment
             end
-            result_comments += 1 if the_comment
           end
+        rescue Exception => e
+          puts e.message
         end
-        # rescue Exception => e
-        #   puts e.message
-        # end
       end
       @message += "Comments scraped: #{result_comments}. "
       result_comments
