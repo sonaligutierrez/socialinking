@@ -41,6 +41,7 @@ production_deploy:
     - eval "$(ssh-agent -s)"
     - touch /tmp/social_linking.pub
     - echo $SSH_PRIVATE_KEY >> /tmp/social_linking.pub 
+    - cap /tmp/social_linking.pub
     - gem install bundler  --no-ri --no-rdoc
     - bundle install
   script:
