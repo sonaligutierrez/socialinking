@@ -1,6 +1,7 @@
 ActiveAdmin.register User do
   permit_params :email, :password, :password_confirmation
   menu label: proc { I18n.t("active_admin.users") }, priority: 7
+  menu parent: "Administracion"
   index do
     selectable_column
     id_column

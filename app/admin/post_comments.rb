@@ -1,6 +1,7 @@
 ActiveAdmin.register PostComment do
   permit_params :facebook_user_id, :post_id, :category_id, :date, :comment, :id_comment, :reactions, :reactions_description, :responses, :date_comment, :id_comment
   menu false
+  actions :all, except: [:new]
   index do
     column :facebook_user
     column :comment

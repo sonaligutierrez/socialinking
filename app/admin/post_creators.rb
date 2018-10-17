@@ -5,6 +5,7 @@ ActiveAdmin.register PostCreator do
   permit_params :account_id, :fan_page, :url, :avatar, :fb_user, :fb_pass, :fb_session_id, :proxy_id, :cookie_info
   config.batch_actions = false
   config.filters = false
+  menu parent: "Comentarios"
 
   index do
     render "admin/index_post_creators", context: self

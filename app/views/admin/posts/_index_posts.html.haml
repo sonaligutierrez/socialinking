@@ -20,6 +20,16 @@
                     = p.try(:title).upcase
               -else
                 .text-post-style=""
+            .row
+              -if p.try(:description).present?
+                - if p.description.size > 32
+                  .text-post-style{:description => "#{p.try(:description).upcase}"}
+                    = p.try(:description).upcase.truncate 62
+                - else
+                  %div{:style => "margin: 20px 0px 10px 17px;"}
+                    = p.try(:description).upcase
+              -else
+                .text-post-style=""
           .panel-body
             = link_to comments_admin_post_path(p) do
               %img.img-responsive{:alt => "Image", :src => "#{p.image || 'https://placehold.it/150x80?text=IMAGE'}", :style => "width:100%; height: 225px;"}/

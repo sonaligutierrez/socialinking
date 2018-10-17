@@ -17,7 +17,6 @@
 
 :javascript
   $('#page_title').html("#{@post.title}" || "#{@post.date} - #{@post.post_creator.fb_user}");
-  $("#titlebar_right").html("<span class='action_item'><a href='/admin/posts/#{@post.id}/new_comment'>Añadir Comentario</a></span>")
   	function update(comment_id, category_id){
   	  $.ajax({
   						method: "put",

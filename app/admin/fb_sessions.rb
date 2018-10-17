@@ -1,6 +1,7 @@
 ActiveAdmin.register FbSession do
   permit_params :name, :disabled, :login, :pass, :proxy_id
   menu label: proc { I18n.t("active_admin.fb_sessions") }, priority: 9
+  menu parent: "Administracion"
 
   index do
     selectable_column

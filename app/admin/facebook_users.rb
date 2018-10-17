@@ -1,10 +1,10 @@
 ActiveAdmin.register FacebookUser do
   menu label: proc { I18n.t("active_admin.facebook_users") }, priority: 3
+  menu parent: "Usuarios"
   permit_params :fb_username, :fb_name, :fb_avatar
   actions :all, except: [:new]
-  filter :fb_username
-  filter :fb_name
-  filter :fb_avatar
+  filter :posts, label: "Publicaciones"
+  filter :post_creators, label: "Publicadores"
   index do
     column :fb_username
     column :fb_name

@@ -2,6 +2,7 @@ ActiveAdmin.register Post do
   config.filters = false
   config.batch_actions = false
   menu label: proc { I18n.t("active_admin.posts") }, priority: 2
+  menu parent: "Comentarios"
   actions :all
   permit_params :post_creator_id, :date, :post_date, :url, :title
 

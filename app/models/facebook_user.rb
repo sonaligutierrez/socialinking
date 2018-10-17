@@ -1,5 +1,7 @@
 class FacebookUser < ApplicationRecord
   has_many :post_comments
+  has_many :posts, through: :post_comments
+  has_many :post_creators, through: :posts
 
   validates :fb_username, :fb_name, presence: true
 

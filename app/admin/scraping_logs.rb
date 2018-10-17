@@ -3,6 +3,7 @@ ActiveAdmin.register ScrapingLog do
   filter :scraping_date
   filter :total_comment
   menu label: proc { I18n.t("active_admin.scraping_logs") }, priority: 6
+  menu parent: "Administracion"
   index do
     column :scraping_date
     column :exec_time_in_hours

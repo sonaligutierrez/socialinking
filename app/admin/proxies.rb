@@ -1,6 +1,7 @@
 ActiveAdmin.register Proxy do
   permit_params :name, :disabled
   menu label: proc { I18n.t("active_admin.proxies") }, priority: 8
+  menu parent: "Administracion"
   index do
     selectable_column
     id_column
