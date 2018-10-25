@@ -69,6 +69,10 @@ ActiveAdmin.register Post do
 
   controller do
 
+    def edit
+      @page_title = "Editar Publicacion # #{resource.id}"
+    end
+
     def comment_params
       params.require(:post_comment).permit(:date, :comment, :facebook_user_id, :category_id, :id_comment, :reactions, :reactions_description, :responses, :date_comment)
     end

@@ -11,16 +11,6 @@
                 %br
                 =p.try(:post_date)&.strftime('%d de %b de %Y a las %l:%M')
             .row
-              -if p.try(:title).present?
-                - if p.title.size > 32
-                  .text-post-style{:title => "#{p.try(:title).upcase}"}
-                    = p.try(:title).upcase.truncate 62
-                - else
-                  %div{:style => "margin: 20px 0px 10px 17px;"}
-                    = p.try(:title).upcase
-              -else
-                .text-post-style=""
-            .row
               -if p.try(:description).present?
                 - if p.description.size > 32
                   .text-post-style{:description => "#{p.try(:description).upcase}"}

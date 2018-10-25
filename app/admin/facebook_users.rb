@@ -3,8 +3,12 @@ ActiveAdmin.register FacebookUser do
   menu parent: "Usuarios"
   permit_params :fb_username, :fb_name, :fb_avatar
   actions :all, except: [:new]
-  filter :posts, label: "Publicaciones"
-  filter :post_creators, label: "Publicadores"
+  filter :posts, label: "Publicaciones", collection: -> {
+    Post.all.map { |post| [ "ID #{post.id} - #{post.title}", post.id] }
+  }
+  filter :post_creators, label: "Publicadores", collection: -> {
+    PostCreator.all.map { |pc| [ "ID #{pc.id} - #{pc.name}", pc.id] }
+  }
   index do
     column :fb_username
     column :fb_name

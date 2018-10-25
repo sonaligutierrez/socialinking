@@ -6,6 +6,7 @@ class Post < ApplicationRecord
   validates :post_creator, :url, presence: true
 
   after_create :send_to_scraping
+  before_create :clean_url
 
   attr_accessor :debug, :headless
 
@@ -107,4 +108,16 @@ class Post < ApplicationRecord
     def send_to_scraping
       ExtractDataInBatchJob.set(wait: 1.second).perform_later self
     end
+
+    def clean_url
+      if self.url.include?("post")
+        self.url = self.url.split("?").first
+      elsif self.url.include?("story_fbid")
+        the_url = self.url
+        self.url = the_url.split("&").first
+        self.url += "&"
+        self.url += the_url.split("&").second unless the_url.split("&").second.to_s.empty?
+      end
+    end
+  
 end
