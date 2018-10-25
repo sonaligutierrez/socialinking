@@ -119,5 +119,4 @@ class Post < ApplicationRecord
         self.url += the_url.split("&").second unless the_url.split("&").second.to_s.empty?
       end
     end
-  
 end

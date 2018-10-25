@@ -136,11 +136,11 @@ ActiveAdmin.setup do |config|
   # config.comments_menu = { parent: 'Admin', priority: 1 }
   config.namespace :admin do |admin|
     admin.build_menu do |menu|
-      menu.add label: 'Comentarios', priority: 2
-      menu.add label: 'Reacciones', priority: 3
-      menu.add label: 'Likes', priority: 4
-      menu.add label: 'Usuarios', priority: 5
-      menu.add label: 'Administracion', priority: 6
+      menu.add label: "Comentarios", priority: 2
+      menu.add label: "Reacciones", priority: 3
+      menu.add label: "Likes", priority: 4
+      menu.add label: "Usuarios", priority: 5
+      menu.add label: "Administracion", priority: 6
     end
   end
 

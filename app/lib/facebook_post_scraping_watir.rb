@@ -254,7 +254,7 @@ class FacebookPostScrapingWatir
             result_comment = { id_comment: id_comment, user: user, url_profile: url_profile, date_comment: date_comment, comment: text_comment, reactions: reactions, reactions_description: reactions_description, responses: responses, date: date_time, avatar: avatar_url }
 
             fb_user = FacebookUser.where(fb_username: clean_url_profile(result_comment[:url_profile])).first_or_create(fb_name: result_comment[:user], fb_avatar: result_comment[:avatar])
-            
+
             if fb_user
               the_comment = PostComment.find_by_id_comment(result_comment[:id_comment])
               if the_comment
