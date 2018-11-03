@@ -1,6 +1,6 @@
 require "test_helper"
 
-class ExtractDataWatirInBatchJobTest < ActiveJob::TestCase
+class ExtractDataReactionsInBatchJobTest < ActiveJob::TestCase
   def setup
     @fb_post_photo = posts(:watir_1)
     @fb_post = posts(:watir_2)
@@ -10,21 +10,21 @@ class ExtractDataWatirInBatchJobTest < ActiveJob::TestCase
 
   test "scraping execution for a post" do
     VCR.use_cassette("fb_scraping_watir_1") do
-      count = ExtractDataWatirInBatchJob.perform_now @fb_post
+      count = ExtractDataReactionsInBatchJob.perform_now @fb_post
       assert_equal(true, @fb_post.post_comments.count > 10)
     end
   end
 
   test "scraping execution for a post v2" do
     VCR.use_cassette("fb_scraping_watir_2") do
-      count = ExtractDataWatirInBatchJob.perform_now @fb_post_v2
+      count = ExtractDataReactionsInBatchJob.perform_now @fb_post_v2
       assert_equal(true, @fb_post_v2.post_comments.count > 10)
     end
   end
 
   test "scraping execution for a post with photo" do
     VCR.use_cassette("fb_scraping_watir_3") do
-      count = ExtractDataWatirInBatchJob.perform_now @fb_post_photo
+      count = ExtractDataReactionsInBatchJob.perform_now @fb_post_photo
       assert_equal(true, @fb_post_photo.post_comments.count > 10)
     end
   end

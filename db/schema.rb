@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181017035831) do
+ActiveRecord::Schema.define(version: 20181103024332) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,15 @@ ActiveRecord::Schema.define(version: 20181017035831) do
     t.index ["post_id"], name: "index_post_comments_on_post_id"
   end
 
+  create_table "post_creator_likes", force: :cascade do |t|
+    t.bigint "facebook_users_id"
+    t.bigint "post_creators_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["facebook_users_id"], name: "index_post_creator_likes_on_facebook_users_id"
+    t.index ["post_creators_id"], name: "index_post_creator_likes_on_post_creators_id"
+  end
+
   create_table "post_creators", force: :cascade do |t|
     t.string "fan_page"
     t.string "url"
@@ -78,9 +87,30 @@ ActiveRecord::Schema.define(version: 20181017035831) do
     t.string "cookie_info"
     t.bigint "fb_session_id"
     t.bigint "proxy_id"
+    t.boolean "get_likes", default: false
+    t.integer "fb_page_session"
     t.index ["account_id"], name: "index_post_creators_on_account_id"
     t.index ["fb_session_id"], name: "index_post_creators_on_fb_session_id"
     t.index ["proxy_id"], name: "index_post_creators_on_proxy_id"
+  end
+
+  create_table "post_reactions", force: :cascade do |t|
+    t.text "reaction"
+    t.bigint "facebook_users_id"
+    t.bigint "posts_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["facebook_users_id"], name: "index_post_reactions_on_facebook_users_id"
+    t.index ["posts_id"], name: "index_post_reactions_on_posts_id"
+  end
+
+  create_table "post_shared", force: :cascade do |t|
+    t.bigint "facebook_users_id"
+    t.bigint "posts_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["facebook_users_id"], name: "index_post_shared_on_facebook_users_id"
+    t.index ["posts_id"], name: "index_post_shared_on_posts_id"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -93,6 +123,9 @@ ActiveRecord::Schema.define(version: 20181017035831) do
     t.string "title"
     t.string "description"
     t.string "image"
+    t.boolean "get_comments", default: false
+    t.boolean "get_reactions", default: false
+    t.boolean "get_shared", default: false
     t.index ["post_creator_id"], name: "index_posts_on_post_creator_id"
   end
 
@@ -137,9 +170,15 @@ ActiveRecord::Schema.define(version: 20181017035831) do
   add_foreign_key "post_comments", "categories"
   add_foreign_key "post_comments", "facebook_users"
   add_foreign_key "post_comments", "posts"
+  add_foreign_key "post_creator_likes", "facebook_users", column: "facebook_users_id"
+  add_foreign_key "post_creator_likes", "post_creators", column: "post_creators_id"
   add_foreign_key "post_creators", "accounts"
   add_foreign_key "post_creators", "fb_sessions"
   add_foreign_key "post_creators", "proxies"
+  add_foreign_key "post_reactions", "facebook_users", column: "facebook_users_id"
+  add_foreign_key "post_reactions", "posts", column: "posts_id"
+  add_foreign_key "post_shared", "facebook_users", column: "facebook_users_id"
+  add_foreign_key "post_shared", "posts", column: "posts_id"
   add_foreign_key "posts", "post_creators"
   add_foreign_key "scraping_logs", "posts"
 end

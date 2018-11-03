@@ -17,4 +17,5 @@
 
 ActiveSupport::Inflector.inflections do |inflect|
   inflect.plural "proxy", "proxies"
+  inflect.irregular "shared", "shared"
 end

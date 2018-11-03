@@ -8,24 +8,26 @@
 # It must return the number of comment processed
 
 class FacebookPostScraping
-  attr_accessor :post_url, :agent, :fb_user, :fb_pass, :comments, :page, :finish_paging, :cookie_yml, :proxy, :debug, :start_time
 
-  MAX_SCRAPING_TIME = 300 # sec
+  attr_accessor :post_url, :browser, :fb_user, :fb_pass, :comments, :page, :finish_paging, :cookie_json, :proxy, :debug, :start_time, :headless, :message, :post_id
 
-  def initialize(post_url, user, pass, cookie_yml, proxy)
+  MAX_SCRAPING_TIME = 3000 # sec
+
+  def initialize(post_url, user, pass, cookie_json, proxy, headless = true, debug = false)
     @post_url = post_url
     @fb_user = user
     @fb_pass = pass
-    @cookie_yml = cookie_yml
+    @cookie_json = cookie_json
     @proxy = proxy
-    @agent = Mechanize.new
-    @agent.user_agent_alias = "Linux Firefox"
-    @debug = false
+    @headless = headless
+    @debug = debug
+    @message = ""
+    set_proxy
   end
 
   def login
-    print_debug "Login", @cookie_yml
-    if @cookie_yml
+    print_debug "Login", @cookie_json
+    if @cookie_json
       resp = login_with_cookie
       unless resp
         login_with_user_and_pass
@@ -37,80 +39,92 @@ class FacebookPostScraping
     end
   end
 
-  def get_cookie_yml
-    YAML.dump(@agent.cookie_jar)
+  def get_cookie_json
+    @browser.cookies.to_a.to_json
   end
 
   def set_proxy
     print_debug "Set Proxy", @proxy
+    capabilities = Selenium::WebDriver::Remote::Capabilities.chrome
+    capabilities["chrome.page.customHeaders.Accept-Language"] = "en-US"
+    capabilities["intl.accept_languages"] = "en-US"
     unless @proxy.to_s.empty?
-      proxy_config = @proxy.split(":")
-      @agent.set_proxy proxy_config[0], proxy_config[1], proxy_config[2], proxy_config[3]
+      proxies = ["--proxy-server=23.106.16.75:29842", "--proxy-auth=mmacer:nk4YWBdc", "--incognito", "--disable-notifications", "--start-maximized", "--privileged"]
+      @browser = Watir::Browser.new :chrome, switches: proxies, headless: @headless, desired_capabilities: capabilities
+      @browser.goto("http://mmacer:nk4YWBdc@google.com/")
+    else
+      options = ["--incognito", "--disable-notifications", "--start-maximized", "--privileged"]
+      @browser = Watir::Browser.new :chrome, switches: options, headless: @headless, desired_capabilities: capabilities
+      @browser.goto("https://www.google.com/")
     end
   end
 
   def login_with_user_and_pass
     print_debug "Login With User And Pass", ""
-    set_proxy
-    login_page = @agent.get("https://m.facebook.com/")
-    login_form = @agent.page.form_with(method: "POST")
-    login_form.email = @fb_user
-    login_form.pass = @fb_pass
-    @agent.submit(login_form)
-    forget_password = @agent.page.links.find { |l| l.text == "Did you forget your password?" }
-    print_debug "Login With User And Pass - Page", @agent.page.body.to_s
-    forget_password.nil?
+    @browser.goto("https://m.facebook.com/a/language.php?l=en_US&lref=https%3A%2F%2Fm.facebook.com%2F%3Frefsrc%3Dhttps%253A%252F%252Fm.facebook.com%252F&gfid=AQASICdU5DBrEyI_&refid=8")
+    if @browser.a(text: "Log In").exist?
+      @browser.a(text: "Log In").click
+    end
+    @browser.text_field(id: "m_login_email").set(@fb_user)
+    @browser.text_field(id: "m_login_password").set(@fb_pass)
+    if @browser.button(text: "Log In").exist?
+      @browser.button(text: "Log In").click
+    else
+      return false
+    end
+    print_debug "Login With User And Pass - Page", "" # @browser.body.html
+
+    if @browser.a(text: "Did you forget your password?").exist?
+      @message += "Error in login/pass for login. "
+      @message += "User Disabled by FB. " if @browser.div(text: "Your Account Has Been Disabled").exist?
+      return false
+    else
+      @message += "Logged with User/Pass. "
+      return true
+    end
   end
 
   def login_with_cookie
-    print_debug "Login With Cookie", @cookie_yml
-    unless @cookie_yml.empty?
-      set_proxy
-      cookie_jar = YAML.load(@cookie_yml)
-      @agent.cookie_jar = cookie_jar
-      @agent.get("https://m.facebook.com/")
-      forget_password = @agent.page.links.find { |l| l.text == "Forgot Password?" || l.text == "Create Account" || l.text == "Crear cuenta nueva" }
-      print_debug "Login With Cookie - Page", @agent.page.body.to_s
-      forget_password.nil?
+    print_debug "Login With Cookie", @cookie_json
+    unless @cookie_json.empty?
+      @browser.goto("https://www.facebook.com/")
+      @browser.a(text: "English (US)").click! if @browser.a(text: "English (US)").exist?
+      set_cookie
+      @browser.refresh
+      print_debug "Login With Cookie - Page - Before Check Cookie Login", @browser.body.html
+      if @browser.element(css: ".removableItem").exist?
+        @browser.element(css: ".removableItem").click
+        if @browser.text_fields(id: "pass").count > 1
+          @browser.text_fields(id: "pass").last.set(@fb_pass)
+          if @browser.buttons(text: "Log In").count > 1
+            @browser.buttons(text: "Log In").last.click
+          end
+        end
+      end
+      sleep(3)
+      print_debug "Login With Cookie - Page - After Check Cookie Login", @browser.body.html
+      if @browser.a(text: "Did you forget your password?").exist? || @browser.a(text: "Forgot account?").exist? || @browser.a(text: "Create New Account").exist?
+        @message += "Error in Cookie for Login. "
+        @message += "User Disabled by FB. " if @browser.div(text: "Your Account Has Been Disabled").exist?
+        return false
+      else
+        @message += "Logged with Cookie. "
+        return true
+      end
     else
-      false
+      return false
     end
   end
 
-  def process
-    print_debug "Process", check_and_get_post_url
-    @start_time = DateTime.now
-    @comments = []
-    @finish_paging = 0
-    if @agent
-      @agent.get(check_and_get_post_url) do |page|
-        @page = page
-        print_debug "Process - First Page", @page.body.to_s
-        scrapped_comments = get_comments(page)
-        print_debug "Process - First Page - Comments", scrapped_comments.to_s
-        url = get_next_url(page)
-        while @finish_paging == 0
-          @comments += scrapped_comments
-          page = @agent.get(url)
-          if page
-            print_debug "Process - Page #{url}", page.body.to_s
-            scrapped_comments = get_comments(page)
-            print_debug "Process - Page #{url} - Comments", scrapped_comments.to_s
-            sleep(1)
-            url = get_next_url(page)
-          end
-        end
-        @comments += scrapped_comments
-      end
+  def set_cookie
+    saved_cookies = JSON.parse(cookie_json)
+    saved_cookies.each do |saved_cookie|
+      @browser.cookies.add(saved_cookie["name"], saved_cookie["value"], path: saved_cookie["path"] ? saved_cookie["path"] : "/", domain: saved_cookie["domain"] ? saved_cookie["domain"] : ".facebook.com", secure: saved_cookie["secure"] ? saved_cookie["secure"] : false)
     end
-
-    @comments = @comments.select { |c| c[:id_comment][0] != "s" }
-    @comments = @comments.index_by { |r| r[:id_comment] }
-    @comments.length
   end
 
   def get_page_info
-    if @page
+    if @browser
       objectOG = OpenGraphReader.fetch(@post_url)
       page_info = {}
       if objectOG
@@ -124,6 +138,10 @@ class FacebookPostScraping
     end
   end
 
+  def close
+    @browser.close
+  end
+
   private
 
     def print_debug(title, value)
@@ -134,43 +152,7 @@ class FacebookPostScraping
     end
 
     def check_and_get_post_url
-      @post_url.gsub("www.facebook.com", "m.facebook.com")
-    end
-
-    def get_comments(page)
-      print_debug "Process - Comments", ""
-      result_comments = []
-      if page.code == "200"
-        comments = page.search("div[id^='composer']")&.first&.next&.children || page.search("div[id^='sentence']")&.first&.next&.children || []
-        print_debug "Process - Comments - Scraping", comments.to_s
-        comments.each do |comment|
-          begin
-
-            reactions = ""
-            reactions_description = ""
-            user = comment.search("h3")&.text
-            url_profile = comment.search("a")&.first&.attributes["href"]&.text&.split("?")&.first
-            url_profile = comment.search("a")&.first&.attributes["href"]&.text&.split("&")&.first if url_profile == "/profile.php"
-
-            text_comment = comment.search("h3")&.first&.next&.text
-
-            date_comment = comment.search("abbr")&.text
-            id_comment = comment.attributes["id"]&.text
-
-            reaction_node = comment.search("span > span > a").first
-            if reaction_node
-              reactions = reaction_node&.text&.to_i
-              reactions_description = reaction_node&.attributes["aria-label"]&.text
-            end
-
-            responses = comment.search("div > div > div a")&.text
-            result_comments << { id_comment: id_comment, user: user, url_profile: url_profile, date_comment: date_comment, comment: text_comment, reactions: reactions, reactions_description: reactions_description, responses: responses } unless text_comment.to_s.empty? && id_comment.to_s.empty?
-          rescue Exception => e
-            puts e.message
-          end
-        end
-      end
-      result_comments
+      @post_url.gsub("m.facebook.com", "www.facebook.com")
     end
 
     def get_execution_time
@@ -180,31 +162,4 @@ class FacebookPostScraping
       seconds
     end
 
-    def get_next_url(page)
-      next_url = page.link_with(text: " Ver comentarios siguientes…")&.href || page.link_with(text: " Ver comentarios anteriores…")&.href || page.link_with(text: " Ver más comentarios…")&.href || page.link_with(text: " View more comments…")&.href || page.link_with(text: " View previous comments…")&.href
-      print_debug "Get Next Url", next_url.to_s
-      unless next_url
-        temp_url = page.canonical_uri.to_s
-        temp_url.sub! "www.facebook.com", "m.facebook.com"
-        temp_url = temp_url.split("&").map do |m|
-          if m[0] == "p"
-            actual_page = m.split("=").last.to_i
-            actual_page += 1
-            "p=#{actual_page}"
-          else
-            m
-          end
-        end
-        @finish_paging += 1
-        return temp_url.join("&")
-      else
-        if get_execution_time > MAX_SCRAPING_TIME
-          print_debug "Get Next Url - TimeUp", next_url.to_s
-          @finish_paging = 1
-        else
-          @finish_paging = 0
-        end
-        return next_url
-      end
-      end
 end

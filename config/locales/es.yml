@@ -52,6 +52,8 @@ es:
     edit: "Editar"
     proxies: "Proxy"
     fb_sessions: "Fb Sessions"
+    post_reactions: "Reacciones"
+    post_shared: "Compartidos"
   time:
     formats:
       default: '%Y-%m-%d'

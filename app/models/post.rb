@@ -5,36 +5,23 @@ class Post < ApplicationRecord
 
   validates :post_creator, :url, presence: true
 
-  after_create :send_to_scraping
+  after_create :send_to_scraping_comments
+  after_create :send_to_scraping_reactions
+  after_create :send_to_scraping_shared
+
   before_create :clean_url
 
   attr_accessor :debug, :headless
 
   scope :created_before_24_hours, -> { where("created_at > ?", 36.hours.ago) }
 
-  def scraping
+  def scraping_comments
     start_time = DateTime.now
-    post_creator.generate_cookie if post_creator.fb_session.try(:name).to_s.empty? && !post_creator.cookie_info.to_s.empty?
-    fb_scraping = FacebookPostScraping.new(url, post_creator.fb_user, post_creator.fb_pass, post_creator.fb_session.try(:name), post_creator.proxy.try(:name))
 
-    fb_scraping.debug = true if @debug
+    fb_scraping = FacebookPostScrapingComments.new(url, post_creator.fb_user, post_creator.fb_pass, post_creator.fb_session.try(:name), "", @headless || true, @debug || false)
+
     count = 0
-    # Login
-    if fb_scraping.login
-      fb_scraping.process
-      fb_scraping.comments.each do |comment|
-        fb_user = FacebookUser.where(fb_username: comment[1][:url_profile]).first_or_create(fb_name: comment[1][:user])
-        if fb_user
-          the_comment = PostComment.find_by_id_comment(comment[0])
-          if the_comment
-            the_comment.update(date_comment: comment[1][:date_comment], reactions: comment[1][:reactions], reactions_description: comment[1][:reactions_description], responses: comment[1][:responses])
-          else
-            the_comment = PostComment.create(post_id: id, facebook_user_id: fb_user.id, id_comment: comment[0], date_comment: comment[1][:date_comment], reactions: comment[1][:reactions], reactions_description: comment[1][:reactions_description], responses: comment[1][:responses], category_id: Category.find_by_name("Uncategorized").id, comment: comment[1][:comment])
-          end
-          count += 1 if the_comment
-        end
-      end
-    end
+
     page_info = fb_scraping.get_page_info
     if page_info
       self.title = page_info[:title]
@@ -42,16 +29,60 @@ class Post < ApplicationRecord
       self.image = page_info[:image]
       self.save
     end
+
+    # Login
+    if fb_scraping.login
+      post_creator.fb_session = FbSession.new unless post_creator.fb_session
+      post_creator.fb_session.name = fb_scraping.get_cookie_json
+      post_creator.fb_session.save
+      # begin
+      fb_scraping.post_id = id
+      count = fb_scraping.process
+    end
+    fb_scraping.close
     end_time = DateTime.now
+    fb_scraping.message += "Scraping finished. "
     seconds = ((end_time - start_time) * 24 * 60 * 60).to_i
-    scraping_logs.create(scraping_date: start_time, exec_time: Time.at(seconds), total_comment: count)
+    scraping_logs.create(scraping_date: start_time, exec_time: Time.at(seconds), total_comment: count, message: fb_scraping.message)
     count
   end
 
-  def scraping_watir
+  def scraping_reactions
     start_time = DateTime.now
 
-    fb_scraping = FacebookPostScrapingWatir.new(url, post_creator.fb_user, post_creator.fb_pass, post_creator.fb_session.try(:name), "", true, @debug ? @debug : false)
+    fb_scraping = FacebookPostScrapingReactions.new(url, post_creator.fb_user, post_creator.fb_pass, post_creator.fb_session.try(:name), "", @headless || true, @debug || false)
+
+    count = 0
+
+    page_info = fb_scraping.get_page_info
+    if page_info
+      self.title = page_info[:title]
+      self.description = page_info[:description]
+      self.image = page_info[:image]
+      self.save
+    end
+
+    # Login
+    if fb_scraping.login
+      post_creator.fb_session = FbSession.new unless post_creator.fb_session
+      post_creator.fb_session.name = fb_scraping.get_cookie_json
+      post_creator.fb_session.save
+      # begin
+      fb_scraping.post_id = id
+      count = fb_scraping.process
+    end
+    fb_scraping.close
+    end_time = DateTime.now
+    fb_scraping.message += "Scraping finished. "
+    seconds = ((end_time - start_time) * 24 * 60 * 60).to_i
+    scraping_logs.create(scraping_date: start_time, exec_time: Time.at(seconds), total_comment: count, message: fb_scraping.message)
+    count
+  end
+
+  def scraping_shared
+    start_time = DateTime.now
+
+    fb_scraping = FacebookPostScrapingShared.new(url, post_creator.fb_user, post_creator.fb_pass, post_creator.fb_session.try(:name), "", @headless.nil? ? true : @headless, @debug.nil? ? false : @debug)
 
     count = 0
 
@@ -105,8 +136,17 @@ class Post < ApplicationRecord
   end
 
   private
-    def send_to_scraping
-      ExtractDataInBatchJob.set(wait: 1.second).perform_later self
+
+    def send_to_scraping_comments
+      ExtractDataCommentsInBatchJob.set(wait: 1.second).perform_later self if self.get_comments
+    end
+
+    def send_to_scraping_reactions
+      ExtractDataReactionsInBatchJob.set(wait: 1.second).perform_later self if self.get_reactions
+    end
+
+    def send_to_scraping_shared
+      ExtractDataSharedInBatchJob.set(wait: 1.second).perform_later self if self.get_shared
     end
 
     def clean_url

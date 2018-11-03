@@ -2,7 +2,7 @@ ActiveAdmin.register Post do
   config.filters = false
   config.batch_actions = false
   menu label: proc { I18n.t("active_admin.posts") }, priority: 2
-  menu parent: "Comentarios"
+  menu parent: "Publicadores"
   actions :all
   permit_params :post_creator_id, :date, :post_date, :url, :title
 
@@ -14,6 +14,9 @@ ActiveAdmin.register Post do
     f.inputs do
       f.input :post_creator, label: "Publicador", as: :select, collection: PostCreator.all.map { |u| ["#{u.fan_page}", u.id] }
       f.input :url
+      f.input :get_comments, label: "Obtener Comentarios"
+      f.input :get_reactions, label: "Obtener Reacciones"
+      f.input :get_shared, label: "Obtener Compartidos"
     end
     f.actions
   end
