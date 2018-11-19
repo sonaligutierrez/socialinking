@@ -7,27 +7,27 @@ stages:
   # - test
   - deploy
 
-test_all:
-  stage: test
-  variables:
-    POSTGRES_USER: test
-    POSTGRES_PASSSWORD: test-password
-    POSTGRES_DB: test_db
-    DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSSWORD}@postgres/${POSTGRES_DB}
-    RAILS_ENV: test
-    CHROME_BIN: /usr/bin/chromium-browser
-    CHROME_PATH: /usr/lib/chromium/
+# test_all:
+#   stage: test
+#   variables:
+#     POSTGRES_USER: test
+#     POSTGRES_PASSSWORD: test-password
+#     POSTGRES_DB: test_db
+#     DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSSWORD}@postgres/${POSTGRES_DB}
+#     RAILS_ENV: test
+#     CHROME_BIN: /usr/bin/chromium-browser
+#     CHROME_PATH: /usr/lib/chromium/
 
-  before_script:
-    - apk update && apk add --update build-base postgresql-dev nodejs chromium chromium-chromedriver libexif udev curl-dev less git yarn redis
-    - gem install bundler  --no-ri --no-rdoc
-    - gem install tzinfo-data
-    - bundle install
-    - rails db:migrate
+#   before_script:
+#     - apk update && apk add --update build-base postgresql-dev nodejs chromium chromium-chromedriver libexif udev curl-dev less git yarn redis
+#     - gem install bundler  --no-ri --no-rdoc
+#     - gem install tzinfo-data
+#     - bundle install
+#     - rails db:migrate
 
-  script:
-    - rubocop
-    - rails test
+#   script:
+#     - rubocop
+#     - rails test
 
 production_deploy:
   stage: deploy
