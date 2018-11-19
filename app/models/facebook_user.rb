@@ -11,6 +11,7 @@ class FacebookUser < ApplicationRecord
     fb_username
   end
 
+  # TODO: Refactor for watir lib
   def scraping
     start_time = DateTime.now
     post_creator = post_comments&.first&.post&.post_creator

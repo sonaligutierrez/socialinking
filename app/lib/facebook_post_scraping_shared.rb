@@ -63,7 +63,6 @@ class FacebookPostScrapingShared < FacebookPostScraping
           @browser.scroll.to(:top).by(0, element.location.y - 100)
           sleep 1.seconds
           last_count_shared = @browser.elements(css: '#repost_view_dialog .userContentWrapper').count
-          puts last_count_shared
           if count_shared == last_count_shared
             count_to_exit += 1
             if count_to_exit == 10
@@ -91,7 +90,7 @@ class FacebookPostScrapingShared < FacebookPostScraping
         print_debug "Process - shared - Scraping", shared.count.to_s
 
         shared.each do |share|
-          # begin
+          begin
             shared = ""
             shared_description = ""
             responses = ""
@@ -109,13 +108,12 @@ class FacebookPostScrapingShared < FacebookPostScraping
                 if the_share.count == 0
                   the_share = PostShared.create(posts_id: @post_id, facebook_users_id: fb_user.id)
                 end
-                byebug
                 result_shared += 1 if the_share
               end
             end
-          # rescue Exception => e
-          #   puts e.message
-          # end
+          rescue Exception => e
+            puts e.message
+          end
         end
       end
 

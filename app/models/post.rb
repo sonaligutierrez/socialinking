@@ -1,6 +1,8 @@
 class Post < ApplicationRecord
   belongs_to :post_creator
   has_many :post_comments
+  has_many :post_reactions, foreign_key: "posts_id"
+  has_many :post_shared, foreign_key: "posts_id"
   has_many :scraping_logs
 
   validates :post_creator, :url, presence: true
@@ -135,19 +137,19 @@ class Post < ApplicationRecord
     end
   end
 
+  def send_to_scraping_comments
+    ExtractDataCommentsInBatchJob.set(wait: 1.second).perform_later self if self.get_comments
+  end
+
+  def send_to_scraping_reactions
+    ExtractDataReactionsInBatchJob.set(wait: 1.second).perform_later self if self.get_reactions
+  end
+
+  def send_to_scraping_shared
+    ExtractDataSharedInBatchJob.set(wait: 1.second).perform_later self if self.get_shared
+  end
+
   private
-
-    def send_to_scraping_comments
-      ExtractDataCommentsInBatchJob.set(wait: 1.second).perform_later self if self.get_comments
-    end
-
-    def send_to_scraping_reactions
-      ExtractDataReactionsInBatchJob.set(wait: 1.second).perform_later self if self.get_reactions
-    end
-
-    def send_to_scraping_shared
-      ExtractDataSharedInBatchJob.set(wait: 1.second).perform_later self if self.get_shared
-    end
 
     def clean_url
       if self.url.include?("post")
