@@ -8,7 +8,6 @@
 # It must return the number of comment processed
 
 class FacebookPostScrapingShared < FacebookPostScraping
-
   attr_accessor :shared
 
   def initialize(post_url, user, pass, cookie_json, proxy, headless = true, debug = false)
@@ -46,10 +45,10 @@ class FacebookPostScrapingShared < FacebookPostScraping
     def get_shared
       print_debug "Process - shared", "getting...."
       result_shared = 0
-      
+
       # Searching shared link
       shared_link = @browser.elements(css: '.commentable_item a[href^="/shares/view"]').first
-      
+
       if shared_link
         shared_link.click!
 
@@ -58,11 +57,11 @@ class FacebookPostScrapingShared < FacebookPostScraping
         count_shared = 0
         last_count_shared = 0
         more_shared = true
-        while more_shared && @browser.element(css: '#repost_view_dialog .uiMorePager').exist?
-          element = @browser.element(css: '#repost_view_dialog .uiMorePager')
+        while more_shared && @browser.element(css: "#repost_view_dialog .uiMorePager").exist?
+          element = @browser.element(css: "#repost_view_dialog .uiMorePager")
           @browser.scroll.to(:top).by(0, element.location.y - 100)
           sleep 1.seconds
-          last_count_shared = @browser.elements(css: '#repost_view_dialog .userContentWrapper').count
+          last_count_shared = @browser.elements(css: "#repost_view_dialog .userContentWrapper").count
           if count_shared == last_count_shared
             count_to_exit += 1
             if count_to_exit == 10
@@ -71,7 +70,7 @@ class FacebookPostScrapingShared < FacebookPostScraping
           else
             count_shared = last_count_shared
             count_to_exit = 0
-          end 
+          end
 
           if get_execution_time > MAX_SCRAPING_TIME
             @message += "Scraping Time up. "
@@ -79,11 +78,11 @@ class FacebookPostScrapingShared < FacebookPostScraping
             more_shared = false
           end
         end
-        
+
         shared_html = @browser.element(css: "#repost_view_dialog").html
-        
+
         # close
-        
+
         page = Nokogiri::HTML(shared_html)
         shared = page.css(".userContentWrapper")
         @message += "shared found: #{shared.count}. "
@@ -94,15 +93,15 @@ class FacebookPostScrapingShared < FacebookPostScraping
             shared = ""
             shared_description = ""
             responses = ""
-            user = share.css('.clearfix > .clearfix .profileLink').first.text
-            url_profile = share.css('.clearfix > .clearfix .profileLink').first.attributes["href"].text
-            avatar_url = share.css('.clearfix > .clearfix > a img').first.attributes["src"].text
-        
+            user = share.css(".clearfix > .clearfix .profileLink").first.text
+            url_profile = share.css(".clearfix > .clearfix .profileLink").first.attributes["href"].text
+            avatar_url = share.css(".clearfix > .clearfix > a img").first.attributes["src"].text
+
             unless user.to_s.empty?
               result_share = { user: user, url_profile: url_profile, avatar: avatar_url }
               profile = clean_url_profile(result_share[:url_profile])
               fb_user = FacebookUser.where(fb_username: profile).first_or_create(fb_name: result_share[:user], fb_avatar: result_share[:avatar])
-  
+
               if fb_user
                 the_share = PostShared.where(facebook_users_id: fb_user.id, posts_id: @post_id)
                 if the_share.count == 0

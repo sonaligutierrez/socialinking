@@ -8,7 +8,6 @@
 # It must return the number of comment processed
 
 class FacebookPostScraping
-
   attr_accessor :post_url, :browser, :fb_user, :fb_pass, :comments, :page, :finish_paging, :cookie_json, :proxy, :debug, :start_time, :headless, :message, :post_id
 
   MAX_SCRAPING_TIME = 3000 # sec
@@ -161,5 +160,4 @@ class FacebookPostScraping
       seconds = ((end_time - @start_time) * 24 * 60 * 60).to_i
       seconds
     end
-
 end

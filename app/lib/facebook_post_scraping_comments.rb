@@ -8,7 +8,6 @@
 # It must return the number of comment processed
 
 class FacebookPostScrapingComments < FacebookPostScraping
-
   def initialize(post_url, user, pass, cookie_json, proxy, headless = true, debug = false)
     super(post_url, user, pass, cookie_json, proxy, headless, debug)
     @message = "#{self.class.name}: "
@@ -147,5 +146,4 @@ class FacebookPostScrapingComments < FacebookPostScraping
         ""
       end
     end
-
 end

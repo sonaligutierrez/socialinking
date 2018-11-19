@@ -1,7 +1,6 @@
-require 'test_helper'
+require "test_helper"
 
 class PostSharedTest < ActiveSupport::TestCase
-
   test "scraping comments with paging" do
     post = posts(:three)
     VCR.use_cassette("fb_scraping_shared") do
@@ -10,5 +9,4 @@ class PostSharedTest < ActiveSupport::TestCase
       end
     end
   end
-
 end

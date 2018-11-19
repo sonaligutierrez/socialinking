@@ -1,7 +1,6 @@
-require 'test_helper'
+require "test_helper"
 
 class PostReactionsTest < ActiveSupport::TestCase
-
   test "scraping comments with paging" do
     post = posts(:three)
     VCR.use_cassette("fb_scraping_reactions") do
@@ -10,5 +9,4 @@ class PostReactionsTest < ActiveSupport::TestCase
       end
     end
   end
-
 end
