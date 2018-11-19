@@ -4,7 +4,7 @@ ActiveAdmin.register Post do
   menu label: proc { I18n.t("active_admin.posts") }, priority: 2
   menu parent: "Publicadores"
   actions :all
-  permit_params :post_creator_id, :date, :post_date, :url, :title
+  permit_params :post_creator_id, :date, :post_date, :url, :title, :get_comments, :get_reactions, :get_shared
 
   index do
     render "admin/posts/index_posts", context: self
