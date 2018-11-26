@@ -80,32 +80,32 @@ class FacebookPostScrapingReactions < FacebookPostScraping
 
         reactions.each do |reaction|
           begin
-          reactions = ""
-          reactions_description = ""
-          responses = ""
-          user = reaction.css(".clearfix a").last.text
-          url_profile = reaction.css(".clearfix a").first.attributes["href"].text
-          avatar_url = reaction.css(".clearfix a .img").first.attributes["src"].text
+            reactions = ""
+            reactions_description = ""
+            responses = ""
+            user = reaction.css(".clearfix a").last.text
+            url_profile = reaction.css(".clearfix a").first.attributes["href"].text
+            avatar_url = reaction.css(".clearfix a .img").first.attributes["src"].text
 
-          text_reaction = reaction.css(".clearfix a div div span i").first.attributes["class"].text.split(" ").first
+            text_reaction = reaction.css(".clearfix a div div span i").first.attributes["class"].text.split(" ").first
 
-          unless text_reaction.to_s.empty?
-            result_reaction = { user: user, url_profile: url_profile, reaction: text_reaction, avatar: avatar_url }
-            profile = clean_url_profile(result_reaction[:url_profile])
-            fb_user = FacebookUser.where(fb_username: profile).first_or_create(fb_name: result_reaction[:user], fb_avatar: result_reaction[:avatar])
+            unless text_reaction.to_s.empty?
+              result_reaction = { user: user, url_profile: url_profile, reaction: text_reaction, avatar: avatar_url }
+              profile = clean_url_profile(result_reaction[:url_profile])
+              fb_user = FacebookUser.where(fb_username: profile).first_or_create(fb_name: result_reaction[:user], fb_avatar: result_reaction[:avatar])
 
-            if fb_user
-              the_reaction = PostReaction.where(facebook_users_id: fb_user.id, posts_id: @post_id)
-              if the_reaction.count >= 1
-                the_reaction.first.update(reaction: result_reaction[:reaction])
-              else
-                the_reaction = PostReaction.create(posts_id: @post_id, facebook_users_id: fb_user.id, reaction: result_reaction[:reaction])
+              if fb_user
+                the_reaction = PostReaction.where(facebook_users_id: fb_user.id, posts_id: @post_id)
+                if the_reaction.count >= 1
+                  the_reaction.first.update(reaction: result_reaction[:reaction])
+                else
+                  the_reaction = PostReaction.create(posts_id: @post_id, facebook_users_id: fb_user.id, reaction: result_reaction[:reaction])
+                end
+                result_reactions += 1 if the_reaction
               end
-              result_reactions += 1 if the_reaction
             end
-          end
-          rescue Exception => e
-            puts e.message
+            rescue Exception => e
+              puts e.message
           end
         end
       end

@@ -19,4 +19,3 @@ ActiveAdmin.register PostReaction do
     actions
   end
 end
-
