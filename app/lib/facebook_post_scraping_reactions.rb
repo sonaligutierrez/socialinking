@@ -79,7 +79,7 @@ class FacebookPostScrapingReactions < FacebookPostScraping
         print_debug "Process - reactions - Scraping", reactions.count.to_s
 
         reactions.each do |reaction|
-          # begin
+          begin
           reactions = ""
           reactions_description = ""
           responses = ""
@@ -104,9 +104,9 @@ class FacebookPostScrapingReactions < FacebookPostScraping
               result_reactions += 1 if the_reaction
             end
           end
-          # rescue Exception => e
-          #   puts e.message
-          # end
+          rescue Exception => e
+            puts e.message
+          end
         end
       end
 
