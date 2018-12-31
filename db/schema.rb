@@ -22,6 +22,20 @@ ActiveRecord::Schema.define(version: 20181103024332) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "active_admin_comments", force: :cascade do |t|
+    t.string "namespace"
+    t.text "body"
+    t.string "resource_type"
+    t.bigint "resource_id"
+    t.string "author_type"
+    t.bigint "author_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
+    t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
+    t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
+  end
+
   create_table "categories", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -48,6 +62,12 @@ ActiveRecord::Schema.define(version: 20181103024332) do
     t.string "pass"
     t.bigint "proxy_id"
     t.index ["proxy_id"], name: "index_fb_sessions_on_proxy_id"
+  end
+
+  create_table "folders", force: :cascade do |t|
+    t.text "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "post_comments", force: :cascade do |t|
@@ -123,9 +143,11 @@ ActiveRecord::Schema.define(version: 20181103024332) do
     t.string "title"
     t.string "description"
     t.string "image"
+    t.bigint "folder_id"
     t.boolean "get_comments", default: false
     t.boolean "get_reactions", default: false
     t.boolean "get_shared", default: false
+    t.index ["folder_id"], name: "index_posts_on_folder_id"
     t.index ["post_creator_id"], name: "index_posts_on_post_creator_id"
   end
 
@@ -179,6 +201,7 @@ ActiveRecord::Schema.define(version: 20181103024332) do
   add_foreign_key "post_reactions", "posts", column: "posts_id"
   add_foreign_key "post_shared", "facebook_users", column: "facebook_users_id"
   add_foreign_key "post_shared", "posts", column: "posts_id"
+  add_foreign_key "posts", "folders"
   add_foreign_key "posts", "post_creators"
   add_foreign_key "scraping_logs", "posts"
 end

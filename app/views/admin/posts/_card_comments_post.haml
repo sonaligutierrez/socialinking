@@ -1,0 +1,22 @@
+%div{:class => "panel shadow-box js-post", :id => "#{p.id}"}
+  .panel-heading
+    .row.header-coments
+      %ul
+        %li.js-item.active{id:"#item-comment"}
+          %img.img-responsive{:alt => "Image", :src => asset_url("comment.png"), :style => "height: 13px; position: absolute; top: 22px;"} 
+          .item.item-comment= p.post_comments.count
+          .item.item-comment= "Comentarios"
+        - @categorias.each do |c|
+          - if c.name == "Uncategorized"
+            %li.js-item{id:"item-category-#{c.id}"}
+              .item.item-uncategorized= p.count_comments_uncategorized
+              .item.item-uncategorized= c.name 
+          - else  
+            %li.js-item{id:"item-category-#{c.id}"}
+              .item.item-category= p.count_comments_categorized_with c.id
+              .item.item-category= c.name 
+        %li.item-to-go-categorice= link_to "Ir a Categorizar", admin_post_comments_path(post_id: p.id)
+    .row#body_comments
+      = render 'post_comments', c: @post_comments
+              
+%br/

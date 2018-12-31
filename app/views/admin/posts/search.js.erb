@@ -1,0 +1,5 @@
+$entity_table = $("<%= j render 'table_index_posts', q: @posts %>");
+$("#index-post").fadeOut();
+$("#index-post").fadeIn(function() {
+	$(this).html($entity_table);
+});

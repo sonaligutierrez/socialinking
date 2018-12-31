@@ -1,0 +1,21 @@
+.container.top-container-show-post
+  .row
+    .col-sm-4
+      = hidden_field_tag "post_id", @post.id
+      = render 'card_show_post', p: @post
+    .col-sm-8
+      = render 'card_comments_post', p: @post, id:"comment-list"
+  .row
+    .col-sm-4
+    .col-sm-5
+      = render 'card_reactions_post', p: @post, reactions: @reactions, id:"reaction-list"
+    .col-sm-3
+      = render 'card_share_post', p: @post, shared: @post_shared, id:"share-list"
+
+
+    
+.comments_download_links
+  %span Descargar:
+  %a{:href => "/admin/post_comments/import_csv?post_id=#{@post.id}"} CSV
+
+    

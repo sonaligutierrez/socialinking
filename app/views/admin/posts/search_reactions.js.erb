@@ -1,0 +1,5 @@
+$entity_table = $("<%= j render 'post_reactions', r: @post_reactions %>");
+$("#body_reactions").fadeOut();
+$("#body_reactions").fadeIn(function() {
+	$(this).html($entity_table);
+});

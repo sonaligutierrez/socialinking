@@ -1,0 +1,5 @@
+$entity_table = $("<%= j render 'table_post_creator', q: @post_creators %>");
+$("#index-post-creator").fadeOut();
+$("#index-post-creator").fadeIn(function() {
+	$(this).html($entity_table);
+});

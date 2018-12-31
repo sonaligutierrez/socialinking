@@ -1,0 +1,16 @@
+%div{:class => "panel shadow-box js-post", :id => "#{p.id}"}
+  .panel-heading
+    .row.header-reactions.top-header
+      %ul.list-reaction
+        %li.js-item-react.active{id:"#item-reaction"}
+          %img.img-responsive{:alt => "Image", :src => asset_url("like_icon.png"), :style => "height: 13px; position: absolute; top: 22px;"} 
+          .gral-item= p.post_reactions.count
+          .gral-item= "Reacciones"
+        - reactions.each do |r|
+          %li.js-item-react.item-react{id:"item-reaction-#{r[1]}"}
+            %div{:class => "#{r[1]} image-position", :title => "#{r[0]}"}
+            .item.text-item= p.quantity_of r[1]
+    .row#body_reactions
+      = render 'post_reactions', r: @post_reactions
+              
+%br/

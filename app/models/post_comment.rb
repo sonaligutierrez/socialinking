@@ -10,7 +10,7 @@ class PostComment < ApplicationRecord
     categorized = joins(:category).where("categories.name like '%Uncategorized%'").count
     hash_coms = Hash.new
     hash_coms.merge!("Categorizados" => categorized)
-    hash_coms.merge!("No Categorizados" => uncategorized)
+    hash_coms.merge!("Sin Categorizar" => uncategorized)
     hash_coms
   end
 
@@ -22,4 +22,12 @@ class PostComment < ApplicationRecord
     end
     hash_coms
   end
+
+  def self.categorized
+    joins(:category).where("categories.name like '%Uncategorized%'").count
+ end
+
+  def self.uncategorized
+    joins(:category).where("categories.name not like '%Uncategorized%'").count
+ end
 end

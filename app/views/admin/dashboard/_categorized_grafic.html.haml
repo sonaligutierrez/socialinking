@@ -1,4 +1,14 @@
-= javascript_include_tag "https://www.gstatic.com/charts/loader.js"
-
 .content-grafic
-	= pie_chart PostComment.categorized_vs_uncategorized, height: "170px",  library:{legend: {position: "bottom"}, chartArea: {left:0, width:'100%', height: '70%'}}
+  %h3.title-chart
+    ="Categorizados/ No categorizados"
+  = pie_chart PostComment.categorized_vs_uncategorized, donut: true, colors: ["#06bfa7", "#ff3939"], height: "300px",  library:{legend: {position: "bottom"}, chartArea: {left:0, width:'100%', height: '70%'}}
+  %hr
+  .link-list
+    = link_to "Ver Comentarios", admin_posts_path
+    .left-element
+      = @date_hour
+      = image_tag("refresh.png", :border => 0, :alt => '', :title => '', :style => "width: 10%; cursor: pointer;", :onclick => "refresh_grafic(2);")
+
+
+
+

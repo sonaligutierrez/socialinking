@@ -7,8 +7,8 @@ class DashboardControllerTest < ActionDispatch::IntegrationTest
     sign_in users(:one)
     get admin_dashboard_url
     assert_response :success
-    assert_match "Cantidad de Comentarios por Categoría", @response.body
-    assert_match "Categorizados vs No Categorizados", @response.body
+    assert_match "Comentarios por Categoría", @response.body
+    assert_match "Categorizados/ No categorizados", @response.body
     assert_match "Últimas 10 Publicaciones", @response.body
     assert_match "Usuarios", @response.body
     assert_match "Seguimientos", @response.body

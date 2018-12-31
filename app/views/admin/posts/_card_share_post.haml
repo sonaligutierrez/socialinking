@@ -1,0 +1,12 @@
+%div{:class => "panel shadow-box js-post", :id => "#{p.id}"}
+  .panel-heading
+    .row.header-shared
+      %ul.list-reaction
+        %li.js-item-shared.active{id:"#item-shared"}
+          %img.img-responsive{:alt => "Image", :src => asset_url("share.png"), :style => "height: 13px; position: absolute; top: 22px;"} 
+          .gral-item= p.post_shared.count
+          .gral-item= "Compartidos"
+    .row#body_shared
+      = render 'post_shared', s: @post_shared
+              
+%br/

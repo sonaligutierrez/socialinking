@@ -3,29 +3,9 @@ ActiveAdmin.register FacebookUser do
   menu parent: "Usuarios"
   permit_params :fb_username, :fb_name, :fb_avatar
   actions :all, except: [:new]
-  filter :posts, label: "Publicaciones", collection: -> {
-    Post.all.map { |post| [ "ID #{post.id} - #{post.title}", post.id] }
-  }
-  filter :post_creators, label: "Publicadores", collection: -> {
-    PostCreator.all.map { |pc| [ "ID #{pc.id} - #{pc.name}", pc.id] }
-  }
+  config.filters = false
   index do
-    column :fb_username
-    column :fb_name
-    column :dni do |fuser|
-      text_field_tag "dni", fuser.dni, maxlength: 15, size: 20, class: "dni-input", onchange: "update_dni(#{fuser.id}, this.value)"
-    end
-    column :fb_avatar do |img|
-      image_tag img.fb_avatar unless img.fb_avatar.to_s.empty?
-    end
-    column "Actions" do |u|
-      col = link_to "Ver", admin_facebook_user_path(u)
-      if current_user.admin?
-        col += link_to "Editar", edit_admin_facebook_user_path(u)
-        col += link_to "Eliminar", admin_facebook_user_path(u), method: :DELETE
-      end
-      col
-    end
+    render "admin/facebook_users/index_facebook_users", context: self
   end
 
   member_action :fuser_update, method: :put do
@@ -34,4 +14,23 @@ ActiveAdmin.register FacebookUser do
     render body: nil
   end
 
+  collection_action :import_csv, method: :get do
+   fusers = FacebookUser.all
+   csv = CSV.generate(encoding: "UTF-8") do |csv|
+     csv << [ "Id", "fb_username", "fb_name", "fb_avatar", "created_at", "updated_at", "dni"]
+     fusers.each do |f|
+       commentarry = [ f.id, f.fb_username, f.fb_name, f.fb_avatar, f.created_at,  f.updated_at, f.dni]
+       csv << commentarry
+     end
+   end
+   send_data csv.encode("UTF-8"), type: "text/csv; charset=windows-1251; header=present", disposition: "attachment; filename=facebook_users.csv"
+ end
+
+  controller do
+
+   def index
+     @fusers = FacebookUser.all.page(params[:page]).per(10)
+     @page_title = "Usuarios (#{@fusers.count})"
+   end
+ end
 end
