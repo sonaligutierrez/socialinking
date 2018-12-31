@@ -1,4 +1,4 @@
-$entity_table = $("<%= j render 'comments_table', q: @post_comments %>");
+$entity_table = $("<%= j render 'comments_table', q: @post_comments, account: @post.post_creator.account %>");
 $("#table_content").fadeOut();
 $("#table_content").fadeIn(function() {
 	$(this).html($entity_table);

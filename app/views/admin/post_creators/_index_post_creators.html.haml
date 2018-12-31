@@ -1,0 +1,18 @@
+.container.post-creators
+  .row
+    .select-show
+      %label="MOSTRAR: "
+      = select_tag 'channel', options_for_select(["Facebook","Twitter"]), class: "table_tools color-border-select", onchange: "search()"
+      %label="ORDENAR: "
+      = select_tag 'order', options_for_select(@columns), class: "table_tools color-border-select", onchange: "search()"
+      %img.js-img.img-responsive.img-order{:alt => "Image", :src => asset_url("long-arrow-down.png"), :title => "Descendente", :id => "desc"}/
+      %img.js-img.img-responsive.img-order{:alt => "Image", :src => asset_url("long-arrow-up.png"), :title => "Ascendente", :id => "asc"}/
+      = hidden_field_tag "type_order", @select_type_order
+      = hidden_field_tag "module", "post_creators"
+  .row#index-post-creator
+    = render 'table_post_creator', post_creators: @post_creators
+
+.posts_creator_download_links
+  %span Descargar:
+  %a{:href => "/admin/post_creators/import_csv"} CSV
+    

@@ -1,0 +1,19 @@
+var type = "<%= @type %>";
+if(type == 1){
+	$entity_table = $("<%= j render :partial => 'admin/dashboard/cant_category_grafic'%>");
+	$div_section = "#comments_by_category";
+}
+else if(type == 2){
+	$entity_table = $("<%= j render :partial => 'admin/dashboard/categorized_grafic'%>");
+	$div_section = "#category_uncategory";
+}
+else if(type == 3){
+	$entity_table = $("<%= j render :partial => 'admin/dashboard/post_table'%>");
+	$div_section = "#div_post_table";
+}
+
+
+$($div_section).fadeOut();
+$($div_section).fadeIn(function() {
+	$(this).html($entity_table);
+});

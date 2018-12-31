@@ -1,0 +1,5 @@
+$entity_table = $("<%= j render 'post_comments', c: @post_comments %>");
+$("#body_comments").fadeOut();
+$("#body_comments").fadeIn(function() {
+	$(this).html($entity_table);
+});

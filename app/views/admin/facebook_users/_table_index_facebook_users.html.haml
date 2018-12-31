@@ -1,0 +1,48 @@
+%table#index_table_user_facebook.index_table.index{:border => "0", :cellpadding => "0", :paginator => "true"}
+  %thead
+    %tr
+      %th.sortable.col.col-setting
+      %th.sortable.col.col-name=I18n.t("active_admin.name")
+      %th.sortable.col.col-channel{:width => "15%"}=I18n.t("active_admin.channel")
+      %th.sortable.col.col-link{:width => "10%"}=I18n.t("active_admin.link")
+      %th.sortable.col.col-date{:width => "15%"}=I18n.t("active_admin.register_date")
+      %th.sortable.col.col-document{:width => "20%"}=I18n.t("active_admin.document")
+  %tbody
+    - fusers.each do |fu|
+      %tr{:id => "facebook_user_#{fu.id}"}
+        %td.col.col-setting
+          %label.check-container
+            %input{:type => "checkbox", :id => fu.id}/
+            %spa.checkmark{:id => "checkmark-#{fu.id}"}
+        %td.col.col-name.text-blue
+          %img{:alt => "Image", :src => "#{fu.try(:avatar) || '/assets/default-user.png'}", class: "img-circle", :style => "width:7%"}/
+          = fu.try(:fb_name)
+        %td.col.col-channel= "Facebook"
+        %td.col.col-link= fu.try(:fb_avatar)
+        %td.col.col-date= fu.try(:created_at).strftime('%d/%m/%Y')
+        %td.col.col-category
+          -if fu.dni.blank?
+            .InputAddOn
+              = text_field_tag "dni-#{fu.id}", fu.dni, maxlength: 15, size: 20, class: "dni-input", onfocus: "see_button(#{fu.id})"
+              .InputAddOn-item.hidden{id:"add-#{fu.id}" ,onclick: "update_dni(#{fu.id});"}
+              .InputClose-item.hidden{id:"close-#{fu.id}",onclick: "see_button(#{fu.id});"}
+          -else
+            .InputAddOn
+              = text_field_tag "dni-#{fu.id}", fu.dni, maxlength: 15, size: 20, class: "dni-input dni-input-readonly", readonly: "readonly"
+          %div{:class => "element-menu js-menu dni-menu", :id => "js-post-menu-#{fu.id}", :style => "margin-left: -10px; !important"}
+            .punto
+            .punto
+            .punto
+          %div.menu-dropdown.menu-td.width-post-creator{:id => "menu-dropdown-#{fu.id}", :style => "display:none; width:163px; !important"}
+            %ul
+              %li=link_to "Editar usuario", edit_admin_facebook_user_path(fu)
+              %li=link_to "Eliminar usuario", admin_facebook_user_path(fu), method: :DELETE, data: { confirm: "¿Seguro que desea eliminar el usuario #{fu.fb_name}?" }
+
+:javascript
+  $("#index_table_user_facebook").tableSorter({
+      sortColumn: 'nombre',     // número entero del índice o nombre de la columna en minúsculas
+      sortClassAsc: 'headerSortUp',   // clase css de la cabecera de la columna cuando aplicamos un orden ascendente
+      sortClassDesc: 'headerSortDown',  // clase css de la cabecera de la columna cuando aplicamos un orden descendente
+      headerClass: 'header',      // clase genérica de las cabeceras (th's)
+      dateFormat: 'dd/mm/yyyy'    // se indica el formato de la fecha no ISO, por defecto us, nosotros indicamos el formato español
+    });

@@ -8,7 +8,7 @@ ActiveAdmin.register PostCreator do
   menu parent: "Publicadores"
 
   index do
-    render "admin/index_post_creators", context: self
+    render "admin/post_creators/index_post_creators", context: self
   end
 
   form do |f|
@@ -38,4 +38,35 @@ ActiveAdmin.register PostCreator do
     end
   end
 
+
+  collection_action :import_csv, method: :get do
+    # post_comments = PostComment.where(post_id: params[:post_id]).includes(:facebook_user).order("id ASC")
+    posts_creators = PostCreator.all
+    csv = CSV.generate(encoding: "UTF-8") do |csv|
+      csv << [ "Id", "fan_page", "url", "avatar", "created_at", "updated_at",
+      "account", "cookie_info", "fb_session_id", "proxy_id", "get_likes", "fb_page_session"]
+      posts_creators.each do |p|
+        commentarry = [ p.id, p.fan_page, p.url, p.avatar, p.created_at, p.updated_at,
+      p.account.try(:name), p.cookie_info, p.fb_session.try(:name), p.try(:proxy), p.get_likes, p.fb_page_session]
+        csv << commentarry
+      end
+    end
+    send_data csv.encode("UTF-8"), type: "text/csv; charset=windows-1251; header=present", disposition: "attachment; filename=post_creators.csv"
+  end
+
+  collection_action :search, method: :get do
+    @post_creators = PostCreator.search(params[:channel], params[:column_order], params[:type_order])
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  controller do
+
+    def index
+      @post_creators = PostCreator.all.page(params[:page]).per(10)
+      @page_title = "Publicadores (#{@post_creators.count})"
+      @columns = [["Fan Page", "fan_page"], ["Cantidad de Publicaciones", ""]]
+    end
+  end
 end

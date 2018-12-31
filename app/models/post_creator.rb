@@ -1,5 +1,10 @@
 class PostCreator < ApplicationRecord
   has_many :posts
+  has_many :post_comments, through: :posts
+  has_many :post_reactions, through: :posts
+  has_many :post_shared, through: :posts
+
+
   belongs_to :account
   belongs_to :fb_session, optional: true
 
@@ -17,7 +22,7 @@ class PostCreator < ApplicationRecord
   end
 
   def proxy
-    return fb_session.proxy.name if fb_session.proxy
+    return fb_session.try(:proxy).name if fb_session.try(:proxy)
     nil
   end
 
@@ -67,5 +72,11 @@ class PostCreator < ApplicationRecord
     fbs = FbSession.new_session var_json
     post_creator.fb_session_id = fbs.id
     post_creator.save!
+  end
+
+  def self.search(channel, column_order, type_order)
+    results = PostCreator.all
+    results = results.order("#{column_order.to_sym} #{type_order}") if column_order.present?
+    results
   end
 end

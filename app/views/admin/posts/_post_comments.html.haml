@@ -1,0 +1,13 @@
+%table#table_post_comments.index_table{:border => "0", :cellpadding => "0", :paginator => "true"}
+  %tbody
+    - c.each do |pc|
+      %tr{:id => "post_comment_#{pc.id}"}
+        %td
+          %img.col-sm-3.img-responsive{:alt => "Image", :src => "#{pc.facebook_user.try(:fb_avatar) || '/assets/default-user.png'}", class: "img-circle", :style => "width:10%"}/
+          .col-sm-3.text-blue{:style => "font-weight: bold;"}= pc.facebook_user.fb_username
+          .col-sm-3="Comentó el #{pc.try(:date_comment)}:"
+          -if pc.category.try(:name).upcase != "UNCATEGORIZED"
+            .col-sm-2.category-name=pc.category.try(:name) 
+
+          %br
+          %p.text-comment= pc.try(:comment)

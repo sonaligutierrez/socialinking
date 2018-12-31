@@ -1,0 +1,38 @@
+#div_post_table
+  %table#posts-table
+    %thead
+      %tr
+        %th.col.col-post{:width => "30%"}="PUBLICACIÓN"
+        %th.col.col-post-creator{:width => "10%"}="PUBLICADOR"
+        %th.col.col-channel{:width => "10%"}="CANAL"
+        %th.col.col-date{:width => "10%"}="FECHA"
+        %th.col.col-comments{:width => "10%"}="COMENTARIOS"
+        %th.col.col-reactions{:width => "10%"}="REACCIONES"
+        %th.col.col-shared{:width => "10%"}="COMPARTIDOS"
+    %tbody
+      - Post.last_ten_posts.each do |p|
+        %tr{:id => "post_#{p.id}"}
+          %td.col.col-post= p.try(:title).nil? ? "" : p.try(:title).truncate(70).to_s
+          %td.col.col-post-creator= p.try(:fan_page)
+          %td.col.col-channel= "Facebook"
+          %td.col.col-date= p.post_date
+          %td.col.col-comments= "#{p.post_comments.count} comentarios"
+          %td.col.col-reactions= "#{p.post_reactions.count} reacciones"
+          %td.col.col-shared= "#{p.post_shared.count} compartidos"
+  .col-links
+    = link_to "Ver publicaciones", admin_posts_path
+    .left-element-table
+      = @date_hour
+      = image_tag("refresh.png", :border => 0, :alt => '', :title => '', :style => "width: 10%; cursor: pointer;", :onclick => "refresh_grafic(3);")  
+
+
+:javascript
+  $(document).ready(function(){
+    $("#posts-table").tableSorter({
+        sortColumn: 'publicación',     // número entero del índice o nombre de la columna en minúsculas
+        sortClassAsc: 'headerSortUp',   // clase css de la cabecera de la columna cuando aplicamos un orden ascendente
+        sortClassDesc: 'headerSortDown',  // clase css de la cabecera de la columna cuando aplicamos un orden descendente
+        headerClass: 'header',      // clase genérica de las cabeceras (th's)
+        dateFormat: 'dd/mm/yyyy'    // se indica el formato de la fecha no ISO, por defecto us, nosotros indicamos el formato español
+      });
+  });

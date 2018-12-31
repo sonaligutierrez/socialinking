@@ -113,12 +113,27 @@ class Post < ApplicationRecord
     count
   end
 
+  def self.search(post_creator_id, column_order, type_order)
+    results = Post.all
+    results = results.where(post_creator_id: post_creator_id) if post_creator_id.to_i > 0
+    results = results.order("#{column_order.to_sym} #{type_order}") if column_order.present?
+    results
+  end
+
+  def quantity_of(reaction)
+    post_reactions.where(reaction: reaction).count
+  end
+
   def count_comments_uncategorized
     post_comments.joins(:category).where("categories.name LIKE ?", "Uncategorized").count
   end
 
   def count_comments_categorized
     post_comments.joins(:category).where("categories.name NOT LIKE ?", "Uncategorized").count
+  end
+
+  def count_comments_categorized_with(category)
+    post_comments.where(category_id: category).count
   end
 
   def self.cant_comments(id)

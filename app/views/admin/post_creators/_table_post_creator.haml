@@ -1,0 +1,41 @@
+- @post_creators.each do |p|
+  .col-sm-3
+    .panel
+      .panel-heading
+        .row
+          .col-xs-10
+          .col-sm-1
+            %div{:class => "element-menu js-menu", :id => "js-post-menu-#{p.id}", :style => "margin-left: -10px; !important"}
+              .punto
+              .punto
+              .punto
+            %div.menu-dropdown.width-post-creator{:id => "menu-dropdown-#{p.id}", :style => "display:none; width:163px; !important"}
+              %ul
+                %li=link_to "Editar publicador", edit_admin_post_creator_path(p)
+                %li=link_to "Eliminar publicador", admin_post_creator_path(p), method: :DELETE
+        .row
+          .col-xs-12
+            %img.img-responsive{:alt => "Image", :src => "#{p.try(:avatar) || '/assets/default-user.png'}", class: "img-circle logo-center-post-creator", :style => "width:25%"}/
+        .row  
+          .col-xs-12.name-post-creator
+            = link_to admin_post_creator_path(p.id) do
+              %h4=p.try(:fan_page)
+            .text-canal-post-creator
+              ="en"
+              .text-blue{style: "display: inline"}="Facebook"
+            .text-cant-posts
+              = link_to "#{p.posts.count} #{I18n.t('active_admin.posts')}", posts_admin_post_creator_path(p)
+      .panel-body.footer-post-creator
+        .col-xs-4.border-left
+          %img.img-responsive{:alt => "Image", :src => asset_url("like_icon.png"), :style => "width:15%; height: 13px; position:absolute; top:15px; left:26px;"}/
+          .text-footer=p.post_reactions.count
+        .col-xs-4
+          %img.img-responsive{:alt => "Image", :src => asset_url("comment.png"), :style => "width:15%; height: 13px; position:absolute; top:15px; left:26px;"}/
+          .text-footer=p.post_comments.count
+        .col-xs-4.border-right
+          %img.img-responsive{:alt => "Image", :src => asset_url("share.png"), :style => "width:15%; height: 13px; position:absolute; top:15px; left:26px;"}/
+          .text-footer=p.post_shared.count
+          
+
+      
+%br/

@@ -1,0 +1,26 @@
+.paginated_collection
+  .paginated_collection_contents
+    .index_content
+      %div.table_tools
+        %div.batch_actions_selector.dropdown_menu
+          = select_tag 'category', options_for_select(@categorias), onchange: "select_by_category(this.value)", class: "dropdown_menu_button"
+          =hidden_field_tag "post_id", @post.try(:id) || nil
+          =hidden_field_tag "current_category_id", ""
+          %label.text-label-category= "MARCAR COMO: "
+          - Category.all.each do |cat|
+            -if !cat.try(:name).nil? && cat.try(:name).upcase == "UNCATEGORIZED"
+              .cat-button.text-red{:id => "categoria-#{cat.id}", :onclick => "update_post_comments(this.id)"}
+                =cat.try(:name)
+            -else
+              .cat-button.text-green{:id => "categoria-#{cat.id}", :onclick => "update_post_comments(this.id)"}
+                =cat.try(:name)
+
+      .index_as_table.table_tools#table_content
+        = render 'admin/posts/comments_table', q: @post_comments, account: @post.nil? ? Account.first : @post.post_creator.account 
+
+
+
+
+:javascript
+  $('#page_title').html("#{@post.try(:title)}" || "#{@post.try(:date)} - #{@post.try(:post_creator).try(:fb_user)}");
+  	

@@ -38,6 +38,7 @@ es:
     post_comments: "Comentarios"
     post_creators: "Publicadores"
     posts: "Publicaciones"
+    post: "Publicación"
     scraping_logs: "Seguimientos"
     comment: "Comentario"
     post_comments: "Comentarios"
@@ -54,6 +55,11 @@ es:
     fb_sessions: "Fb Sessions"
     post_reactions: "Reacciones"
     post_shared: "Compartidos"
+    name: "Nombre"
+    channel: "Canal"
+    link: "Link"
+    register_date: "Fecha de Registro"
+    document: "Documento"
   time:
     formats:
       default: '%Y-%m-%d'
