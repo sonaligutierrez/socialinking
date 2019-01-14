@@ -66,7 +66,7 @@ ActiveAdmin.register PostComment do
 
 
   action_item :only => :index do
-    link_to "Filtrar comentarios", filter_comments_admin_post_comments_path, remote: true
+    #link_to "Filtrar comentarios", filter_comments_admin_post_comments_path, remote: true
   end
   action_item :only => :index do
     link_to "Añadir comentarios", new_admin_post_comment_path

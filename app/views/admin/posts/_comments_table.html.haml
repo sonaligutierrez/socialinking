@@ -14,7 +14,9 @@
             %input{:type => "checkbox", :id => pc.id, :data => {:cat_id => pc.category.id}}/
             %spa.checkmark{:id => "checkmark-#{pc.id}"}
         %td.col.col-comment= pc.comment
-        %td.col.col-facebook_user.text-blue{:style => "font-weight: bold"}= pc.facebook_user.fb_username
+        %td.col.col-facebook_user.text-blue{:style => "font-weight: bold"}
+          %img.col-sm-3.img-responsive{:alt => "Image", :src => "#{pc.facebook_user.try(:fb_avatar) || '/assets/default-user.png'}", class: "img-circle", :style => "width:80%"}/
+          = pc.facebook_user.fb_name
         %td.col.col-date= pc.date
         %td.col.col-category
           %p{class: "#{pc.category.try(:name).upcase == 'UNCATEGORIZED' ? 'color-border-select-red' :  'color-border-select'}", id: "p-category-#{pc.id}", onmouseover: "see_select(#{pc.id})"}= pc.category.try(:name).upcase
