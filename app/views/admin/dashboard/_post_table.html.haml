@@ -19,7 +19,7 @@
           %td.col.col-comments= "#{p.post_comments.count} comentarios"
           %td.col.col-reactions= "#{p.post_reactions.count} reacciones"
           %td.col.col-shared= "#{p.post_shared.count} compartidos"
-  .col-links
+  .col-links.link-list
     = link_to "Ver publicaciones", admin_posts_path
     .left-element-table
       = @date_hour

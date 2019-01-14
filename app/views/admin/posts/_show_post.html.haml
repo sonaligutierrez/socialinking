@@ -4,6 +4,9 @@
       = hidden_field_tag "post_id", @post.id
       = render 'card_show_post', p: @post
     .col-sm-8
+      .comments_download_links
+        %span Descargar:
+        %a{:href => "/admin/post_comments/import_csv?post_id=#{@post.id}"} CSV
       = render 'card_comments_post', p: @post, id:"comment-list"
   .row
     .col-sm-4
@@ -14,8 +17,6 @@
 
 
     
-.comments_download_links
-  %span Descargar:
-  %a{:href => "/admin/post_comments/import_csv?post_id=#{@post.id}"} CSV
+
 
     

@@ -5,6 +5,7 @@ ActiveAdmin.register Account do
   filter :name
   filter :url
   index do
+      selectable_column
       column :name
       column :url
       actions

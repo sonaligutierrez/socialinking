@@ -6,7 +6,7 @@
           %img.img-responsive{:alt => "Image", :src => asset_url("share.png"), :style => "height: 13px; position: absolute; top: 22px;"} 
           .gral-item= p.post_shared.count
           .gral-item= "Compartidos"
-    .row#body_shared
+    .row#body_shared.scroll.scroll2
       = render 'post_shared', s: @post_shared
               
 %br/

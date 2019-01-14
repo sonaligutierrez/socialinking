@@ -55,6 +55,7 @@ es:
     fb_sessions: "Fb Sessions"
     post_reactions: "Reacciones"
     post_shared: "Compartidos"
+    categorize: Categorizar
     name: "Nombre"
     channel: "Canal"
     link: "Link"
@@ -80,10 +81,10 @@ es:
         display_entries: "Mostrando %{entry_name} <b>%{first}&nbsp;-&nbsp;%{last}</b> de un total de <b>%{total}</b>"
   views:
     pagination:
-      first: Primero
-      previous: Anterior
-      next: Próximo
-      last: Último
+      first: "|<"
+      previous: "<"
+      next: ">"
+      last: ">|"
   devise:
     failure:
       user:
@@ -177,6 +178,7 @@ es:
         account_id: "Cuenta"
       category:
         name: "Nombre"
+        account: "Cuenta"
       post_comment:
         facebook_user: "Usuario Facebook"
         post: "Publicación"
@@ -203,6 +205,8 @@ es:
         exec_time: "Tiempo ejecución"
         exec_time_in_hours: "Tiempo ejecución"
         total_comment: "Total de comentarios"
+        post_id: "Publicación"
+        message: Mensaje
       user:
         email: "Email"
         password: "Contraseña"
@@ -212,6 +216,40 @@ es:
         fb_name: "Nombre"
         fb_avatar: "Avatar"
         name: "Nombre"
+      fb_session:
+        name: Nombre
+        created_at: Creado el
+        updated_at: Actualizado el
+        disabled: Deshabilitado
+        login: inicio de sesión
+        pass: Contraseña
+        proxy_id: Proxy
+        post_creators: Publicadores
+      post_reaction:
+        reaction: Reacción
+        facebook_users_id: Usuario
+        posts: Publicación
+        created_at: Creado el
+        updated_at: Actualizado el
+      post_shared:
+        post: Publicación
+        facebook_user: Usuario
+        created_at: Creado el
+        updated_at: Actualizado el
+        disabled: Deshabilitado
+        post_creators: Publicadores
+      proxy:
+        name: Nombre
+        created_at: Creado el
+        updated_at: Actualizado el
+        disabled: Deshabilitado
+      user:
+        email: Email
+        current_sign_in_at: Inicio de sesión actual
+        last_sign_in_at: Ultimo inicio de sesión
+        admin: Administrador
+        created_at: Creado el
+        updated_at: Actualizado el
     errors:
       models:
         category:

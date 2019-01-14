@@ -10,7 +10,7 @@
           %li.js-item-react.item-react{id:"item-reaction-#{r[1]}"}
             %div{:class => "#{r[1]} image-position", :title => "#{r[0]}"}
             .item.text-item= p.quantity_of r[1]
-    .row#body_reactions
+    .row#body_reactions.scroll.scroll2
       = render 'post_reactions', r: @post_reactions
               
 %br/

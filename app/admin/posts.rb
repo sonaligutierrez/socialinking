@@ -3,7 +3,6 @@ ActiveAdmin.register Post do
   config.batch_actions = false
 
   menu label: proc { I18n.t("active_admin.posts") }, priority: 2
-  menu parent: "Publicadores"
   actions :all
   permit_params :post_creator_id, :date, :post_date, :url, :title, :get_comments, :get_reactions, :get_shared
 
@@ -71,6 +70,13 @@ ActiveAdmin.register Post do
     @categorias = []
     @categorias.push(["Todo", 0])
     Category.all.map { |c| @categorias.push([c.name, c.id]) }
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  collection_action :search_by_post_creator, method: :get do
+    @posts = Post.where(post_creator_id: params[:post_creator_id])
     respond_to do |format|
       format.js
     end

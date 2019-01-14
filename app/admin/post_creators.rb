@@ -5,7 +5,6 @@ ActiveAdmin.register PostCreator do
   permit_params :account_id, :fan_page, :url, :avatar, :fb_user, :fb_pass, :fb_session_id, :proxy_id, :cookie_info
   config.batch_actions = false
   config.filters = false
-  menu parent: "Publicadores"
 
   index do
     render "admin/post_creators/index_post_creators", context: self
@@ -40,7 +39,6 @@ ActiveAdmin.register PostCreator do
 
 
   collection_action :import_csv, method: :get do
-    # post_comments = PostComment.where(post_id: params[:post_id]).includes(:facebook_user).order("id ASC")
     posts_creators = PostCreator.all
     csv = CSV.generate(encoding: "UTF-8") do |csv|
       csv << [ "Id", "fan_page", "url", "avatar", "created_at", "updated_at",
@@ -66,7 +64,7 @@ ActiveAdmin.register PostCreator do
     def index
       @post_creators = PostCreator.all.page(params[:page]).per(10)
       @page_title = "Publicadores (#{@post_creators.count})"
-      @columns = [["Fan Page", "fan_page"], ["Cantidad de Publicaciones", ""]]
+      @columns = [["Fan Page", "fan_page"], ["Cantidad de Publicaciones", 1]]
     end
   end
 end

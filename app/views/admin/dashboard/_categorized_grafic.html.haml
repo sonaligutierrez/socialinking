@@ -4,7 +4,7 @@
   = pie_chart PostComment.categorized_vs_uncategorized, donut: true, colors: ["#06bfa7", "#ff3939"], height: "300px",  library:{legend: {position: "bottom"}, chartArea: {left:0, width:'100%', height: '70%'}}
   %hr
   .link-list
-    = link_to "Ver Comentarios", admin_posts_path
+    = link_to "Ver Comentarios", admin_post_comments_path
     .left-element
       = @date_hour
       = image_tag("refresh.png", :border => 0, :alt => '', :title => '', :style => "width: 10%; cursor: pointer;", :onclick => "refresh_grafic(2);")

@@ -3,7 +3,7 @@
     - s.each do |ps|
       %tr{:id => "post_shared_#{ps.id}"}
         %td
-          %img.col-sm-2.img-responsive{:alt => "Image", :src => "#{ps.facebook_user.try(:fb_avatar).nil? ? '/assets/default-user.png' : ps.facebook_user.try(:fb_avatar)}", class: "img-circle", :style => "width:30%"}/
+          %img.col-sm-2.img-responsive{:alt => "Image", :src => "#{ps.facebook_user.try(:fb_avatar).nil? ? '/assets/default-user.png' : ps.facebook_user.try(:fb_avatar)}", class: "img-circle img-shared"}/
           .col-sm-8
             .text-blue{:style => "font-weight: bold;"}= ps.facebook_user.fb_username
             .text-medium="#{ps.try(:created_at).strftime("Compartió el %m/%d/%Y")}"

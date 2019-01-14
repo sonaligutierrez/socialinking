@@ -1,0 +1,48 @@
+#search-modal.modal.fade{:role => "dialog"}
+  .modal-dialog.modal-lg
+    .modal-content
+      .modal-header
+        ="Filtrar Comentarios"
+        %button.close{"data-dismiss" => "modal", :type => "button"} ×
+      %div
+        = semantic_form_for(@q, :url => search_comments_admin_post_comments_path, :remote => true, method: :get, :id => "search_form") do |f|
+          .content
+            .row
+              = label_tag "Palabras claves"
+              #keywords
+              = f.hidden_field :keywords
+              = label_tag "Escriba una palabra que desea filtar y presione enter para sumarla", nil, style: "font-weight: 500;"
+              = text_field_tag "word"
+              %hr
+            .row
+              .col-xs-6.inputs-responsive
+                = f.input :post_creator_id, as: :select, label:"Publicador", collection: PostCreator.all.map{|pc| [pc.name, pc.id]}, input_html: {onchange: "get_posts(this)"}, include_blank: "Seleccionar un publicador"
+              .col-xs-6.inputs-responsive  
+                #post_select
+                  = f.input :post_id, as: :select, label:"Publicación", collection: Post.all.map{|p| [p.title.truncate(30), p.id]}, include_blank: "Seleccionar una publicación"
+            .row
+              %hr
+              .col-xs-4.inputs-responsive
+                = label_tag "Fecha de comentario"
+                = f.input :date_from, as: :date_picker, label: false, input_html: {size: 8}, placeholder: 'Desde'
+              .col-xs-4.inputs-responsive
+                = f.input :date_to, as: :date_picker, label: false, input_html: {size: 8}, placeholder: 'Hasta'
+            .row
+              %hr
+              = label_tag "Categorias"
+              = f.fields_for :categories do |cat|
+                -@categories.each do |c|
+                  .col-xs-4.checks.inputs-responsive
+                    %label.check-container
+                      = cat.check_box "category-#{c.id}"
+                      %spa.checkmark.check-modal{:id => "checkmark-#{c.id}"}
+                      = label_tag c.name
+                    
+                   
+              %br
+            %hr
+            = f.button "Aplicar filtro"
+            %button#clear-filter{:type => "button", :onclick => "clear_form()"} Limpiar filtros
+                
+
+
