@@ -16,8 +16,8 @@
             %li=link_to "Editar publicación", edit_admin_post_path(p)
             %li=link_to "Eliminar publicación", edit_admin_post_path(p)
     .row
-      .title-post-style{:title => "#{p.try(:title).upcase}"}
-        = p.try(:title).upcase.truncate 20
+      .title-post-style{:title => "#{p.try(:title)&.upcase}"}
+        = p.try(:title)&.upcase&.truncate 20
       -if p.try(:description).present?
         - if p.description.size > 30
           .text-post-style{:description => "#{p.try(:description).upcase}", :id => "js-text-truncate-#{p.id}"}
