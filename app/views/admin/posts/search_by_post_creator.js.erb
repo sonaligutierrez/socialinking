@@ -1,0 +1,5 @@
+$entity_element = $("<%= j render 'select_posts', q: @posts %>");
+$("#post_select").fadeOut();
+$("#post_select").fadeIn(function() {
+	$(this).html($entity_element);
+});

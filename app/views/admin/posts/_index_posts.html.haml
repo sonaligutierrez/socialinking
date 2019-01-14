@@ -9,11 +9,12 @@
       %img.js-img.img-responsive.img-order{:alt => "Image", :src => asset_url("long-arrow-up.png"), :title => "Ascendente", :id => "asc"}/
       = hidden_field_tag "type_order", @select_type_order
       = hidden_field_tag "module", "posts"
+    .posts_download_links
+      %span EXPORTAR:
+      %a{:href => "/admin/posts/import_csv"} CSV
   .row#index-post
     = render 'table_index_posts', post: @posts
 
 
-.posts_download_links
-  %span Descargar:
-  %a{:href => "/admin/posts/import_csv"} CSV
+
     

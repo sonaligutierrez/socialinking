@@ -5,6 +5,7 @@ ActiveAdmin.register PostCreatorLike do
   actions :all, except: [:new, :edit, :delete]
   filter :post
   index do
+    selectable_column
     column :post
     column :facebook
     actions

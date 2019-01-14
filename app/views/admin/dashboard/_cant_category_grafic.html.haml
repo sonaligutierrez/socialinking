@@ -2,7 +2,7 @@
 .content-grafic
   %h3.title-chart
     ="Comentarios por Categoría"
-  = column_chart PostComment.cant_for_category, colors: ["#06bfa7"], height: "300px",  library:{legend: {position: "bottom"}, chartArea: {left:0, width:'100%', height: '70%'}, tooltip: {textStyle: {color: "#333333"}}}
+  = column_chart PostComment.cant_for_category, colors: ["#12bc99"], height: "300px",  library:{legend: {position: "bottom"}, chartArea: {left:0, width:'100%', height: '70%'}, tooltip: {textStyle: {color: "#333333"}}}
   %hr
   .link-list
     = link_to "Ver Categorías", admin_categories_path

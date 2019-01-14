@@ -3,3 +3,4 @@
 #= require common
 #= require datatables.min
 #= require tableSorter
+#= require bootstrap/modal

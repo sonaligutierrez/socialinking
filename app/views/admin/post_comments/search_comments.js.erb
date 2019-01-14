@@ -1,0 +1,13 @@
+$entity_table = $("<%= j render 'admin/posts/comments', q: @post_comments, account: Account.first %>");
+$("#main_content").fadeOut();
+$("#main_content").fadeIn(function() {
+	$(this).html($entity_table);
+});
+
+$('.pagination_information').html($( $.parseHTML("<%= page_entries_info(@post_comments).html_safe %>")));
+$('.pagination').html($("<%= j paginate @post_comments, :params => {:controller => 'post_comments', :action => 'search_comments'}, :remote => true %>"));
+
+$('#search-modal').modal('hide');
+
+
+

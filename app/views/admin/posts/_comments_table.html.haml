@@ -1,34 +1,34 @@
-.header.headerSortDown
-%table#index_table_post_comments.index_table.index{:border => "0", :cellpadding => "0", :paginator => "true"}
+%table#post_comments_index_table.index_table.index{:border => "0", :cellpadding => "0", :paginator => "true"}
   %thead
     %tr
-      %th.sortable.col.col-setting
-      %th.sortable.col.col-comment=I18n.t("active_admin.post")
-      %th.sortable.col.col-comment=I18n.t("active_admin.comment")
-      %th.sortable.col.col-facebook_user=I18n.t("active_admin.user")
-      %th.sortable.col.col-date=I18n.t("active_admin.date")
-      %th.sortable.col.col-category=I18n.t("active_admin.category")
+      %th.col.col-setting
+      %th.col.col-comment=I18n.t("active_admin.comment")
+      %th.col.col-facebook_user=I18n.t("active_admin.user")
+      %th.col.col-date=I18n.t("active_admin.date")
+      %th.col.col-category{:width => "15%"}=I18n.t("active_admin.category")
   %tbody
     - q.each do |pc|
-      %tr{:id => "post_comment_#{pc.id}"}
+      %tr{:id => "comment_#{pc.id}"}
         %td.col.col-setting
           %label.check-container
             %input{:type => "checkbox", :id => pc.id, :data => {:cat_id => pc.category.id}}/
             %spa.checkmark{:id => "checkmark-#{pc.id}"}
-        %td.col.col-comment= pc.post.try(:title)
         %td.col.col-comment= pc.comment
         %td.col.col-facebook_user.text-blue{:style => "font-weight: bold"}= pc.facebook_user.fb_username
         %td.col.col-date= pc.date
         %td.col.col-category
-          = select_tag "category-#{pc.id}", options_for_select(@categorias, pc.category_id), onchange: "update(#{pc.id}, this.value)", class: "table_tools dropdown_menu_button #{pc.category.name.upcase == 'UNCATEGORIZED' ? 'color-border-select-red' :  'color-border-select'}"
-
-
+          %p{class: "#{pc.category.try(:name).upcase == 'UNCATEGORIZED' ? 'color-border-select-red' :  'color-border-select'}", id: "p-category-#{pc.id}", onmouseover: "see_select(#{pc.id})"}= pc.category.try(:name).upcase
+          = select_tag "category-#{pc.id}", options_for_select(@categorias, pc.category_id), onchange: "update(#{pc.id}, this.value)", onmouseout: "see_select(#{pc.id})", class: "table_tools dropdown_menu_button #{pc.category.try(:name).upcase == 'UNCATEGORIZED' ? 'color-border-select-red' :  'color-border-select'} hidden"
 
 :javascript
-  $("#index_table_post_comments").tableSorter({
-      sortColumn: 'publicación',     // número entero del índice o nombre de la columna en minúsculas
+  $("#post_comments_index_table").tableSorter({
+      sortColumn: 'comentario',     // número entero del índice o nombre de la columna en minúsculas
       sortClassAsc: 'headerSortUp',   // clase css de la cabecera de la columna cuando aplicamos un orden ascendente
       sortClassDesc: 'headerSortDown',  // clase css de la cabecera de la columna cuando aplicamos un orden descendente
       headerClass: 'header',      // clase genérica de las cabeceras (th's)
       dateFormat: 'dd/mm/yyyy'    // se indica el formato de la fecha no ISO, por defecto us, nosotros indicamos el formato español
     });
+
+
+
+

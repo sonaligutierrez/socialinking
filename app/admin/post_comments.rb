@@ -1,9 +1,12 @@
 ActiveAdmin.register PostComment do
   permit_params :facebook_user_id, :post_id, :category_id, :date, :comment, :id_comment, :reactions, :reactions_description, :responses, :date_comment, :id_comment
   menu false
+  menu label: proc { I18n.t("active_admin.categorize") }, priority: 3
   config.filters = false
-  actions :all, except: [:new]
-  index do
+  config.clear_action_items!
+  actions :all
+
+  index  do
     render "admin/posts/comments", context: self
   end
 
@@ -46,6 +49,29 @@ ActiveAdmin.register PostComment do
     send_data csv.encode("UTF-8"), type: "text/csv; charset=windows-1251; header=present", disposition: "attachment; filename=post_comments.csv"
   end
 
+  collection_action :filter_comments, method: :get do
+    @q = PostComment.new
+    @categories = Category.all
+  end
+
+  collection_action :search_comments, method: :get do
+    @post_comments = PostComment.search(params[:post_comment])
+    @post_comments = @post_comments.page(params[:page] || 1).per(10)
+    @categorias = Category.content_select
+    respond_to do |format|
+      format.js
+    end
+  end
+
+
+
+  action_item :only => :index do
+    link_to "Filtrar comentarios", filter_comments_admin_post_comments_path, remote: true
+  end
+  action_item :only => :index do
+    link_to "Añadir comentarios", new_admin_post_comment_path
+  end
+
 
 
   controller do
@@ -53,9 +79,8 @@ ActiveAdmin.register PostComment do
       @post = params[:post_id].nil? ? nil : Post.find(params[:post_id])
       @post_comments = @post.nil? ? PostComment.all : @post.post_comments
       @post_comments = @post_comments.page(params[:page] || 1).per(10)
-      @categorias = []
-      @categorias.push(["Todo", 0])
-      Category.all.map { |c| @categorias.push([c.name, c.id]) }
+      @page_title = @post.nil? ? "Categorizar" : @post.try(:title)
+      @categorias = Category.content_select
     end
   end
 

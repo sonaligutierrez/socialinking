@@ -3,7 +3,8 @@
     %div{:class => "panel panel-post shadow-box js-post", :id => "#{p.id}"}
       .panel-heading
         .row
-          %img.col-sm-3.img-responsive{:alt => "Image", :src => "#{p.post_creator.try(:avatar) || '/assets/default-user.png'}", class: "img-circle", :style => "width:18%"}/
+          .col-sm-3
+            %img{:alt => "Image", :src => "#{p.post_creator.try(:avatar) || '/assets/default-user.png'}", class: "img-circle img-post-creator"}/
           .col-sm-8.position-title
             =link_to p.post_creator.try(:fan_page), edit_admin_post_path(p), class:"text-blue name-post"
             %br
@@ -19,7 +20,7 @@
                 %li=link_to "Eliminar publicación", edit_admin_post_path(p)
         .row
           .title-post-style{:title => "#{p.try(:title).nil? ? "" : p.try(:title).upcase}"}
-            = p.try(:title).nil? ? "" : p.try(:title).upcase.truncate(20)
+            = p.try(:title).nil? ? "" : p.try(:title).upcase.truncate(40)
           -if p.try(:description).present?
             - if p.description.size > 30
               .text-post-style{:description => "#{p.try(:description).upcase}", :id => "js-text-truncate-#{p.id}"}
@@ -31,26 +32,25 @@
               %div{:style => "margin: 20px 0px 10px 17px;"}
                 = p.try(:description).nil? ? "" : p.try(:description).upcase
           -else
-            .text-post-style=""
+            .text-post-style-empty=""
       .panel-body
-        -if p.image.present? 
-          = link_to admin_post_path(p) do
-            %img.img-responsive{:alt => "Image", :src => "#{p.image || 'https://placehold.it/150x80?text=IMAGE'}", :style => "width:100%; height: 250px;"}/
-        .row.stadistic-style
-          .col-sm-4.text-color-darkgrey.text-medium-bold
-            %img.img-responsive{:alt => "Image", :src => asset_url("like_icon.png"), :style => "width:15%; height: 13px; position:absolute; top:5px; left:8px;"}/
+        = link_to admin_post_path(p) do
+          %img#img-post{:alt => "Image", :src => "#{p.image || '/assets/default-image.png'}", :style => "width:100%; height: #{p.try(:description).present? ? '250px' : '302px' };"}/
+        .stadistic-style
+          .text-color-darkgrey.text-medium-bold.div-info
+            %img.icon-post{:alt => "Image", :src => asset_url("like_icon.png")}/
             .position-info
               =p.try(:post_reactions).count 
               %br/
               =I18n.t("active_admin.post_reactions")
-          .col-sm-4.text-color-darkgrey.text-medium-bold
-            %img.img-responsive{:alt => "Image", :src => asset_url("comment.png"), :style => "width:12%; height: 13px; position:absolute; top:5px; left:2px;"}/
+          .text-color-darkgrey.text-medium-bold.div-info
+            %img.icon-post{:alt => "Image", :src => asset_url("comment.png")}/
             .position-info
               =p.post_comments.count 
               %br/
               =I18n.t("active_admin.post_comments")
-          .col-sm-4.text-color-darkgrey.text-medium-bold.padding-uncategorized
-            %img.img-responsive{:alt => "Image", :src => asset_url("share.png"), :style => "width:12%; height: 15px; position:absolute; top:5px; left:14px;"}/
+          .text-color-darkgrey.text-medium-bold.padding-uncategorized.div-info
+            %img.icon-post-share{:alt => "Image", :src => asset_url("share.png")}/
             .position-info
               =p.post_shared.count 
               %br/

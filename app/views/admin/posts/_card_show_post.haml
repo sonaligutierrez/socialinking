@@ -7,11 +7,11 @@
         %br
         .text-date-post=p.try(:post_date)&.strftime('%d de %b de %Y a las %l:%M')
       .col-sm-1
-        %div{:class => "element-menu js-menu", :id => "js-post-menu-#{p.id}"}
+        %div{:class => "element-menu menu-show-post js-menu", :id => "js-post-menu-#{p.id}"}
           .punto
           .punto
           .punto
-        %div.menu-dropdown{:id => "menu-dropdown-#{p.id}", :style => "display:none;"}
+        %div.menu-dropdown.dropdown-show-post{:id => "menu-dropdown-#{p.id}", :style => "display:none;"}
           %ul
             %li=link_to "Editar publicación", edit_admin_post_path(p)
             %li=link_to "Eliminar publicación", edit_admin_post_path(p)
@@ -31,27 +31,26 @@
       -else
         .text-post-style=""
   .panel-body
-    -if p.image.present? 
-      = link_to admin_post_path(p) do
-        %img.img-responsive{:alt => "Image", :src => "#{p.image || 'https://placehold.it/150x80?text=IMAGE'}", :style => "width:100%; height: 250px;"}/
-    .row.stadistic-style
-      .col-sm-4.text-color-darkgrey.text-medium-bold
-        %img.img-responsive{:alt => "Image", :src => asset_url("like_icon.png"), :style => "width:15%; height: 13px; position:absolute; top:5px; left:8px;"}/
+    = link_to admin_post_path(p) do
+      %img#img-post{:alt => "Image", :src => "#{p.image || '/assets/default-image.png'}", :style => "width:100%; height: #{p.try(:description).present? ? '250px' : '302px' };"}/
+    .stadistic-style
+      .text-color-darkgrey.text-medium-bold.div-info
+        %img.icon-post{:alt => "Image", :src => asset_url("like_icon.png")}/
         .position-info
           =p.try(:post_reactions).count 
           %br/
           =I18n.t("active_admin.post_reactions")
-      .col-sm-4.text-color-darkgrey.text-medium-bold
-        %img.img-responsive{:alt => "Image", :src => asset_url("comment.png"), :style => "width:12%; height: 13px; position:absolute; top:5px; left:2px;"}/
+      .text-color-darkgrey.text-medium-bold.div-info
+        %img.icon-post{:alt => "Image", :src => asset_url("comment.png")}/
         .position-info
           =p.post_comments.count 
           %br/
           =I18n.t("active_admin.post_comments")
-      .col-sm-4.text-color-darkgrey.text-medium-bold.padding-uncategorized
-        %img.img-responsive{:alt => "Image", :src => asset_url("share.png"), :style => "width:12%; height: 15px; position:absolute; top:5px; left:14px;"}/
+      .text-color-darkgrey.text-medium-bold.padding-uncategorized.div-info
+        %img.icon-post-share{:alt => "Image", :src => asset_url("share.png")}/
         .position-info
           =p.post_shared.count 
           %br/
-          =I18n.t("active_admin.post_shared")     
+          =I18n.t("active_admin.post_shared")    
               
 %br/

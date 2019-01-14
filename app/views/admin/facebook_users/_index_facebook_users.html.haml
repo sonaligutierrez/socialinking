@@ -1,13 +1,13 @@
 .container
   .row
     .select-show
-      %label="MOSTRAR: "
-      = select_tag 'post_creator', options_for_select([]), class: "table_tools color-border-select", onchange: "search()"
-      %label="ORDENAR: "
-      = select_tag 'order', options_for_select([]), class: "table_tools color-border-select", onchange: "search()"
+      .select-order
+        .icon-select
+        = select_tag 'facebook_user_order', options_for_select(@users_option), class: "table_tools color-border-select", onchange: "search()"
+      .refresh-butom=link_to "", admin_facebook_users_path
+    .facebook_users_download_links
+      %span Exportar:
+      %a{:href => "/admin/facebook_users/import_csv"} CSV 
   .row#index-facebook-user
     = render 'table_index_facebook_users', fusers: @fusers
-    
-.facebook_users_download_links
-  %span Descargar:
-  %a{:href => "/admin/facebook_users/import_csv"} CSV
+    = hidden_field_tag "module", "facebook_user"

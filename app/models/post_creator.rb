@@ -76,7 +76,19 @@ class PostCreator < ApplicationRecord
 
   def self.search(channel, column_order, type_order)
     results = PostCreator.all
-    results = results.order("#{column_order.to_sym} #{type_order}") if column_order.present?
+    if column_order.present?
+      if column_order.to_i == 1
+        results = PostCreator.joins("LEFT JOIN posts ON posts.post_creator_id = post_creators.id").select("post_creators.id, post_creators.fan_page, post_creators.url,
+        post_creators.avatar, post_creators.created_at, post_creators.updated_at, post_creators.account_id,
+        post_creators.cookie_info, post_creators.fb_session_id, post_creators.proxy_id,post_creators.get_likes,
+        post_creators.fb_page_session,COUNT (posts.id) as count").group("post_creators.id, post_creators.fan_page,
+        post_creators.url, post_creators.avatar, post_creators.created_at, post_creators.updated_at,
+        post_creators.account_id, post_creators.cookie_info, post_creators.fb_session_id, post_creators.proxy_id,
+        post_creators.get_likes, post_creators.fb_page_session").order("count desc")
+      else
+        results = results.order("#{column_order.to_sym} #{type_order}")
+      end
+    end
     results
   end
 end

@@ -16,7 +16,7 @@
               .item.item-category= p.count_comments_categorized_with c.id
               .item.item-category= c.name 
         %li.item-to-go-categorice= link_to "Ir a Categorizar", admin_post_comments_path(post_id: p.id)
-    .row#body_comments
+    .row#body_comments.scroll.scroll2
       = render 'post_comments', c: @post_comments
               
 %br/
