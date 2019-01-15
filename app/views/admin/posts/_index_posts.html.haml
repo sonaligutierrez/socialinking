@@ -2,9 +2,9 @@
   .row
     .select-show
       %label="MOSTRAR: "
-      = select_tag 'post_creator', options_for_select(@creators, @select), class: "table_tools color-border-select", onchange: "search()"
+      = select_tag 'post_creator', options_for_select(@creators || [], @select), class: "table_tools color-border-select", onchange: "search()"
       %label="ORDENAR: "
-      = select_tag 'order', options_for_select(@columns), class: "table_tools color-border-select", onchange: "search()"
+      = select_tag 'order', options_for_select(@columns || []), class: "table_tools color-border-select", onchange: "search()"
       %img.js-img.img-responsive.img-order{:alt => "Image", :src => asset_url("long-arrow-down.png"), :title => "Descendente", :id => "desc"}/
       %img.js-img.img-responsive.img-order{:alt => "Image", :src => asset_url("long-arrow-up.png"), :title => "Ascendente", :id => "asc"}/
       = hidden_field_tag "type_order", @select_type_order
@@ -13,7 +13,7 @@
       %span EXPORTAR:
       %a{:href => "/admin/posts/import_csv"} CSV
   .row#index-post
-    = render 'table_index_posts', post: @posts
+    = render '/admin/posts/table_index_posts', post: @posts
 
 
 
