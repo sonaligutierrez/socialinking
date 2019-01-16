@@ -4,9 +4,9 @@
       %tr{:id => "post_reaction_#{pr.id}"}
         %td
           %img.col-sm-3{:alt => "Image", :src => "#{pr.facebook_user.try(:fb_avatar).nil? ? '/assets/default-user.png' : pr.facebook_user.try(:fb_avatar)}", class: "img-circle", :style => "width:15%"}/
-          %img.col-sm-3{:alt => "Image", :src => "/assets/#{pr.image_reaction}", class: "img-circle", :style => "width:12%; margin-left: -32px; margin-top: 7px;"}/
+          %img.col-sm-3{:alt => "Image", :src => image_url(pr.image_reaction), class: "img-circle", :style => "width:12%; margin-left: -32px; margin-top: 7px;"}/
           .col-sm-6
-            .text-blue{:style => "font-weight: bold;"}= pr.facebook_user.fb_username
+            .text-blue{:style => "font-weight: bold;"}= pr.facebook_user.fb_name
             ="#{pr.try(:created_at).strftime("Reaccionó el %m/%d/%Y")}"
           
 

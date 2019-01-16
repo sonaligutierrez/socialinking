@@ -362,6 +362,7 @@ text-post-style-empty{
     }
     .select-order{
       display: inline-grid;
+      height: 30px;
       .icon-select{
         border: solid 1px #d8d8d8;
         width: 15px;
@@ -1534,10 +1535,13 @@ body.logged_out #content_wrapper{
   width: 1255px;
 }
 
+.index_as_table > .container {
+  width: 100%;
+}
 
 .facebook_users_download_links {
   float: right;
-  margin-top: 42px;
+  margin-top: 22px;
 }
 
 .admin_post_comments{
