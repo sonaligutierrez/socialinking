@@ -23,19 +23,19 @@
             = p.try(:title).nil? ? "" : p.try(:title).upcase.truncate(40)
           -if p.try(:description).present?
             - if p.description.size > 30
-              .text-post-style{:description => "#{p.try(:description).upcase}", :id => "js-text-truncate-#{p.id}"}
-                = p.try(:description).nil? ? "" : p.try(:description).upcase.truncate(80)
-              .text-post-style.hidden{:description => "#{p.try(:description).upcase}", :id => "js-text-complete-#{p.id}"}
-                = p.try(:description).nil? ? "" : p.try(:description).upcase
+              .text-post-style{:description => "#{p.try(:description)}", :id => "js-text-truncate-#{p.id}"}
+                = p.try(:description).nil? ? "" : p.try(:description).truncate(80)
+              .text-post-style.hidden{:description => "#{p.try(:description)}", :id => "js-text-complete-#{p.id}"}
+                = p.try(:description).nil? ? "" : p.try(:description)
               .see-more-label{:onclick => "see_more(#{p.id});"}Ver mas
             - else
               %div{:style => "margin: 20px 0px 10px 17px;"}
-                = p.try(:description).nil? ? "" : p.try(:description).upcase
+                = p.try(:description).nil? ? "" : p.try(:description)
           -else
             .text-post-style-empty=""
       .panel-body
         = link_to admin_post_path(p) do
-          %img#img-post{:alt => "Image", :src => "#{p.image || '/assets/default-image.png'}", :style => "width:100%; height: #{p.try(:description).present? ? '250px' : '302px' };"}/
+          %img#img-post{:alt => "Image", :src => "#{p.image || '/assets/default-image.png'}", :style => "width:100%; height: #{p.try(:description).present? ? '250px' : '307px' };"}/
         .stadistic-style
           .text-color-darkgrey.text-medium-bold.div-info
             %img.icon-post{:alt => "Image", :src => asset_url("like_icon.png")}/

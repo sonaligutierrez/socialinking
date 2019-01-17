@@ -146,10 +146,11 @@ function update(comment_id, category_id){
   })
   .done(function(data) {
       $("#comment_"+comment_id).fadeOut();
+      $("#p-category-"+comment_id).html("");
       if(text_select == "UNCATEGORIZED")
-        $("#p-category-"+comment_id).html("<p class='color-border-select-red' id='p-category-'"+comment_id+"' onmouseover='see_select("+comment_id+")''>"+text_select+"</p>");
+        $("#p-category-"+comment_id).html("<p class='color-border-select-red' id='p-category-"+comment_id+"' onmouseover='see_select("+comment_id+")'>"+text_select+"</p>");
       else
-        $("#p-category-"+comment_id).html("<p class='color-border-select' id='p-category-'"+comment_id+"' onmouseover='see_select("+comment_id+")''>"+text_select+"</p>");
+        $("#p-category-"+comment_id).html("<p class='color-border-select' id='p-category-"+comment_id+"' onmouseover='see_select("+comment_id+")'>"+text_select+"</p>");
       
       $("#comment_"+comment_id).fadeIn();
     })

@@ -7,7 +7,7 @@
       .refresh-butom=link_to "", admin_post_comments_path(post_id: @post.try(:id))
       =hidden_field_tag "post_id", @post.try(:id) || nil
       =hidden_field_tag "current_category_id", ""
-    .download_links
+    .download_links_post_comments
       %span EXPORTAR:
       %a{:href => "/admin/post_comments.csv"} CSV
   %div.index_as_table{id:"table_content_post_comments"}
