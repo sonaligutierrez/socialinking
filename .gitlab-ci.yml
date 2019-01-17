@@ -37,12 +37,8 @@ production_deploy:
     - master
   before_script:
     - apk update && apk add --update build-base postgresql-dev nodejs chromium chromium-chromedriver libexif udev curl-dev less git yarn redis openssh
-    - mkdir -p ~/.ssh && chmod 700 ~/.ssh
-    - echo "$DEPLOYER_KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
-    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-    - chmod 600 ~/.ssh/config
-    - cat ~/.ssh/id_rsa
-    - "ssh -vvv ubuntu@social-linking.prosumia.la uname -a"
+    - ssh-add <(echo -e "$DEPLOYER_KEY")
+    - ssh -vvv ubuntu@social-linking.prosumia.la uname -a
     - gem install bundler  --no-ri --no-rdoc
     - bundle install
 
