@@ -1,6 +1,6 @@
 ActiveAdmin.register FacebookUser do
   menu label: proc { I18n.t("active_admin.users") }, priority: 4
-  
+
   permit_params :fb_username, :fb_name, :fb_avatar
   actions :all, except: [:new]
   config.filters = false
@@ -26,13 +26,13 @@ ActiveAdmin.register FacebookUser do
    send_data csv.encode("UTF-8"), type: "text/csv; charset=windows-1251; header=present", disposition: "attachment; filename=facebook_users.csv"
  end
 
- collection_action :filter_fusers, method: :get do
-    @q = FacebookUser.new
-  end
+  collection_action :filter_fusers, method: :get do
+     @q = FacebookUser.new
+   end
 
- action_item :only => :index do
-    link_to "Filtrar usuarios", filter_fusers_admin_facebook_users_path, remote: true
-  end
+  action_item only: :index do
+     link_to "Filtrar usuarios", filter_fusers_admin_facebook_users_path, remote: true
+   end
 
   controller do
 
@@ -43,5 +43,3 @@ ActiveAdmin.register FacebookUser do
    end
  end
 end
-
-
