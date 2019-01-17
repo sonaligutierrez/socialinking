@@ -65,6 +65,27 @@ ActiveAdmin.register PostCreator do
       @post_creators = PostCreator.all.page(params[:page]).per(10)
       @page_title = "Publicadores (#{@post_creators.count})"
       @columns = [["Fan Page", "fan_page"], ["Cantidad de Publicaciones", 1]]
+      respond_to do |format|
+        format.html
+        format.js { render "index", status: :ok }
+      end
+    end
+
+    def destroy
+      @post_creator = PostCreator.find(params[:id])
+      
+      PostCreator.transaction do
+        begin
+          @post_creator.destroy
+          @post_creators = PostCreator.all.page(params[:page]).per(10)
+          redirect_to admin_post_creators_path, notice: "Eliminado satisfactoriamente"
+        rescue => e
+          Rails.logger.info("destroy post creator failed")
+          redirect_to admin_post_creators_path, alert: "No se pudo eliminar el publicador"
+        end
+      end
+      
     end
   end
 end
+

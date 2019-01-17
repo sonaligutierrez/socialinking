@@ -1542,9 +1542,6 @@ body.logged_out #content_wrapper{
   width: 1255px;
 }
 
-.index_as_table > .container {
-  width: 100%;
-}
 
 .facebook_users_download_links {
   float: right;
@@ -1900,6 +1897,11 @@ table tr:nth-child(odd):hover, tr:nth-child(even):hover{
     }
     
   }
+}
+
+.flashes{
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
 
