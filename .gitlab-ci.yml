@@ -36,7 +36,7 @@ production_deploy:
   only:
     - master
   before_script:
-    - apk update && apk add --update build-base postgresql-dev nodejs chromium chromium-chromedriver libexif udev curl-dev less git yarn redis openssh
+    - apk update && apk add --update build-base postgresql-dev nodejs chromium chromium-chromedriver libexif udev curl-dev less git yarn redis openssh bash
     - eval $(ssh-agent -s)
     - bash -c "ssh-add <(echo '$DEPLOYER_KEY')"
     - ssh -vvv ubuntu@social-linking.prosumia.la uname -a
