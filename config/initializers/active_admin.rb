@@ -134,14 +134,14 @@ ActiveAdmin.setup do |config|
   #
   # You can customize the comment menu:
   # config.comments_menu = { parent: 'Admin', priority: 1 }
-  #config.namespace :admin do |admin|
+  # config.namespace :admin do |admin|
   #  admin.build_menu do |menu|
   #    menu.add label: "Publicadores", priority: 2
   #    menu.add label: "Posts", priority: 3
   #    menu.add label: "Usuarios", priority: 4
   #    menu.add label: "Administracion", priority: 5
   #  end
-  #end
+  # end
 
   # == Batch Actions
   #

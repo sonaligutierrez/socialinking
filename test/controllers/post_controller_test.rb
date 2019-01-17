@@ -10,4 +10,15 @@ class PostControllerTest < ActionDispatch::IntegrationTest
     assert_match "Publicaciones", @response.body
     assert_match "Cambiemos", @response.body
   end
+
+  test "show" do
+    @post = posts(:three)
+    sign_in users(:one)
+    get admin_post_url(@post)
+    assert_template partial: %r{\Aadmin/posts/_show_post\Z}, locals: { post: @post }
+    assert_match "Publicaciones", @response.body
+    assert_match "Cambiemos", @response.body
+    assert_match "Comentario de prueba", @response.body
+
+  end
 end

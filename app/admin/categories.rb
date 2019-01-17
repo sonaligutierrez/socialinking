@@ -4,7 +4,7 @@ ActiveAdmin.register Category do
   menu parent: "Administracion"
   filter :name
   index do
-  	selectable_column
+    selectable_column
     column :name
     column :account
     actions

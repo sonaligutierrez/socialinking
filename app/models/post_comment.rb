@@ -5,7 +5,7 @@ class PostComment < ApplicationRecord
 
   validates :comment, :id_comment, :facebook_user, :post, presence: true
 
-  attr_accessor :keywords, :post_creator_id,:date_from, :date_to
+  attr_accessor :keywords, :post_creator_id, :date_from, :date_to
 
   def self.categorized_vs_uncategorized
     uncategorized = joins(:category).where("categories.name not like '%Uncategorized%'").count
@@ -33,7 +33,7 @@ class PostComment < ApplicationRecord
     joins(:category).where("categories.name not like '%Uncategorized%'").count
  end
 
-  def self.search params
+  def self.search(params)
     result = PostComment.joins(:post)
     sql = ""
     if params[:keywords].present? && !result.nil?
@@ -93,7 +93,7 @@ class PostComment < ApplicationRecord
           end
         end
       end
-    end    
+    end
     result = result.where(sql)
     result
    end

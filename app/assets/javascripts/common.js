@@ -201,6 +201,11 @@ function abrir_menu(){
   $("#tabs").toggleClass("ver-menu");
 }
 
+//Link to post detail in post table row in dashboard
+function post_detail_redirect(post){
+  window.location = $(post).data("link");
+}
+
 $(document).on('keypress',function(e) {
     if(e.which == 13) {
         if($("#word").val() != ""){
@@ -223,9 +228,7 @@ $(document).ready(function(e){
     $("#user_password").attr("placeholder", "Contraseña");
     $("#user_submit_action").html("<input type='submit' name='commit' value='Ingresar' data-disable-with='Ingresar'>");
     
-
     $("#site_title").append("<div class= 'col-sm-1 link_menu' onclick='abrir_menu();'><div class='element-menu menu-show-post js-menu', id='js-menu-responsive'<div class='linea'></div><div class='linea'></div><div class='linea'></div><div class='linea'></div></div></div>");
-
 
     $(".js-menu").on('click', function(){
       var id = $(this).attr("id").split("-")[3];
