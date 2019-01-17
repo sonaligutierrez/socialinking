@@ -20,7 +20,7 @@ class Post < ApplicationRecord
   def scraping_comments
     start_time = DateTime.now
 
-    fb_scraping = FacebookPostScrapingComments.new(url, post_creator.fb_user, post_creator.fb_pass, post_creator.fb_session.try(:name), "", @headless || true, @debug || false)
+    fb_scraping = FacebookPostScrapingComments.new(url, post_creator.fb_user, post_creator.fb_pass, post_creator.fb_session.try(:name), "", @headless.nil? ? true : @headless, @debug.nil? ? false : @debug)
 
     count = 0
 
@@ -52,7 +52,7 @@ class Post < ApplicationRecord
   def scraping_reactions
     start_time = DateTime.now
 
-    fb_scraping = FacebookPostScrapingReactions.new(url, post_creator.fb_user, post_creator.fb_pass, post_creator.fb_session.try(:name), "", @headless || true, @debug || false)
+    fb_scraping = FacebookPostScrapingReactions.new(url, post_creator.fb_user, post_creator.fb_pass, post_creator.fb_session.try(:name), "", @headless.nil? ? true : @headless, @debug.nil? ? false : @debug)
 
     count = 0
 

@@ -47,8 +47,7 @@ class FacebookPostScrapingShared < FacebookPostScraping
       result_shared = 0
 
       # Searching shared link
-      shared_link = @browser.elements(css: '.commentable_item a[href^="/shares/view"]').first
-
+      shared_link = @browser.elements(css: '.commentable_item a[href*="/shares/view"]').first
       if shared_link
         shared_link.click!
 

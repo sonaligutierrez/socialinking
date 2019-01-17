@@ -18,7 +18,7 @@ class ExtractDataCommentsInBatchJobTest < ActiveJob::TestCase
   test "scraping execution for a post v2" do
     VCR.use_cassette("fb_scraping_watir_2") do
       count = ExtractDataCommentsInBatchJob.perform_now @fb_post_v2
-      assert_equal(true, @fb_post_v2.post_comments.count > 10)
+      assert_equal(true, @fb_post_v2.post_comments.count > 20)
     end
   end
 
