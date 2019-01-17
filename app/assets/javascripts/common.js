@@ -146,10 +146,11 @@ function update(comment_id, category_id){
   })
   .done(function(data) {
       $("#comment_"+comment_id).fadeOut();
+      $("#p-category-"+comment_id).html("");
       if(text_select == "UNCATEGORIZED")
-        $("#p-category-"+comment_id).html("<p class='color-border-select-red' id='p-category-'"+comment_id+"' onmouseover='see_select("+comment_id+")''>"+text_select+"</p>");
+        $("#p-category-"+comment_id).html("<p class='color-border-select-red' id='p-category-"+comment_id+"' onmouseover='see_select("+comment_id+")'>"+text_select+"</p>");
       else
-        $("#p-category-"+comment_id).html("<p class='color-border-select' id='p-category-'"+comment_id+"' onmouseover='see_select("+comment_id+")''>"+text_select+"</p>");
+        $("#p-category-"+comment_id).html("<p class='color-border-select' id='p-category-"+comment_id+"' onmouseover='see_select("+comment_id+")'>"+text_select+"</p>");
       
       $("#comment_"+comment_id).fadeIn();
     })
@@ -201,6 +202,11 @@ function abrir_menu(){
   $("#tabs").toggleClass("ver-menu");
 }
 
+//Link to post detail in post table row in dashboard
+function post_detail_redirect(post){
+  window.location = $(post).data("link");
+}
+
 $(document).on('keypress',function(e) {
     if(e.which == 13) {
         if($("#word").val() != ""){
@@ -223,9 +229,7 @@ $(document).ready(function(e){
     $("#user_password").attr("placeholder", "Contraseña");
     $("#user_submit_action").html("<input type='submit' name='commit' value='Ingresar' data-disable-with='Ingresar'>");
     
-
     $("#site_title").append("<div class= 'col-sm-1 link_menu' onclick='abrir_menu();'><div class='element-menu menu-show-post js-menu', id='js-menu-responsive'<div class='linea'></div><div class='linea'></div><div class='linea'></div><div class='linea'></div></div></div>");
-
 
     $(".js-menu").on('click', function(){
       var id = $(this).attr("id").split("-")[3];

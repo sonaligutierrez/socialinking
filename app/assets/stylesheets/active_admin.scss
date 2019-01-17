@@ -26,7 +26,7 @@ $skinLogo: none;
 
 
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: sans-serif;
 }
 
 body.active_admin, #wrapper{
@@ -291,12 +291,12 @@ img {
 }
 
 .text-post-style{
-  margin: 10px 15px 0px 17px;
+  margin: 3px 19px 1px 15px;
   word-wrap: break-word;
   overflow: auto;
   max-height: 100px;
-  font-family: Roboto, sans-serif;
-  font-size: 9px;
+  font-family: sans-serif;
+  font-size: 13px;
   text-align: justify;
 }
 
@@ -315,7 +315,7 @@ text-post-style-empty{
   word-wrap: break-word;
   /*overflow: scroll;*/
   max-height: 40px;
-  font-family: Roboto, sans-serif;
+  font-family: sans-serif;
   font-size: 10px;
   text-align: justify;
 }
@@ -345,20 +345,20 @@ text-post-style-empty{
 .select-show{
   display: inline-block;
   margin: 15px;
-  
+  font-family: sans-serif;
     label{
-      color: #a1a1a1;
-      font-size: 11px;
+      color: #696B6A;
+      font-size: 10px;
       font-weight: 600;
       margin-right: 10px;
     }
     select{
-      color: #b4b6b6 !important;
+      color: #696B6A !important;
       border-color: #c2c2c2 !important;
       border-radius: 4px;
       margin-right: 5px;
       background-color: #fff;
-      font-size: 11px;
+      font-size: 12px;
     }
     .select-order{
       display: inline-grid;
@@ -697,6 +697,13 @@ table tr{
     background-color: #f4f8fa !important;
   }  
 }
+
+table{
+  *[data-link] {
+    cursor: pointer;
+  }
+}
+
 
 
 table.index_table 
@@ -1480,7 +1487,7 @@ body.logged_out #content_wrapper{
 }
 
 
-.download_links, .comments_download_links, .posts_download_links, .posts_creator_download_links, .facebook_users_download_links {
+.download_links, .comments_download_links, .posts_download_links, .posts_creator_download_links, .facebook_users_download_links, .download_links_post_comments {
   color: #7f8c8d;
   font-size: 12px;
   margin-left: 32px;
@@ -1510,7 +1517,7 @@ body.logged_out #content_wrapper{
  
 
 
-.admin_posts .download_links, .admin_post_creators .download_links, .admin_facebook_users #index_footer .download_links{
+.admin_posts .download_links, .admin_post_creators .download_links, .admin_facebook_users #index_footer .download_links, .admin_post_comments .download_links {
   display: none;
 }
 
@@ -1535,9 +1542,6 @@ body.logged_out #content_wrapper{
   width: 1255px;
 }
 
-.index_as_table > .container {
-  width: 100%;
-}
 
 .facebook_users_download_links {
   float: right;
@@ -1545,7 +1549,7 @@ body.logged_out #content_wrapper{
 }
 
 .admin_post_comments{
-  .download_links {
+  .download_links_post_comments {
    float: right;
     width: 10% !important;
     margin-top: 26px;
@@ -1598,7 +1602,7 @@ body.logged_out #content_wrapper{
     } 
   }
   .panel-heading .menu-dropdown{
-    left: -149px;
+    left: -148px;
     @media only screen and (max-width : 767px) {
       left: 1042px !important;
       top: -100px;
@@ -1893,6 +1897,11 @@ table tr:nth-child(odd):hover, tr:nth-child(even):hover{
     }
     
   }
+}
+
+.flashes{
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
 
