@@ -37,7 +37,7 @@ production_deploy:
     - master
   before_script:
     - apk update && apk add --update build-base postgresql-dev nodejs chromium chromium-chromedriver libexif udev curl-dev less git yarn redis openssh
-    - ssh-add <(echo -e "$DEPLOYER_KEY")
+    - ssh-add < echo -e "$DEPLOYER_KEY"
     - ssh -vvv ubuntu@social-linking.prosumia.la uname -a
     - gem install bundler  --no-ri --no-rdoc
     - bundle install
