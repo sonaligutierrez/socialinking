@@ -802,7 +802,7 @@ td .element-menu {
     }
 }
 
-.element-menu {
+.element-menu, .element-menu-post-creator {
     width: 35px;
     height: 40px;
     margin-left: 2px;
@@ -893,7 +893,7 @@ body.logged_in .flash.flash_notice{
   background: #f4f4f4 !important;
 }
 
-.menu-dropdown {
+.menu-dropdown, .menu-dropdown-post-creator {
     box-shadow: 2px 4px 4px 1px #e4e4e4;
     background-color: #fff;
     height: 65px;
@@ -1528,7 +1528,7 @@ body.logged_out #content_wrapper{
   margin-right: 3px;
 }
 
-.admin_posts .posts_download_links {
+.admin_posts .posts_download_links, .admin_post_creators .posts_download_links {
   float: right;
   margin-top: -55px;
   margin-right: 18px;
@@ -1580,7 +1580,7 @@ body.logged_out #content_wrapper{
     top: 210px !important;
   }
 
-.admin_posts{
+.admin_posts, .admin_post_creators{
   .panel-heading .img-post-creator{
     width: 80% !important;
     @media only screen and (max-width : 767px) {
@@ -1594,6 +1594,14 @@ body.logged_out #content_wrapper{
       margin-top: -128px;
     } 
   }
+
+  .panel-heading .element-menu-post-creator{
+    margin-right: -27px;
+    @media only screen and (max-width : 767px) {
+      margin-top: -128px;
+    } 
+  }
+
   .panel-heading .menu-show-post{
     margin-right: -35px !important;
     @media only screen and (max-width : 767px) {
@@ -1608,6 +1616,15 @@ body.logged_out #content_wrapper{
       top: -100px;
     }
   }
+
+  .panel-heading .menu-dropdown-post-creator{
+    left: -121px;
+    @media only screen and (max-width : 767px) {
+      left: 1042px !important;
+      top: -100px;
+    }
+  }
+
   .panel-heading .dropdown-show-post{
     left: -123px !important;
     @media only screen and (max-width : 767px) {

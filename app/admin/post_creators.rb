@@ -37,6 +37,20 @@ ActiveAdmin.register PostCreator do
     end
   end
 
+  collection_action :posts, method: :get do
+   @post_creator = PostCreator.find(params[:id])
+   @posts = @post_creator.posts
+   @page_title = "Publicaciones de (#{@posts.count})"
+   @creators = []
+   @columns = [["Fecha de publicación", "post_date"], ["Titulo", "title"]]
+   @creators.push(["Todas las publicaciones", 0])
+   PostCreator.all.map { |p| @creators.push([p.fan_page, p.id]) }
+   @select = params[:post_creator_id] || 0
+   @select_type_order = "DESC"
+
+   render partial: "admin/posts/index_posts", context: self
+ end
+
 
   collection_action :import_csv, method: :get do
     posts_creators = PostCreator.all
@@ -85,6 +99,18 @@ ActiveAdmin.register PostCreator do
         end
       end
       
+    end
+
+    def posts
+      @post_creator = PostCreator.find(params[:id])
+      @posts = @post_creator.posts
+      @page_title = "Publicaciones #{@post_creator.try(:fan_page)} (#{@posts.count})"
+      @creators = []
+      @columns = [["Fecha de publicación", "post_date"], ["Titulo", "title"]]
+      @creators.push(["Todas las publicaciones", 0])
+      PostCreator.all.map { |p| @creators.push([p.fan_page, p.id]) }
+      @select = params[:id] || 0
+      @select_type_order = "DESC"
     end
   end
 end

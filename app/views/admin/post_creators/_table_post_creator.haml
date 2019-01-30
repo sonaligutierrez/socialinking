@@ -5,11 +5,11 @@
         .row
           .col-xs-10
           .col-sm-1
-            %div{:class => "element-menu js-menu", :id => "js-post-menu-#{p.id}", :style => "margin-left: -10px; !important"}
+            %div{:class => "element-menu-post-creator js-menu", :id => "js-post-menu-#{p.id}"}
               .punto
               .punto
               .punto
-            %div.menu-dropdown.width-post-creator{:id => "menu-dropdown-#{p.id}", :style => "display:none; width:163px; !important"}
+            %div.menu-dropdown-post-creator.width-post-creator{:id => "menu-dropdown-#{p.id}", :style => "display:none; width:163px; !important"}
               %ul
                 %li=link_to "Editar publicador", edit_admin_post_creator_path(p)
                 %li=link_to "Eliminar publicador", admin_post_creator_path(p), method: :DELETE
