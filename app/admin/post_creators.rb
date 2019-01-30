@@ -87,7 +87,7 @@ ActiveAdmin.register PostCreator do
 
     def destroy
       @post_creator = PostCreator.find(params[:id])
-      
+
       PostCreator.transaction do
         begin
           @post_creator.destroy
@@ -98,7 +98,7 @@ ActiveAdmin.register PostCreator do
           redirect_to admin_post_creators_path, alert: "No se pudo eliminar el publicador"
         end
       end
-      
+
     end
 
     def posts
@@ -114,4 +114,3 @@ ActiveAdmin.register PostCreator do
     end
   end
 end
-
