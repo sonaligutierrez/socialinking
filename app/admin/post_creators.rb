@@ -98,7 +98,6 @@ ActiveAdmin.register PostCreator do
           redirect_to admin_post_creators_path, alert: "No se pudo eliminar el publicador"
         end
       end
-
     end
 
     def posts
