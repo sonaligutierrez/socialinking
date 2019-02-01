@@ -58,6 +58,15 @@ body.active_admin, #wrapper{
   #tabs {
     width: 59%;
     @media only screen and (max-width : 900px) {
+      width: 20%;
+      display: none;
+    }
+    @media only screen and (max-width : 800px) {
+      width: 30%;
+      display: none;
+    }
+    @media only screen and (max-width : 600px) {
+      width: 40%;
       display: none;
     }
   }
@@ -69,14 +78,23 @@ body.active_admin, #wrapper{
   width: 31%;
 
   @media only screen and (max-width : 900px) {
-    width: 70%;
-  } 
+    width: 0;
+  }
+  
   
 img {
     height: 60px;
     margin-top: 1px;
     width: 270px;
     margin-left: 10px;
+    @media only screen and (max-width : 900px) {
+       width: 45%;
+       height: 57px;
+    } 
+    @media only screen and (max-width : 450px) {
+       width: 70%;
+       height: 57px;
+    } 
   }
 }
 
@@ -222,7 +240,7 @@ img {
 }
 
 .admin_post_creators .container{
-  width: 1252px; 
+  width: 98%; 
   margin-right: auto;
   margin-left: 18px;
 }
@@ -849,8 +867,9 @@ td .element-menu {
   cursor: pointer;
   padding-top: 18px;
   display: none;
+  float: left;
   @media only screen and (max-width : 900px) {
-    display: block;
+    display: inline;
   }
 }
 
@@ -1472,6 +1491,10 @@ body.logged_out #content_wrapper{
 
 }
 
+#header #utility_nav.position-logout, #header h1.site_title.position-logout{
+  padding: 0px 0px 300px 0px;
+}
+
 #header #utility_nav li#logout{
   background-image: asset_url("exit.png");
   background-repeat: no-repeat;
@@ -1539,7 +1562,7 @@ body.logged_out #content_wrapper{
   padding-left: 15px;
   margin-right: 0px;
   margin-left: 16px;
-  width: 1255px;
+  width: 98%;
 }
 
 
