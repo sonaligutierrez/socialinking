@@ -200,6 +200,9 @@ function clear_form(){
 
 function abrir_menu(){
   $("#tabs").toggleClass("ver-menu");
+  $("#site_title_image").toggleClass("hidden");
+  $("#utility_nav").toggleClass("position-logout");
+  $(".site_title").toggleClass("position-logout");
 }
 
 //Link to post detail in post table row in dashboard
@@ -229,7 +232,7 @@ $(document).ready(function(e){
     $("#user_password").attr("placeholder", "Contraseña");
     $("#user_submit_action").html("<input type='submit' name='commit' value='Ingresar' data-disable-with='Ingresar'>");
     
-    $("#site_title").append("<div class= 'col-sm-1 link_menu' onclick='abrir_menu();'><div class='element-menu menu-show-post js-menu', id='js-menu-responsive'<div class='linea'></div><div class='linea'></div><div class='linea'></div><div class='linea'></div></div></div>");
+    $("#site_title").append("<div class= 'col-sm-1 link_menu' onclick='abrir_menu();'><div class='menu-show-post js-menu', id='js-menu-responsive'<div class='linea'></div><div class='linea'></div><div class='linea'></div><div class='linea'></div></div></div>");
 
     $(".js-menu").on('click', function(){
       var id = $(this).attr("id").split("-")[3];
