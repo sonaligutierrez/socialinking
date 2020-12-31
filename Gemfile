@@ -68,7 +68,7 @@ gem 'devise'
 # For background jobs https://github.com/mperham/sidekiq
 gem 'sidekiq'
 
-gem 'nokogiri', "1.8.0"
+gem 'nokogiri', "1.10.10"
 
 gem "httparty"
 
